@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import video from '../../../assets/Cinematic.mp4'
 import {Box}from "@mui/material";
 import Tab from '@mui/material/Tab'
@@ -15,10 +15,20 @@ import RowingOutlinedIcon from '@mui/icons-material/RowingOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import FlightOutlinedIcon from '@mui/icons-material/FlightOutlined';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { optionsData } from '../../../dummyData';
 import SearchNavigationInput from '../../child/SearchNavigationInput';
+const rotate = keyframes `
+  from{
+    transform: rotate(0deg); 
+  }
+  to{
+    transform: rotate(360deg); 
+  }
+`
 const SearchNavigationStyled = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -144,27 +154,68 @@ const SearchBonusNavigationBottomLeftInputWrapperStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 1rem;
 `
 const SearchBonusNavigationBottomLeftMiddleInputStyled = styled.div`
-  height: 1.8rem;
+  position: absolute;
+  background-color: rgb(104, 160, 251);
+  height: 2rem;
+  border-radius: .2rem;
+  padding: .2rem;
+  border: .05rem solid #ccc;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transform: rotate(0deg);
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  ${({ rotate }) => rotate && `transform: rotate(360deg)`};
+  cursor: pointer;
+`
+const SearchBonusNavigationBottomLeftMiddleWrapperInputStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
   width: .06rem;
   margin: 0 1rem;
   background-color: #ccc;
 `
+const SearchBonusNavigationInputWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+`
 const SearchBonusNavigationInputStyled = styled.input`
   width: 100%;
   height: 100%;
-  padding: .6rem 1.2rem;
+  padding: .6rem;
+  margin-top: 1rem;
   font-size: 1.1rem;
   border-radius: .4rem;
   outline: none;
   border: none;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationInputTopContentStyled = styled.span`
+  position: absolute;
+  font-size: .9rem;
+  color: #888;
+  margin-left: .6rem;
+  margin-bottom: 1.6rem;
 `
 const SearchBonusNavigationBottomRightStyled = styled.div`
   flex: 1;
 `
 const SearchNavigation = () => {
   const [valueIndex, setValueIndex] = useState("1");
+  const [rotate, setRotate] = useState(false);
+
+  const handleClick = () => setRotate((prevState) => (!prevState ));
   const handleChangePage = (e, newValue) =>{
     setValueIndex(newValue);
   }
@@ -212,12 +263,22 @@ const SearchNavigation = () => {
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
                             <SearchBonusNavigationBottomLeftInputWrapperStyled>
                               <FlightOutlinedIcon />
-                              <SearchBonusNavigationInputStyled />
+                              <SearchBonusNavigationInputWrapperStyled>
+                                <SearchBonusNavigationInputStyled placeholder='Hồ Chí Minh (SGN)'/>
+                                <SearchBonusNavigationInputTopContentStyled>Bay từ</SearchBonusNavigationInputTopContentStyled>
+                              </SearchBonusNavigationInputWrapperStyled>
                             </SearchBonusNavigationBottomLeftInputWrapperStyled>
-                            <SearchBonusNavigationBottomLeftMiddleInputStyled />
+                            <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled>
+                              <SearchBonusNavigationBottomLeftMiddleInputStyled rotate={rotate} onClick={handleClick}>
+                                <ChangeCircleOutlinedIcon sx={{color: '#fff'}}/>
+                              </SearchBonusNavigationBottomLeftMiddleInputStyled>
+                            </SearchBonusNavigationBottomLeftMiddleWrapperInputStyled>
                             <SearchBonusNavigationBottomLeftInputWrapperStyled>
-                              <FlightOutlinedIcon />
-                              <SearchBonusNavigationInputStyled />
+                              <PlaceOutlinedIcon />
+                              <SearchBonusNavigationInputWrapperStyled>
+                                <SearchBonusNavigationInputStyled placeholder='Singapore (SIN)'/>
+                                <SearchBonusNavigationInputTopContentStyled>Bay đến</SearchBonusNavigationInputTopContentStyled>
+                              </SearchBonusNavigationInputWrapperStyled>
                             </SearchBonusNavigationBottomLeftInputWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
