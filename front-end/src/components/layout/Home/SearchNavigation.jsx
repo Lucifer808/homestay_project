@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
-import video from '../../../assets/Cinematic.mp4'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import video from '../../../assets/Cinematic.mp4';
 import {Box}from "@mui/material";
-import Tab from '@mui/material/Tab'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import { CssBaseline } from '@mui/material'
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { CssBaseline } from '@mui/material';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import AirplaneTicketOutlinedIcon from '@mui/icons-material/AirplaneTicketOutlined';
@@ -17,18 +17,16 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import FlightOutlinedIcon from '@mui/icons-material/FlightOutlined';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import SensorDoorOutlinedIcon from '@mui/icons-material/SensorDoorOutlined';
+import * as rdrLocales from 'react-date-range/dist/locale';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { optionsData } from '../../../dummyData';
 import SearchNavigationInput from '../../child/SearchNavigationInput';
-const rotate = keyframes `
-  from{
-    transform: rotate(0deg); 
-  }
-  to{
-    transform: rotate(360deg); 
-  }
-`
+import { format, addDays } from "date-fns";
+import { DateRangePicker } from "react-date-range";
 const SearchNavigationStyled = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -62,7 +60,7 @@ const SearchNavigationBarStyled = styled.div`
   height: 8.4vh;
   width: 68vw;
   bottom: 2rem;
-  right: -5.7rem;
+  right: -4.2rem;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `
@@ -113,7 +111,8 @@ const SearchNavigationSubmitButtomStyled = styled.button`
   }
 `
 const SearchBonusNavigationContainerStyled = styled.div``
-const SearchBonusNavigationWrapperStyled = styled.div``
+const SearchBonusNavigationWrapperStyled = styled.div`
+`
 const SearchBonusNavigationTopStyled = styled.div`
   display: flex;
 `
@@ -134,7 +133,6 @@ const SearchBonusNavigationButtonStyled = styled.button`
 `
 const SearchBonusNavigationBottomStyled = styled.div`
   display: flex;
-  margin-top: 1rem;
   margin-left: .8rem;
 `
 const SearchBonusNavigationBottomLeftStyled = styled.div`
@@ -146,8 +144,8 @@ const SearchBonusNavigationBottomLeftInputContainerStyled = styled.div`
   justify-content: space-around;
   border: 1px solid #ccc;
   border-radius: .4rem;
-  width: 34vw;
-  padding: .4rem;
+  width: 36vw;
+  padding: .2rem .4rem;
   margin-top: 1rem;
 `
 const SearchBonusNavigationBottomLeftInputWrapperStyled = styled.div`
@@ -158,7 +156,6 @@ const SearchBonusNavigationBottomLeftInputWrapperStyled = styled.div`
 `
 const SearchBonusNavigationBottomLeftMiddleInputStyled = styled.div`
   position: absolute;
-  background-color: rgb(104, 160, 251);
   height: 2rem;
   border-radius: .2rem;
   padding: .2rem;
@@ -167,8 +164,12 @@ const SearchBonusNavigationBottomLeftMiddleInputStyled = styled.div`
   transform: rotate(0deg);
   overflow: hidden;
   transition: all 0.3s ease-out;
-  ${({ rotate }) => rotate && `transform: rotate(360deg)`};
+  ${({ rotate }) => rotate === "true" && `transform: rotate(360deg)`};
+  background-color: #fff;
   cursor: pointer;
+  &:hover{
+    background-color: rgb(104, 160, 251);
+  }
 `
 const SearchBonusNavigationBottomLeftMiddleWrapperInputStyled = styled.div`
   position: relative;
@@ -176,7 +177,7 @@ const SearchBonusNavigationBottomLeftMiddleWrapperInputStyled = styled.div`
   align-items: center;
   justify-content: center;
   height: 4rem;
-  width: .06rem;
+  width: .02rem;
   margin: 0 1rem;
   background-color: #ccc;
 `
@@ -211,13 +212,204 @@ const SearchBonusNavigationInputTopContentStyled = styled.span`
 const SearchBonusNavigationBottomRightStyled = styled.div`
   flex: 1;
 `
+const SearchBonusNavigationBottomRightDateRangeContainerStyled = styled.div`
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #ccc;
+  border-radius: .4rem;
+  width: 36vw;
+  padding: .2rem .4rem;
+  margin-top: 1rem;
+`
+const SearchBonusNavigationBottomRightDateRangeWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+`
+const SearchBonusNavigationDateRangeWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+`
+const SearchBonusNavigationInputDateRangeStyled = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: .6rem;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  border-radius: .4rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationDateRangeTopContentStyled = styled.span`
+  position: absolute;
+  font-size: .9rem;
+  color: #888;
+  margin-left: .6rem;
+  margin-bottom: 1.6rem;
+`
+const SearchBonusNavigationInputCalendarStyled = styled.div`
+  position: absolute;
+  margin: 5.6rem 0 0 14.4rem;
+  z-index: 99;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`
+const SearchBonusNavigationBottomLeftStayingAtWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 1rem;
+  padding: .3rem 0;
+  width: 100%;
+  height: 100%;
+`
+const SearchBonusNavigationStayingAtInputWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+`
+const SearchBonusNavigationStayingAtInputStyled = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: .6rem;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  border-radius: .4rem;
+  outline: none;
+  border: none;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationStayingAtInputTopContentStyled = styled.span`
+  position: absolute;
+  font-size: .9rem;
+  color: #888;
+  margin-left: .6rem;
+  margin-bottom: 1.6rem;
+`
+const SearchBonusNavigationInputCalendarBottomStyled = styled.div`
+  position: absolute;
+  margin: 11rem 0 0 14.4rem;
+  z-index: 99;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`
+const SearchBonusNavigationBottomLeftPassengersInputWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+`
+const SearchBonusNavigationPassengersInputWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+`
+const SearchBonusNavigationPassengersInputStyled = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: .6rem;
+  font-size: 1.1rem;
+  border-radius: .4rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationBottomLeftRoomInputWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+`
+const SearchBonusNavigationRoomInputWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+`
+const SearchBonusNavigationRoomInputStyled = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: .6rem;
+  font-size: 1.1rem;
+  border-radius: .4rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationBottomRightCheckboxWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.3rem 1rem;
+  cursor: pointer;
+  &:hover{
+    color: rgb(104, 160, 251);
+  }
+`
+const SearchBonusNavigationBottomRightCheckboxStyled = styled.input``
+const SearchBonusNavigationBottomRightCheckboxContentStyled = styled.span`
+  margin-left: 1rem;
+`
 const SearchNavigation = () => {
+  const [openDateFlying, setOpenDateFlying] = useState(false);
+  const [openDateStaying, setOpenDateStaying] = useState(false);
   const [valueIndex, setValueIndex] = useState("1");
+  const [isChecked, setIsChecked] = useState(false);
   const [rotate, setRotate] = useState(false);
 
   const handleClick = () => setRotate((prevState) => (!prevState ));
   const handleChangePage = (e, newValue) =>{
     setValueIndex(newValue);
+  }
+  const [dateFlying, setDateFlying] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: 'selection'
+    }
+  ]);
+  const [dateStaying, setDateStaying] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: 'selection'
+    }
+  ]);
+  const handleOpenDateFlying = () =>{
+    if(openDateStaying === true){
+      setOpenDateStaying(false);
+      setOpenDateFlying(!openDateFlying);
+    }
+    setOpenDateFlying(!openDateFlying)
+  }
+  console.log(openDateStaying)
+  const handleChecked = () =>{
+    return;
   }
   return (
     <SearchNavigationStyled>
@@ -242,10 +434,10 @@ const SearchNavigation = () => {
                     </TabList>
                   </Box>
                 </SearchNavigationBarStyled>
-                <TabPanel value='1'>
+                <TabPanel value='1' sx={{paddingTop: '0'}}>
                   <SearchNavigationInput optionsData={optionsData}/>
                 </TabPanel>
-                <TabPanel value='2'>
+                <TabPanel value='2' sx={{paddingTop: '0'}}>
                   <SearchBonusNavigationContainerStyled>
                     <SearchBonusNavigationWrapperStyled>
                       <SearchBonusNavigationTopStyled>
@@ -269,8 +461,8 @@ const SearchNavigation = () => {
                               </SearchBonusNavigationInputWrapperStyled>
                             </SearchBonusNavigationBottomLeftInputWrapperStyled>
                             <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled>
-                              <SearchBonusNavigationBottomLeftMiddleInputStyled rotate={rotate} onClick={handleClick}>
-                                <ChangeCircleOutlinedIcon sx={{color: '#fff'}}/>
+                              <SearchBonusNavigationBottomLeftMiddleInputStyled rotate={rotate.toString()} onClick={handleClick}>
+                                <ChangeCircleOutlinedIcon sx={{color: '#000', "&:hover": { color: '#fff' } }}/>
                               </SearchBonusNavigationBottomLeftMiddleInputStyled>
                             </SearchBonusNavigationBottomLeftMiddleWrapperInputStyled>
                             <SearchBonusNavigationBottomLeftInputWrapperStyled>
@@ -282,39 +474,113 @@ const SearchNavigation = () => {
                             </SearchBonusNavigationBottomLeftInputWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
-                            <FlightOutlinedIcon />
-                            <SearchBonusNavigationInputStyled />
+                            <SearchBonusNavigationBottomLeftStayingAtWrapperStyled>
+                              <ApartmentOutlinedIcon />
+                              <SearchBonusNavigationStayingAtInputWrapperStyled>
+                                <SearchBonusNavigationStayingAtInputStyled placeholder='Nhập địa điểm du lịch hoặc tên khách sạn'/>
+                                <SearchBonusNavigationStayingAtInputTopContentStyled>Nơi ở</SearchBonusNavigationStayingAtInputTopContentStyled>
+                              </SearchBonusNavigationStayingAtInputWrapperStyled>
+                            </SearchBonusNavigationBottomLeftStayingAtWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
-                            <FlightOutlinedIcon />
-                            <SearchBonusNavigationInputStyled />
+                          <SearchBonusNavigationBottomLeftPassengersInputWrapperStyled>
+                              <GroupOutlinedIcon />
+                              <SearchBonusNavigationPassengersInputWrapperStyled>
+                                <SearchBonusNavigationPassengersInputStyled placeholder='1 Phòng'/>
+                              </SearchBonusNavigationPassengersInputWrapperStyled>
+                          </SearchBonusNavigationBottomLeftPassengersInputWrapperStyled>
+                          <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
+                          <SearchBonusNavigationBottomLeftRoomInputWrapperStyled>
+                            <SensorDoorOutlinedIcon />
+                            <SearchBonusNavigationRoomInputWrapperStyled>
+                              <SearchBonusNavigationRoomInputStyled placeholder='2 Người Lớn'/>
+                            </SearchBonusNavigationRoomInputWrapperStyled>
+                          </SearchBonusNavigationBottomLeftRoomInputWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
                         </SearchBonusNavigationBottomLeftStyled>
                         <SearchBonusNavigationBottomRightStyled>
-                          <SearchBonusNavigationBottomLeftInputContainerStyled>
-                            <FlightOutlinedIcon />
-                            <SearchBonusNavigationInputStyled />
-                          </SearchBonusNavigationBottomLeftInputContainerStyled>
-                          <SearchBonusNavigationBottomLeftInputContainerStyled>
-                            <FlightOutlinedIcon />
-                            <SearchBonusNavigationInputStyled />
-                          </SearchBonusNavigationBottomLeftInputContainerStyled>
-                          <SearchBonusNavigationBottomLeftInputContainerStyled>
-                            <FlightOutlinedIcon />
-                            <SearchBonusNavigationInputStyled />
-                          </SearchBonusNavigationBottomLeftInputContainerStyled>
+                          <SearchBonusNavigationBottomRightDateRangeContainerStyled onClick={handleOpenDateFlying}>
+                              <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                                <CalendarTodayOutlinedIcon />
+                                <SearchBonusNavigationDateRangeWrapperStyled>
+                                  <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(dateFlying[0].startDate, "dd/MM/yyyy")}`}/>
+                                  <SearchBonusNavigationDateRangeTopContentStyled>Ngày đi</SearchBonusNavigationDateRangeTopContentStyled>
+                                </SearchBonusNavigationDateRangeWrapperStyled>
+                              </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                              <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
+                              <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                                <CalendarTodayOutlinedIcon />
+                                <SearchBonusNavigationDateRangeWrapperStyled>
+                                  <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(dateFlying[0].endDate, "dd/MM/yyyy")}`}/>
+                                  <SearchBonusNavigationDateRangeTopContentStyled>Ngày về</SearchBonusNavigationDateRangeTopContentStyled>
+                                </SearchBonusNavigationDateRangeWrapperStyled>
+                              </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                            </SearchBonusNavigationBottomRightDateRangeContainerStyled>
+                            <SearchBonusNavigationBottomRightDateRangeContainerStyled  onClick={() => setOpenDateStaying(!openDateStaying)}>
+                              <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                                <CalendarTodayOutlinedIcon />
+                                <SearchBonusNavigationDateRangeWrapperStyled>
+                                  <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(dateStaying[0].startDate, "dd/MM/yyyy")}`}/>
+                                  <SearchBonusNavigationDateRangeTopContentStyled>Nhận phòng</SearchBonusNavigationDateRangeTopContentStyled>
+                                </SearchBonusNavigationDateRangeWrapperStyled>
+                              </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                              <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
+                              <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                                <CalendarTodayOutlinedIcon />
+                                <SearchBonusNavigationDateRangeWrapperStyled>
+                                  <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(dateStaying[0].endDate, "dd/MM/yyyy")}`}/>
+                                  <SearchBonusNavigationDateRangeTopContentStyled>Trả phòng</SearchBonusNavigationDateRangeTopContentStyled>
+                                </SearchBonusNavigationDateRangeWrapperStyled>
+                              </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+                            </SearchBonusNavigationBottomRightDateRangeContainerStyled>
+                            <SearchBonusNavigationBottomRightDateRangeContainerStyled>
+                              <SearchBonusNavigationBottomRightCheckboxWrapperStyled onClick={() => setIsChecked(!isChecked)}>
+                                <SearchBonusNavigationBottomRightCheckboxStyled type="checkbox" checked={isChecked} onChange={handleChecked}/>
+                                <SearchBonusNavigationBottomRightCheckboxContentStyled>Tìm khách sạn ở thành phố theo ngày</SearchBonusNavigationBottomRightCheckboxContentStyled>
+                              </SearchBonusNavigationBottomRightCheckboxWrapperStyled>
+                            </SearchBonusNavigationBottomRightDateRangeContainerStyled>
                         </SearchBonusNavigationBottomRightStyled>
+                        <SearchBonusNavigationInputCalendarStyled>
+                          {openDateFlying && (
+                            <DateRangePicker
+                            onChange={date => setDateFlying([date.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={dateFlying}
+                            direction="horizontal"
+                            preventSnapRefocus={true}
+                            calendarFocus="backwards"
+                            locale={rdrLocales.vi}
+                          />
+                          )}
+                        </SearchBonusNavigationInputCalendarStyled>
+                        <SearchBonusNavigationInputCalendarBottomStyled>
+                          {openDateStaying && (
+                            <DateRangePicker
+                            onChange={date => setDateStaying([date.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={dateStaying}
+                            direction="horizontal"
+                            preventSnapRefocus={true}
+                            calendarFocus="backwards"
+                            locale={rdrLocales.vi}
+                          />
+                          )}
+                        </SearchBonusNavigationInputCalendarBottomStyled>
                       </SearchBonusNavigationBottomStyled>
                     </SearchBonusNavigationWrapperStyled>
                   </SearchBonusNavigationContainerStyled>
                 </TabPanel>
-                <TabPanel value='3'>
+                <TabPanel value='3' sx={{paddingTop: '0'}}>
                   <SearchNavigationInput optionsData={optionsData}/>
                 </TabPanel>
-                <TabPanel value='4'>
+                <TabPanel value='4' sx={{paddingTop: '0'}}>
                   <SearchNavigationInput optionsData={optionsData}/> 
                 </TabPanel>
-                <TabPanel value='5'>
+                <TabPanel value='5' sx={{paddingTop: '0'}}>
                   <SearchNavigationActivitiesContainerStyled>
                     <SearchNavigationActivitiesInputWrapperStyled>
                       <SearchOutlinedIcon />
