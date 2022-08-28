@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import DateRangeIcon from '@mui/icons-material/DateRange';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -10,6 +9,9 @@ import AddIcon from '@mui/icons-material/Add';
 import FamilyRestroomOutlinedIcon from '@mui/icons-material/FamilyRestroomOutlined';
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
+import * as rdrLocales from 'react-date-range/dist/locale';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+
 const SearchNavigationInputContentStyled = styled.form`
 `
 const SearchNavigationInputFullStyled = styled.div`
@@ -18,7 +20,7 @@ const SearchNavigationInputFullStyled = styled.div`
   justify-content: flex-start;
   border: 1px solid #ccc;
   border-radius: .4rem;
-  padding: .4rem;
+  padding: .8rem 1.4rem;
 `
 const SearchNavigationInputStyled = styled.input`
   width: 100%;
@@ -37,37 +39,6 @@ const SearchNavigationInputHalfWrapperStyled = styled.div`
 const SearchNavigationInputHalfLeftStyled = styled.div`
   flex: 1;
 `
-const SearchNavigationInputCalendarWrapperStyled = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: .9rem .4rem;
-  border-radius: .4rem;
-  width: 34rem;
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-  cursor: pointer;
-`
-const SearchNavigationInputCalendarTitleWrapperStyled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-const SearchNavigationInputCalendarTitleLeftStyled = styled.span`
-  display: block;
-  margin-left: 1.1rem;
-  color: #757575;
-`
-const SearchNavigationInputCalendarTitleMiddleStyled = styled.div`
-  height: 1rem;
-  width: .05rem;
-  margin: 0 1rem;
-  background-color: #ccc;
-`
-const SearchNavigationInputCalendarTitleRightStyled = styled.span`
-  display: block;
-  color: #757575;
-`
 const SearchNavigationInputCalendarStyled = styled.div`
   position: absolute;
   z-index: 99;
@@ -81,9 +52,9 @@ const SearchNavigationInputOptionsWrapperStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .2rem .4rem;
+  padding: .7rem 1.4rem;
   border-radius: .4rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   border: 1px solid #ccc;
   cursor: pointer;
   margin-left: auto;
@@ -200,7 +171,7 @@ const SearchNavigationOptionDetailInfomationStyled = styled.span`
 const SearchNavigationSubmitButtomStyled = styled.button`
   position: absolute;
   padding: 1rem 18rem;
-  top: 18rem;
+  top: 19rem;
   right: 18rem;
   outline: none;
   border-radius: .4rem;
@@ -214,6 +185,62 @@ const SearchNavigationSubmitButtomStyled = styled.button`
   &:hover{
     background-color: rgb(135, 179, 251);
   }
+`
+const SearchBonusNavigationBottomRightDateRangeContainerStyled = styled.div`
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #ccc;
+  border-radius: .4rem;
+  width: 36vw;
+  padding: .2rem .4rem;
+  margin-top: 1rem;
+`
+const SearchBonusNavigationBottomRightDateRangeWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+`
+const SearchBonusNavigationDateRangeWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+`
+const SearchBonusNavigationInputDateRangeStyled = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: .6rem;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  border-radius: .4rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  ::placeholder{
+    color: #000;
+  }
+`
+const SearchBonusNavigationDateRangeTopContentStyled = styled.span`
+  position: absolute;
+  font-size: .9rem;
+  color: #888;
+  margin-left: .6rem;
+  margin-bottom: 1.6rem;
+`
+const SearchBonusNavigationBottomLeftMiddleWrapperInputStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: .02rem;
+  margin: 0 1rem;
+  background-color: #ccc;
 `
 const SearchNavigationInput = (props) => {
   const [openDate, setOpenDate] = useState(false);
@@ -237,18 +264,23 @@ const SearchNavigationInput = (props) => {
       </SearchNavigationInputFullStyled>
       <SearchNavigationInputHalfWrapperStyled>
         <SearchNavigationInputHalfLeftStyled>
-          <SearchNavigationInputCalendarWrapperStyled  onClick={() => setOpenDate(!openDate)}>
-            <DateRangeIcon />
-            <SearchNavigationInputCalendarTitleWrapperStyled>
-              <SearchNavigationInputCalendarTitleLeftStyled>
-                {`${format(date[0].startDate, "dd/MM/yyyy")}`}
-              </SearchNavigationInputCalendarTitleLeftStyled>
-              <SearchNavigationInputCalendarTitleMiddleStyled />
-              <SearchNavigationInputCalendarTitleRightStyled>
-                {`${format(date[0].endDate, "dd/MM/yyyy")}`}
-              </SearchNavigationInputCalendarTitleRightStyled>
-            </SearchNavigationInputCalendarTitleWrapperStyled>
-          </SearchNavigationInputCalendarWrapperStyled>
+        <SearchBonusNavigationBottomRightDateRangeContainerStyled  onClick={() => setOpenDate(!openDate)}>
+          <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+            <CalendarTodayOutlinedIcon />
+            <SearchBonusNavigationDateRangeWrapperStyled>
+              <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].startDate, "dd/MM/yyyy")}`}/>
+              <SearchBonusNavigationDateRangeTopContentStyled>Nhận phòng</SearchBonusNavigationDateRangeTopContentStyled>
+            </SearchBonusNavigationDateRangeWrapperStyled>
+          </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+          <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
+          <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+            <CalendarTodayOutlinedIcon />
+            <SearchBonusNavigationDateRangeWrapperStyled>
+              <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].endDate, "dd/MM/yyyy")}`}/>
+              <SearchBonusNavigationDateRangeTopContentStyled>Trả phòng</SearchBonusNavigationDateRangeTopContentStyled>
+            </SearchBonusNavigationDateRangeWrapperStyled>
+          </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+        </SearchBonusNavigationBottomRightDateRangeContainerStyled>
           <SearchNavigationInputCalendarStyled>
               {openDate && (
                 <DateRange
@@ -257,9 +289,10 @@ const SearchNavigationInput = (props) => {
                   moveRangeOnFirstSelection={false}
                   ranges={date}
                   minDate={new Date()}
+                  locale={rdrLocales.vi}
                 />
               )}
-            </SearchNavigationInputCalendarStyled>
+          </SearchNavigationInputCalendarStyled>
         </SearchNavigationInputHalfLeftStyled>
         <SearchNavigationInputHalfRightStyled>
           <SearchNavigationInputOptionsWrapperStyled onClick={() => setOpenOption(!openOption)}>

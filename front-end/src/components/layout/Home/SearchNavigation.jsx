@@ -67,7 +67,6 @@ const SearchNavigationBarStyled = styled.div`
 const SearchNavigationInputContainerStyled = styled.div`
   position: absolute;
   border-radius: 1rem;
-  height: ${props => props.valueCheck === "2" ? "50vh" : "38vh"};
   width: 80vw;
   bottom: 2rem;
   right: 10rem;
@@ -81,7 +80,7 @@ const SearchNavigationActivitiesInputWrapperStyled = styled.div`
   justify-content: flex-start;
   border: 1px solid #ccc;
   border-radius: .4rem;
-  padding: .4rem;
+  padding: .6rem .4rem;
   margin-top: 1rem;
 `
 const SearchNavigationActivitiesInputStyled = styled.input`
@@ -95,7 +94,7 @@ const SearchNavigationActivitiesInputStyled = styled.input`
 const SearchNavigationSubmitButtomStyled = styled.button`
   position: absolute;
   padding: 1rem 18rem;
-  top: 18rem;
+  top: 13rem;
   right: 18rem;
   outline: none;
   border-radius: .4rem;
@@ -110,7 +109,9 @@ const SearchNavigationSubmitButtomStyled = styled.button`
     background-color: rgb(135, 179, 251);
   }
 `
-const SearchBonusNavigationContainerStyled = styled.div``
+const SearchBonusNavigationContainerStyled = styled.div`
+  transition: all linear .2s;
+`
 const SearchBonusNavigationWrapperStyled = styled.div`
 `
 const SearchBonusNavigationTopStyled = styled.div`
@@ -122,6 +123,7 @@ const SearchBonusNavigationTopLeftStyled = styled.div`
   background-color: rgb(83, 146, 249);
   padding: .6rem .8rem;
   margin-left: .8rem;
+  cursor: pointer;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `
 const SearchBonusNavigationButtonStyled = styled.button`
@@ -129,6 +131,7 @@ const SearchBonusNavigationButtonStyled = styled.button`
   border: none;
   background-color: transparent;
   font-size: 1rem;
+  cursor: pointer;
   color: #fff;
 `
 const SearchBonusNavigationBottomStyled = styled.div`
@@ -216,7 +219,6 @@ const SearchBonusNavigationBottomRightDateRangeContainerStyled = styled.div`
   position: relative; 
   display: flex;
   align-items: center;
-  justify-content: space-around;
   border: 1px solid #ccc;
   border-radius: .4rem;
   width: 36vw;
@@ -312,6 +314,7 @@ const SearchBonusNavigationBottomLeftPassengersInputWrapperStyled = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 1rem;
+  cursor: pointer;
 `
 const SearchBonusNavigationPassengersInputWrapperStyled = styled.div`
   position: relative;
@@ -330,6 +333,7 @@ const SearchBonusNavigationPassengersInputStyled = styled.input`
   outline: none;
   border: none;
   cursor: pointer;
+  pointer-events: none;
   ::placeholder{
     color: #000;
   }
@@ -339,6 +343,7 @@ const SearchBonusNavigationBottomLeftRoomInputWrapperStyled = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 1rem;
+  cursor: pointer;
 `
 const SearchBonusNavigationRoomInputWrapperStyled = styled.div`
   position: relative;
@@ -356,7 +361,7 @@ const SearchBonusNavigationRoomInputStyled = styled.input`
   border-radius: .4rem;
   outline: none;
   border: none;
-  cursor: pointer;
+  pointer-events: none;
   ::placeholder{
     color: #000;
   }
@@ -365,15 +370,35 @@ const SearchBonusNavigationBottomRightCheckboxWrapperStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.3rem 1rem;
+  margin: 1.3rem 1.2rem;
   cursor: pointer;
   &:hover{
     color: rgb(104, 160, 251);
   }
 `
-const SearchBonusNavigationBottomRightCheckboxStyled = styled.input``
+const SearchBonusNavigationBottomRightCheckboxStyled = styled.input`
+  user-select: none;
+`
 const SearchBonusNavigationBottomRightCheckboxContentStyled = styled.span`
   margin-left: 1rem;
+`
+const SearchNavigationBonusButtonStyled = styled.button`
+  position: absolute;
+  padding: 1rem 18rem;
+  top: ${props => props.checkedOpen === true ? '28rem' : '22rem'};
+  right: 18rem;
+  outline: none;
+  border-radius: .4rem;
+  border: none;
+  background-color: rgb(83, 146, 249);
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 20%) 0px 1px 3px 1px;
+  transition: all ease-in-out .1s;
+  &:hover{
+    background-color: rgb(135, 179, 251);
+  }
 `
 const SearchNavigation = () => {
   const [openDateFlying, setOpenDateFlying] = useState(false);
@@ -407,7 +432,6 @@ const SearchNavigation = () => {
     }
     setOpenDateFlying(!openDateFlying)
   }
-  console.log(openDateStaying)
   const handleChecked = () =>{
     return;
   }
@@ -422,7 +446,7 @@ const SearchNavigation = () => {
           <CssBaseline />
           <Box>
             <TabContext value={valueIndex}>
-              <SearchNavigationInputContainerStyled valueCheck={valueIndex}>
+              <SearchNavigationInputContainerStyled>
                 <SearchNavigationBarStyled>
                   <Box sx={{height: '100%'}}>
                     <TabList onChange={handleChangePage} variant='fullWidth'>
@@ -434,10 +458,10 @@ const SearchNavigation = () => {
                     </TabList>
                   </Box>
                 </SearchNavigationBarStyled>
-                <TabPanel value='1' sx={{paddingTop: '0'}}>
+                <TabPanel value='1' sx={{padding: '3rem'}}>
                   <SearchNavigationInput optionsData={optionsData}/>
                 </TabPanel>
-                <TabPanel value='2' sx={{paddingTop: '0'}}>
+                <TabPanel value='2' sx={{padding: '3rem'}}>
                   <SearchBonusNavigationContainerStyled>
                     <SearchBonusNavigationWrapperStyled>
                       <SearchBonusNavigationTopStyled>
@@ -473,6 +497,7 @@ const SearchNavigation = () => {
                               </SearchBonusNavigationInputWrapperStyled>
                             </SearchBonusNavigationBottomLeftInputWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
+                          { isChecked && (
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
                             <SearchBonusNavigationBottomLeftStayingAtWrapperStyled>
                               <ApartmentOutlinedIcon />
@@ -482,6 +507,7 @@ const SearchNavigation = () => {
                               </SearchBonusNavigationStayingAtInputWrapperStyled>
                             </SearchBonusNavigationBottomLeftStayingAtWrapperStyled>
                           </SearchBonusNavigationBottomLeftInputContainerStyled>
+                          )}
                           <SearchBonusNavigationBottomLeftInputContainerStyled>
                           <SearchBonusNavigationBottomLeftPassengersInputWrapperStyled>
                               <GroupOutlinedIcon />
@@ -516,6 +542,7 @@ const SearchNavigation = () => {
                                 </SearchBonusNavigationDateRangeWrapperStyled>
                               </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
                             </SearchBonusNavigationBottomRightDateRangeContainerStyled>
+                            {isChecked && (
                             <SearchBonusNavigationBottomRightDateRangeContainerStyled  onClick={() => setOpenDateStaying(!openDateStaying)}>
                               <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
                                 <CalendarTodayOutlinedIcon />
@@ -533,6 +560,7 @@ const SearchNavigation = () => {
                                 </SearchBonusNavigationDateRangeWrapperStyled>
                               </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
                             </SearchBonusNavigationBottomRightDateRangeContainerStyled>
+                            )}
                             <SearchBonusNavigationBottomRightDateRangeContainerStyled>
                               <SearchBonusNavigationBottomRightCheckboxWrapperStyled onClick={() => setIsChecked(!isChecked)}>
                                 <SearchBonusNavigationBottomRightCheckboxStyled type="checkbox" checked={isChecked} onChange={handleChecked}/>
@@ -572,15 +600,18 @@ const SearchNavigation = () => {
                         </SearchBonusNavigationInputCalendarBottomStyled>
                       </SearchBonusNavigationBottomStyled>
                     </SearchBonusNavigationWrapperStyled>
+                    <SearchNavigationBonusButtonStyled checkedOpen={isChecked}>
+                      TÌM
+                    </SearchNavigationBonusButtonStyled>
                   </SearchBonusNavigationContainerStyled>
                 </TabPanel>
-                <TabPanel value='3' sx={{paddingTop: '0'}}>
+                <TabPanel value='3' sx={{padding: '3rem'}}>
                   <SearchNavigationInput optionsData={optionsData}/>
                 </TabPanel>
-                <TabPanel value='4' sx={{paddingTop: '0'}}>
+                <TabPanel value='4' sx={{padding: '3rem'}}>
                   <SearchNavigationInput optionsData={optionsData}/> 
                 </TabPanel>
-                <TabPanel value='5' sx={{paddingTop: '0'}}>
+                <TabPanel value='5' sx={{padding: '3rem'}}>
                   <SearchNavigationActivitiesContainerStyled>
                     <SearchNavigationActivitiesInputWrapperStyled>
                       <SearchOutlinedIcon />
