@@ -171,7 +171,7 @@ const SearchNavigationOptionDetailInfomationStyled = styled.span`
 const SearchNavigationSubmitButtomStyled = styled.button`
   position: absolute;
   padding: 1rem 18rem;
-  top: 19rem;
+  top: 16rem;
   right: 18rem;
   outline: none;
   border-radius: .4rem;
