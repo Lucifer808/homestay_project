@@ -6,21 +6,24 @@ import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeft
 import discount from '../../../assets/discount.png';
 import discount1 from '../../../assets/discount1.png';
 import discount2 from '../../../assets/discount2.png';
+import discount3 from '../../../assets/discount3.png';
+import discount4 from '../../../assets/discount4.png';
+import discount5 from '../../../assets/discount5.png';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 const ReactSlickSyled = styled(Slider)`
-    /* width: 68vw !important;
-    height: 100% !important; */
     .slick-list {
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
     height: 100% !important;
+    pointer-events: none;
     }
     .custom-indicator li{
         border-radius: 50%;
-        height: 14px;
-        width: 14px;
+        height: 10px;
+        width: 10px;
+        margin-left: .4rem;
         background-color: #ccc;
     }
     .custom-indicator li.slick-active{
@@ -36,6 +39,7 @@ const ReactSlickSyled = styled(Slider)`
         width: 30px;
         height: 30px;
         border-radius: 50%;
+        border: .5px solid #ccc;
     }
     .slick-prev{
         left: 20px;
@@ -59,6 +63,7 @@ const DiscountBannerImageWrapperStyled = styled.div`
     height: 100%;
     width: 100%;
     margin: 0rem;
+    margin-left: 5rem;
 `
 const DiscountBannerImageStyled = styled.img`
     height: 12rem;
@@ -67,7 +72,6 @@ const DiscountBannerImageStyled = styled.img`
 `
 const DiscountBanner = () => {
     function NextArrow(props) {
-        console.log(props);
         const { className, onClick } = props;
         return (
           <div className={className} onClick={onClick}>
@@ -89,7 +93,7 @@ const DiscountBanner = () => {
         centerMode: true,
         infinite: true,
         dots: true,
-        centerPadding: "60px",
+        centerPadding: "70px",
         slidesToShow: 2,
         dotsClass: "slick-dots slick-thumb custom-indicator",
         nextArrow: <NextArrow />,
@@ -101,11 +105,9 @@ const DiscountBanner = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "14px",
-                height: "14px",
+                width: "15px",
+                height: "15px",
                 color: "rgb(83, 146, 249)",
-                marginTop: "3px",
-                marginLeft: "3px",
                 borderRadius: "50%"
             }}
             >
@@ -126,13 +128,13 @@ const DiscountBanner = () => {
                     <DiscountBannerImageStyled src={discount2} />
                 </DiscountBannerImageWrapperStyled>
                 <DiscountBannerImageWrapperStyled>
-                    <DiscountBannerImageStyled src={discount2} />
+                    <DiscountBannerImageStyled src={discount3} />
                 </DiscountBannerImageWrapperStyled>
                 <DiscountBannerImageWrapperStyled>
-                    <DiscountBannerImageStyled src={discount2} />
+                    <DiscountBannerImageStyled src={discount4} />
                 </DiscountBannerImageWrapperStyled>
                 <DiscountBannerImageWrapperStyled>
-                    <DiscountBannerImageStyled src={discount2} />
+                    <DiscountBannerImageStyled src={discount5} />
                 </DiscountBannerImageWrapperStyled>
             </ReactSlickSyled>
         </DiscountBannerSliderContainerStyled>

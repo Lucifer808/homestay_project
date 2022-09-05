@@ -1,4 +1,5 @@
 import React from 'react'
+import CategoryList from '../components/layout/Home/CategoryList'
 import DiscountBanner from '../components/layout/Home/DiscountBanner'
 import SearchNavigation from '../components/layout/Home/SearchNavigation'
 
@@ -7,6 +8,7 @@ const Homepage = () => {
     <>
         <SearchNavigation />
         <DiscountBanner />
+        <CategoryList />
     </>
   )
 }
