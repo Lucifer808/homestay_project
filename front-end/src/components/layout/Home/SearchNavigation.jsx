@@ -49,7 +49,7 @@ const SearchNavigationBarStyled = styled.div`
   padding-top: .2rem;
   padding: 0 1rem;
   height: 8.4vh;
-  width: 68vw;
+  width: 70vw;
   bottom: 2rem;
   right: -4.2rem;
   background-color: #fff;

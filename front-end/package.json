@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.10.2",
     "@mui/lab": "^5.0.0-alpha.96",
-    "@mui/material": "^5.10.2",
+    "@mui/material": "^5.10.3",
     "@mui/styled-engine-sc": "^5.10.1",
     "@mui/styles": "^5.10.2",
     "@testing-library/jest-dom": "^5.16.5",
@@ -20,6 +20,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "react-star-ratings": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"

@@ -53,7 +53,7 @@ const ReactSlickSyled = styled(Slider)`
     }
 `
 const DiscountBannerContainerStyled = styled.div`
-    width: 79.8vw;
+    width: 80vw;
     height: 30vh;
     margin: 0 9rem;
 `

@@ -3,14 +3,12 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
-import location_1 from '../../../assets/location_1.png';
-import location_2 from '../../../assets/location_2.png';
-import location_3 from '../../../assets/location_3.png';
-import location_4 from '../../../assets/location_4.png';
-import location_5 from '../../../assets/location_5.png';
-import location_6 from '../../../assets/location_6.png';
-import location_7 from '../../../assets/location_7.png';
-import location_16 from '../../../assets/location_16.png';
+import recommend1 from '../../../assets/recommend1.jpeg';
+import recommend2 from '../../../assets/recommend2.jpeg';
+import recommend3 from '../../../assets/recommend3.jpeg';
+import recommend4 from '../../../assets/recommend4.jpeg';
+import recommend5 from '../../../assets/recommend5.png';
+import recommend6 from '../../../assets/recommend6.jpeg';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 const ReactSlickSyled = styled(Slider)`
@@ -62,9 +60,10 @@ const CategoryListImageWrapperStyled = styled.div`
   margin: 0rem;
 `
 const CategoryListImageStyled = styled.img`
-  height: 20rem;
-  width: 16rem;
-  border-radius: .4rem;
+  object-fit: cover;
+  height: 16rem;
+  width: 24rem;
+  border-radius: .2rem;
   border: none;
 `
 const CategoryListHeaderWrapperStyled = styled.div`
@@ -75,20 +74,23 @@ const CategoryListHeaderSubTitleWrapperStyled = styled.span`
   color: #666;
 `
 const CategoryListContentWrapperStyled = styled.div`
-  position: relative;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   color: #fff;
 `
-const CategoryListContentStyled = styled.h2`
+const CategoryListContentStyled = styled.h4`
   position: absolute;
-  top: -4rem;
+  top: -14rem;
   margin-left: 1rem;
 `
 const CategoryListSubContentStyled = styled.span`
   position: absolute;
-  top: -2rem;
+  top: -4rem;
+  font-weight: 800;
   margin-left: 1rem;
 `
-const CategoryList = () => {
+const RecommendList = () => {
   function NextArrow(props) {
     const { className, onClick } = props;
     return (
@@ -110,8 +112,8 @@ const settings = {
     centerMode: true,
     className: "center",
     dots: false,
-    slidesToShow: 3,
-    centerPadding: "130px",
+    slidesToShow: 2,
+    centerPadding: "194px",
     slidesToScroll: 1,
     dotsClass: "slick-dots slick-thumb custom-indicator",
     nextArrow: <NextArrow />,
@@ -121,65 +123,51 @@ const settings = {
   return (
     <CategoryListContainerStyled>
         <CategoryListHeaderWrapperStyled>
-          <CategoryListHeaderTitleWrapperStyled>Địa điểm nổi bật</CategoryListHeaderTitleWrapperStyled>
-          <CategoryListHeaderSubTitleWrapperStyled>Cùng booking bắt đầu chuyến hành trình chinh phục thế giới của bạn</CategoryListHeaderSubTitleWrapperStyled>
+          <CategoryListHeaderTitleWrapperStyled>Gợi ý khám phá</CategoryListHeaderTitleWrapperStyled>
+          <CategoryListHeaderSubTitleWrapperStyled>Để mỗi chuyến đi là một hành trình truyền cảm hứng, mỗi căn phòng là một khoảng trời an yên</CategoryListHeaderSubTitleWrapperStyled>
         </CategoryListHeaderWrapperStyled>
         <CategoryListSliderContainerStyled>
             <ReactSlickSyled {...settings}>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_2} />
+                    <CategoryListImageStyled src={recommend1} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>Hà Nội</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>8081 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_1} />
+                    <CategoryListImageStyled src={recommend2} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>Nha Trang</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>8081 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_3} />
+                    <CategoryListImageStyled src={recommend3} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>TP. Hồ Chí Minh</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>5081 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_4} />
+                    <CategoryListImageStyled src={recommend4} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>Đà Lạt</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>4081 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_5} />
+                    <CategoryListImageStyled src={recommend5} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>Quảng Ninh</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>8081 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
                 <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_6} />
+                    <CategoryListImageStyled src={recommend6} />
                     <CategoryListContentWrapperStyled>
                       <CategoryListContentStyled>Hội An</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>601 Chỗ ở</CategoryListSubContentStyled>
-                    </CategoryListContentWrapperStyled>
-                </CategoryListImageWrapperStyled>
-                <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_7} />
-                    <CategoryListContentWrapperStyled>
-                      <CategoryListContentStyled>Vũng Tàu</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>402 Chỗ ở</CategoryListSubContentStyled>
-                    </CategoryListContentWrapperStyled>
-                </CategoryListImageWrapperStyled>
-                <CategoryListImageWrapperStyled>
-                    <CategoryListImageStyled src={location_16} />
-                    <CategoryListContentWrapperStyled>
-                      <CategoryListContentStyled>Đà Nẵng</CategoryListContentStyled>
-                      <CategoryListSubContentStyled>8281 Chỗ ở</CategoryListSubContentStyled>
+                      <CategoryListSubContentStyled>Những điều nên tuân thủ trước khi trả phòng homestay để lợi cả đôi đường</CategoryListSubContentStyled>
                     </CategoryListContentWrapperStyled>
                 </CategoryListImageWrapperStyled>
             </ReactSlickSyled>
@@ -188,4 +176,4 @@ const settings = {
   )
 }
 
-export default CategoryList
+export default RecommendList
