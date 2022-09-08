@@ -4,6 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 const FooterContainerStyled = styled.div`
+    @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     width: 100vw;
     height: 60vh;
     background-color: #f6f5f5;

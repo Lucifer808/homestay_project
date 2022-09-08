@@ -1,7 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import flag1 from '../../assets/flag-vn.png'
-import bag1 from '../../assets/Bags-heart.svg'
+import React from 'react';
+import styled from 'styled-components';
+import flag1 from '../../assets/flag-vn.png';
+import bag1 from '../../assets/Bags-heart.svg';
+import { Link } from 'react-router-dom';
 const HeaderStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     height: 100%;
@@ -186,7 +187,9 @@ const Header = () => {
                 <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
                 <HeaderLanguageStyled src={flag1} />
                 <HeaderMoneyStyled>đ</HeaderMoneyStyled>
-                <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
+                <Link to="/login">
+                    <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
+                </Link>
                 <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
             </HeaderLeftStyled>
         </HeaderWrapperStyled>

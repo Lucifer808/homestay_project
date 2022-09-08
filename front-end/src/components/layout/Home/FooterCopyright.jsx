@@ -5,7 +5,7 @@ const FooterCopyrightContainerStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 1rem 0;
 `
 const FooterCopyrightContentStyled = styled.span`
     margin-left: 1rem;

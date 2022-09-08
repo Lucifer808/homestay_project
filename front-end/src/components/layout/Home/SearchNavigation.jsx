@@ -48,7 +48,7 @@ const SearchNavigationBarStyled = styled.div`
   border-radius: .4rem;
   padding-top: .2rem;
   padding: 0 1rem;
-  height: 8.4vh;
+  height: 100%;
   width: 70vw;
   bottom: 2rem;
   right: -4.2rem;
