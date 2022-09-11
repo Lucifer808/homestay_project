@@ -11,7 +11,6 @@ import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import * as rdrLocales from 'react-date-range/dist/locale';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-
 const SearchNavigationInputContentStyled = styled.form`
 `
 const SearchNavigationInputFullStyled = styled.div`
@@ -264,23 +263,23 @@ const SearchNavigationInput = (props) => {
       </SearchNavigationInputFullStyled>
       <SearchNavigationInputHalfWrapperStyled>
         <SearchNavigationInputHalfLeftStyled>
-        <SearchBonusNavigationBottomRightDateRangeContainerStyled  onClick={() => setOpenDate(!openDate)}>
-          <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
-            <CalendarTodayOutlinedIcon />
-            <SearchBonusNavigationDateRangeWrapperStyled>
-              <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].startDate, "dd/MM/yyyy")}`}/>
-              <SearchBonusNavigationDateRangeTopContentStyled>Nhận phòng</SearchBonusNavigationDateRangeTopContentStyled>
-            </SearchBonusNavigationDateRangeWrapperStyled>
-          </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
-          <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
-          <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
-            <CalendarTodayOutlinedIcon />
-            <SearchBonusNavigationDateRangeWrapperStyled>
-              <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].endDate, "dd/MM/yyyy")}`}/>
-              <SearchBonusNavigationDateRangeTopContentStyled>Trả phòng</SearchBonusNavigationDateRangeTopContentStyled>
-            </SearchBonusNavigationDateRangeWrapperStyled>
-          </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
-        </SearchBonusNavigationBottomRightDateRangeContainerStyled>
+          <SearchBonusNavigationBottomRightDateRangeContainerStyled  onClick={() => setOpenDate(!openDate)}>
+            <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+              <CalendarTodayOutlinedIcon />
+              <SearchBonusNavigationDateRangeWrapperStyled>
+                <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].startDate, "dd/MM/yyyy")}`}/>
+                <SearchBonusNavigationDateRangeTopContentStyled>Nhận phòng</SearchBonusNavigationDateRangeTopContentStyled>
+              </SearchBonusNavigationDateRangeWrapperStyled>
+            </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+            <SearchBonusNavigationBottomLeftMiddleWrapperInputStyled />
+            <SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+              <CalendarTodayOutlinedIcon />
+              <SearchBonusNavigationDateRangeWrapperStyled>
+                <SearchBonusNavigationInputDateRangeStyled placeholder={`${format(date[0].endDate, "dd/MM/yyyy")}`}/>
+                <SearchBonusNavigationDateRangeTopContentStyled>Trả phòng</SearchBonusNavigationDateRangeTopContentStyled>
+              </SearchBonusNavigationDateRangeWrapperStyled>
+            </SearchBonusNavigationBottomRightDateRangeWrapperStyled>
+          </SearchBonusNavigationBottomRightDateRangeContainerStyled>
           <SearchNavigationInputCalendarStyled>
               {openDate && (
                 <DateRange

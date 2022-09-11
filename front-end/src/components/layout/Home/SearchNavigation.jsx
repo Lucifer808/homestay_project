@@ -19,7 +19,7 @@ import { optionsData } from '../../../dummyData';
 import SearchNavigationInput from '../../child/SearchNavigationInput';
 import SearchNavigationInputAdvance from '../../child/SearchNavigationInputAdvance';
 const SearchNavigationStyled = styled.div`
-  min-height: 90vh;
+  min-height: 100vh;
   width: 100vw;
 `
 const SearchNavigationVideoWrapperStyled = styled.div`
@@ -51,7 +51,7 @@ const SearchNavigationBarStyled = styled.div`
   height: 100%;
   width: 70vw;
   bottom: 2rem;
-  right: -4.2rem;
+  right: -5rem;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `
