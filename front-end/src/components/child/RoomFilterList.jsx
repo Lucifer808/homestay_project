@@ -11,6 +11,7 @@ const RoomListLeftTopFilterCheckWrapperStyled = styled.div`
 `
 const RoomListLeftTopFilterCheckboxStyled = styled.input`
     margin-right: .4rem;
+    cursor: pointer;
 `
 const RoomListLeftTopFilterContentStyled = styled.span`
     display: block;
