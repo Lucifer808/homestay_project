@@ -25,13 +25,11 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
-import Button from '@mui/material/Button';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -143,6 +141,7 @@ const RoomDetailDialogContentSubImgDetailWrapperStyled = styled.div`
     width: 3rem;
     height: 4rem;
     padding: 0 .8rem;
+    margin-top: 1rem;
 `
 const RoomDetailDialogContentSubImgDetailStyled = styled.img`
     width: 8rem;
@@ -154,7 +153,7 @@ const RoomDetailDialogContentDescTopWrapperStyled = styled.div`
 `
 const RoomDetailDialogContentDescBottomWrapperStyled = styled.div`
     padding: 1rem 2rem;
-    box-shadow: rgb(0 0 0 / 20%) 0px 1px 6px 2px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px 0px;
     .cross {
     position: relative;
     display: inline-block;
@@ -253,6 +252,11 @@ const RoomCardRightBottomButtonTitleStyled = styled.span`
     margin: .9rem .8rem;
     font-size: .9rem;
     color: #fff;
+`
+const RoomCardRightCloseButtonWrapperStyled = styled.div`
+    text-align: right;
+    margin: .4rem;
+    cursor: pointer;
 `
 const RoomDetailTopImage = () => {
   const [open, setOpen] = useState(false);
@@ -381,6 +385,9 @@ const RoomDetailTopImage = () => {
                                 </Slider>
                             </RoomDetailDialogContentImgWrapperStyled>
                             <RoomDetailDialogContentDiscWrapperStyled>
+                                <RoomCardRightCloseButtonWrapperStyled onClick={handleClose}>
+                                    <CloseOutlinedIcon sx={{color: '#666'}}/>
+                                </RoomCardRightCloseButtonWrapperStyled>
                                 <RoomDetailDialogContentDescTopWrapperStyled>
                                     <RoomCardRightReviewWrapperStyled>
                                         <RoomCardRightReviewContentWrapperStyled>
@@ -487,14 +494,6 @@ const RoomDetailTopImage = () => {
                         </RoomDetailDialogContentWrapperStyled>
                     </RoomDetailDialogContentContainerStyled>
                 </DialogContent>
-                {/* <DialogActions>
-                <Button autoFocus onClick={handleClose}>
-                    Disagree
-                </Button>
-                <Button onClick={handleClose} autoFocus>
-                    Agree
-                </Button>
-                </DialogActions> */}
             </Dialog>
         </RoomDetailImgDetailWrapperStyled>
     </RoomDetailImgContainerStyled>

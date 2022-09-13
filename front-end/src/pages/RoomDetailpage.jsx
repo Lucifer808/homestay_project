@@ -40,6 +40,72 @@ const RoomDetailNavigationAddressRoomStyled = styled.span`
     text-decoration: underline;
   }
 `
+const RoomDetailNavigationBarWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: .2rem;
+  margin-top: 1rem;
+`
+const RoomDetailNavigationBarLeftWrapperStyled = styled.div`
+  display:  flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1rem 1rem 0 1rem;
+`
+const RoomDetailNavigationBarLeftTitleWrapperStyled = styled.div`
+  margin: 0 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: .3rem solid rgb(62, 108, 234);
+  cursor: pointer;
+  &:hover{
+    color: rgb(62, 108, 234);
+  }
+`
+const RoomDetailNavigationBarLeftTitleStyled = styled.p`
+  font-weight: 400;
+`
+const RoomDetailNavigationBarRightWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+`
+const RoomDetailNavigationBarRightContentStyled = styled.p`
+  font-size: .8rem;
+  margin-top: .2rem;
+  margin-right: .2rem;
+  color: #666;
+`
+const RoomDetailNavigationBarRightPriceStyled = styled.p`
+  font-size: 1.4rem;
+  max-width: 100%;
+  color: #e12d2d;
+  margin-right: 1rem;
+`
+const RoomCardRightBottomButtonWrapperStyled = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .2rem;
+    margin-right: 1rem;
+    background-color: rgb(62, 108, 234);
+    border-radius: .2rem;
+    border-color: rgb(120, 152, 240);
+    cursor: pointer;
+    &:hover{
+        background-color: rgb(120, 152, 240);
+    }
+`
+const RoomCardRightBottomButtonTitleStyled = styled.span`
+    display: block;
+    margin: .7rem .8rem;
+    font-size: .9rem;
+    color: #fff;
+`
 const RoomDetailpage = () => {
   return (
     <RoomDetailContainerStyled>
@@ -56,6 +122,29 @@ const RoomDetailpage = () => {
         <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại Phuket</RoomDetailNavigationAddressRoomStyled>
       </RoomDetailNavigationAddressWrapperStyled>
       <RoomDetailTopImage />
+      <RoomDetailNavigationBarWrapperStyled>
+        <RoomDetailNavigationBarLeftWrapperStyled>
+          <RoomDetailNavigationBarLeftTitleWrapperStyled>
+            <RoomDetailNavigationBarLeftTitleStyled>Tổng quan</RoomDetailNavigationBarLeftTitleStyled>
+          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          <RoomDetailNavigationBarLeftTitleWrapperStyled>
+            <RoomDetailNavigationBarLeftTitleStyled>Phòng nghỉ</RoomDetailNavigationBarLeftTitleStyled>
+          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          <RoomDetailNavigationBarLeftTitleWrapperStyled>
+            <RoomDetailNavigationBarLeftTitleStyled>Tiện nghi</RoomDetailNavigationBarLeftTitleStyled>
+          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          <RoomDetailNavigationBarLeftTitleWrapperStyled>
+            <RoomDetailNavigationBarLeftTitleStyled>Đánh giá</RoomDetailNavigationBarLeftTitleStyled>
+          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+        </RoomDetailNavigationBarLeftWrapperStyled>
+        <RoomDetailNavigationBarRightWrapperStyled>
+          <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
+          <RoomDetailNavigationBarRightPriceStyled>660.000 đ</RoomDetailNavigationBarRightPriceStyled>
+          <RoomCardRightBottomButtonWrapperStyled>
+            <RoomCardRightBottomButtonTitleStyled>Xem giá</RoomCardRightBottomButtonTitleStyled>
+          </RoomCardRightBottomButtonWrapperStyled>
+        </RoomDetailNavigationBarRightWrapperStyled>
+      </RoomDetailNavigationBarWrapperStyled>
     </RoomDetailContainerStyled>
   )
 }
