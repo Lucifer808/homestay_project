@@ -46,7 +46,7 @@ const HeaderAddressNewStyled = styled.span`
 const PesudoStyled = styled.div `
     position: absolute;
     top: -1rem;
-    z-index: 9999;
+    z-index: 9;
     width: 1.9rem;
     height: 1rem;
     border-radius: .1rem;

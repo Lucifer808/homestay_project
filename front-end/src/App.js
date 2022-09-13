@@ -9,6 +9,7 @@ import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
 import RoomListpage from "./pages/RoomListpage";
 import QuickSearch from "./components/child/QuickSearch";
+import RoomDetailpage from "./pages/RoomDetailpage";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/register" element={<Registerpage />} />
         <Route path="/roomlist" element={<RoomListpage />} />
+        <Route path="/roomdetail" element={<RoomDetailpage />} />
       </Routes>
       <Footer />
       <FooterCopyright />
