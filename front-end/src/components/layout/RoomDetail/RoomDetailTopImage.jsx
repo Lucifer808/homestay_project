@@ -115,6 +115,7 @@ const RoomDetailImgWishListWrapperStyled = styled.div`
     width: 2.5rem;
     background-color: #fff;
     border-radius: 50%;
+    cursor: pointer;
 `
 const RoomDetailImgDetailWrapperStyled = styled.div``
 const RoomDetailDialogContentContainerStyled = styled.div``

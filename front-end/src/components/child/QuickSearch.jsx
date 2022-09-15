@@ -192,7 +192,7 @@ const QuickSearchNavigationOptionWrapperStyled = styled.div`
 const QuickSearchNavigationOptionStyled = styled.div`
   display: flex;
   flex: 1;
-  width: 15rem;
+  width: 20rem;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;

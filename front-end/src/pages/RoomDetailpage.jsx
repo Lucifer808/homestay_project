@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import RoomDetailTopImage from '../components/layout/RoomDetail/RoomDetailTopImage';
+import RoomDetailOverview from '../components/layout/RoomDetail/RoomDetailOverview';
 const RoomDetailContainerStyled = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 80rem;
+  max-width: 80vw;
   margin: 0 10rem;
   padding: 0rem 0 2rem 0;
   height: 100%;
@@ -54,7 +55,7 @@ const RoomDetailNavigationBarLeftWrapperStyled = styled.div`
   display:  flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 1rem 1rem 0 1rem;
+  margin: 1rem 1rem 0 0;
 `
 const RoomDetailNavigationBarLeftTitleWrapperStyled = styled.div`
   margin: 0 1.4rem;
@@ -72,7 +73,6 @@ const RoomDetailNavigationBarRightWrapperStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
 `
 const RoomDetailNavigationBarRightContentStyled = styled.p`
   font-size: .8rem;
@@ -145,6 +145,7 @@ const RoomDetailpage = () => {
           </RoomCardRightBottomButtonWrapperStyled>
         </RoomDetailNavigationBarRightWrapperStyled>
       </RoomDetailNavigationBarWrapperStyled>
+      <RoomDetailOverview />
     </RoomDetailContainerStyled>
   )
 }
