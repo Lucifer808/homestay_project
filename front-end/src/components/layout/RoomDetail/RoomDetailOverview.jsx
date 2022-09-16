@@ -290,6 +290,10 @@ const RoomDetailOverviewRightBottomSubSuggestionMoreStyled = styled.p`
     margin: .8rem 0;
     font-size: .9rem;
     text-align: right;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
 `
 const RoomDetailOverviewLeftTopSellingGoodWrapperStyled = styled.div`
     display: flex;

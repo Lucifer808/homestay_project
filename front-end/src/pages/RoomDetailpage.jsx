@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link as ScrollTo } from 'react-scroll';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import RoomDetailTopImage from '../components/layout/RoomDetail/RoomDetailTopImage';
 import RoomDetailOverview from '../components/layout/RoomDetail/RoomDetailOverview';
+import RoomDetailChoice from '../components/layout/RoomDetail/RoomDetailChoice';
+import RoomDetailComment from '../components/layout/RoomDetail/RoomDetailComment';
 const RoomDetailContainerStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -106,6 +109,9 @@ const RoomCardRightBottomButtonTitleStyled = styled.span`
     font-size: .9rem;
     color: #fff;
 `
+const RoomDetailOverviewWrapperStyled = styled.div``
+const RoomDetailChoiceWrapperStyled = styled.div``
+const RoomDetailCommentWrapperStyled = styled.div``
 const RoomDetailpage = () => {
   return (
     <RoomDetailContainerStyled>
@@ -124,18 +130,24 @@ const RoomDetailpage = () => {
       <RoomDetailTopImage />
       <RoomDetailNavigationBarWrapperStyled>
         <RoomDetailNavigationBarLeftWrapperStyled>
-          <RoomDetailNavigationBarLeftTitleWrapperStyled>
-            <RoomDetailNavigationBarLeftTitleStyled>Tổng quan</RoomDetailNavigationBarLeftTitleStyled>
-          </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          <RoomDetailNavigationBarLeftTitleWrapperStyled>
-            <RoomDetailNavigationBarLeftTitleStyled>Phòng nghỉ</RoomDetailNavigationBarLeftTitleStyled>
-          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          <ScrollTo to="overview" spy={true} smooth={true} duration={0} offset={-50}>
+            <RoomDetailNavigationBarLeftTitleWrapperStyled>
+              <RoomDetailNavigationBarLeftTitleStyled>Tổng quan</RoomDetailNavigationBarLeftTitleStyled>
+            </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          </ScrollTo>
+          <ScrollTo to="choice" spy={true} smooth={true} duration={0} offset={-50}>
+            <RoomDetailNavigationBarLeftTitleWrapperStyled>
+              <RoomDetailNavigationBarLeftTitleStyled>Phòng nghỉ</RoomDetailNavigationBarLeftTitleStyled>
+            </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          </ScrollTo>
           <RoomDetailNavigationBarLeftTitleWrapperStyled>
             <RoomDetailNavigationBarLeftTitleStyled>Tiện nghi</RoomDetailNavigationBarLeftTitleStyled>
           </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          <RoomDetailNavigationBarLeftTitleWrapperStyled>
-            <RoomDetailNavigationBarLeftTitleStyled>Đánh giá</RoomDetailNavigationBarLeftTitleStyled>
-          </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          <ScrollTo to="comment" spy={true} smooth={true} duration={0} offset={-50}>
+            <RoomDetailNavigationBarLeftTitleWrapperStyled>
+              <RoomDetailNavigationBarLeftTitleStyled>Đánh giá</RoomDetailNavigationBarLeftTitleStyled>
+            </RoomDetailNavigationBarLeftTitleWrapperStyled>
+          </ScrollTo>
         </RoomDetailNavigationBarLeftWrapperStyled>
         <RoomDetailNavigationBarRightWrapperStyled>
           <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
@@ -145,7 +157,15 @@ const RoomDetailpage = () => {
           </RoomCardRightBottomButtonWrapperStyled>
         </RoomDetailNavigationBarRightWrapperStyled>
       </RoomDetailNavigationBarWrapperStyled>
-      <RoomDetailOverview />
+      <RoomDetailOverviewWrapperStyled id='overview'>
+        <RoomDetailOverview/>
+      </RoomDetailOverviewWrapperStyled>
+      <RoomDetailChoiceWrapperStyled id='choice'>
+        <RoomDetailChoice />
+      </RoomDetailChoiceWrapperStyled>
+      <RoomDetailCommentWrapperStyled id='comment'>
+        <RoomDetailComment />
+      </RoomDetailCommentWrapperStyled>
     </RoomDetailContainerStyled>
   )
 }
