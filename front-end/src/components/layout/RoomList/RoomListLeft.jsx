@@ -163,7 +163,7 @@ const RoomListLeft = () => {
                     <RoomListLeftTopPriceContainerStyled>
                         <RoomListLeftTopPriceTitleStyled>TỐI ĐA</RoomListLeftTopPriceTitleStyled>
                         <RoomListLeftTopPriceWrapStyled>
-                            <RoomListLeftTopPriceIconStyled>đ</RoomListLeftTopPriceIconStyled>
+                            <RoomListLeftTopPriceIconStyled>₫</RoomListLeftTopPriceIconStyled>
                             <RoomListLeftTopPriceStyled>{price[1].toLocaleString()}</RoomListLeftTopPriceStyled>
                         </RoomListLeftTopPriceWrapStyled>
                     </RoomListLeftTopPriceContainerStyled>

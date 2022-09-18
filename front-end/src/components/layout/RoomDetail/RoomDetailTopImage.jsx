@@ -485,7 +485,7 @@ const RoomDetailTopImage = () => {
                                     </RoomCardRightPriceDiscountWrapperStyled>
                                         <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                         <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                        <RoomCardRightNewPriceStyled>660.000 đ</RoomCardRightNewPriceStyled>
+                                        <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
                                     <RoomCardRightBottomButtonWrapperStyled>
                                         <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
                                         <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>

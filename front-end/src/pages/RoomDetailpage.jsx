@@ -151,7 +151,7 @@ const RoomDetailpage = () => {
         </RoomDetailNavigationBarLeftWrapperStyled>
         <RoomDetailNavigationBarRightWrapperStyled>
           <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
-          <RoomDetailNavigationBarRightPriceStyled>660.000 đ</RoomDetailNavigationBarRightPriceStyled>
+          <RoomDetailNavigationBarRightPriceStyled>660.000 ₫</RoomDetailNavigationBarRightPriceStyled>
           <RoomCardRightBottomButtonWrapperStyled>
             <RoomCardRightBottomButtonTitleStyled>Xem giá</RoomCardRightBottomButtonTitleStyled>
           </RoomCardRightBottomButtonWrapperStyled>

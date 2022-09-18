@@ -1,8 +1,10 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import flag1 from '../../assets/flag-vn.png';
 import bag1 from '../../assets/Bags-heart.svg';
 import { Link } from 'react-router-dom';
+import QuickSearch from '../child/QuickSearch';
 const HeaderStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     height: 100%;
@@ -167,6 +169,7 @@ const HeaderBottomButtonStyled = styled.button`
     }
 `
 const Header = () => {
+  const location = useLocation();
   return (
     <HeaderStyled>
         <HeaderWrapperStyled>
@@ -186,7 +189,7 @@ const Header = () => {
             <HeaderLeftStyled>
                 <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
                 <HeaderLanguageStyled src={flag1} />
-                <HeaderMoneyStyled>đ</HeaderMoneyStyled>
+                <HeaderMoneyStyled>₫</HeaderMoneyStyled>
                 <Link to="/login">
                     <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
                 </Link>
@@ -198,6 +201,7 @@ const Header = () => {
             <HeaderBottomContentStyled>Đi nước ngoài ư? Hãy tìm hiểu những thông tin cập nhật về các hạn chế và hướng dẫn đi lại thời COVID-19.</HeaderBottomContentStyled>
             <HeaderBottomButtonStyled>Tìm hiểu thêm</HeaderBottomButtonStyled>
         </HeaderBottomStyled>
+        { location.pathname !== '/' && <QuickSearch />}
     </HeaderStyled>
   )
 }

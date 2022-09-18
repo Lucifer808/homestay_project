@@ -204,7 +204,7 @@ const BookingDetailCardBottomRightCapacitySubContentStyled = styled.p`
     margin-top: .2rem;
 `
 const BookingDetailCardBottomRightCancelContainerStyled = styled.div`
-    width: 20rem;
+    width: 22rem;
     height: 100%;
     border-right: 1px solid #ccc;
     padding: 1rem;
@@ -220,8 +220,8 @@ const BookingDetailCardBottomRightContentTitleCancelStyled = styled.p`
     margin-left: .4rem;
 `
 const BookingDetailCardBottomRightPriceContainerStyled = styled.div`
-    width: 13.4rem;
-    padding: 1rem;
+    padding: 1rem 0 1rem 1rem;
+    text-align: left;
     .cross {
     position: relative;
     display: inline-block;
@@ -257,6 +257,7 @@ const RoomCardRightPriceDiscountContentStyled = styled.span`
 const RoomCardRightPriceDiscountSubContentStyled = styled.span`
     display: block;
     font-size: .6rem;
+    width: 10rem;
     color: #666;
     margin: .4rem 0;
 `
@@ -414,7 +415,7 @@ const BookingDetailCard = () => {
                                     <BookingDetailCardBottomRightContentTitleWrapperStyled>Lợi ích tùy chọn</BookingDetailCardBottomRightContentTitleWrapperStyled>
                                     <BookingDetailCardBottomRightSubContentWrapperStyled>
                                         <DoneOutlinedIcon style={{color: '#32a923'}}/>
-                                        <BookingDetailCardBottomRightSubContentStyled>Bữa sáng với giá 700.000đ</BookingDetailCardBottomRightSubContentStyled>
+                                        <BookingDetailCardBottomRightSubContentStyled>Bữa sáng với giá 700.000 ₫</BookingDetailCardBottomRightSubContentStyled>
                                     </BookingDetailCardBottomRightSubContentWrapperStyled>
                                 </BookingDetailCardBottomRightContentWrapperStyled>
                             </BookingDetailCardBottomRightContentContainerStyled>
@@ -444,7 +445,7 @@ const BookingDetailCard = () => {
                                 </RoomCardRightPriceDiscountContentWrapperStyled>
                                 <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                 <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                <RoomCardRightNewPriceStyled>660.000 đ</RoomCardRightNewPriceStyled> 
+                                <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled> 
                                 <RoomCardRightBottomButtonWrapperStyled>
                                     <RoomCardRightBottomButtonTitleStyled>Đặt ngay</RoomCardRightBottomButtonTitleStyled>
                                     <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
@@ -471,7 +472,7 @@ const BookingDetailCard = () => {
                                     <BookingDetailCardBottomRightContentTitleWrapperStyled>Lợi ích tùy chọn</BookingDetailCardBottomRightContentTitleWrapperStyled>
                                     <BookingDetailCardBottomRightSubContentWrapperStyled>
                                         <DoneOutlinedIcon style={{color: '#32a923'}}/>
-                                        <BookingDetailCardBottomRightSubContentStyled>Bữa sáng với giá 700.000đ</BookingDetailCardBottomRightSubContentStyled>
+                                        <BookingDetailCardBottomRightSubContentStyled>Bữa sáng với giá 700.000 ₫</BookingDetailCardBottomRightSubContentStyled>
                                     </BookingDetailCardBottomRightSubContentWrapperStyled>
                                 </BookingDetailCardBottomRightContentWrapperStyled>
                             </BookingDetailCardBottomRightContentContainerStyled>
@@ -501,7 +502,7 @@ const BookingDetailCard = () => {
                                 </RoomCardRightPriceDiscountContentWrapperStyled>
                                 <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                 <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                <RoomCardRightNewPriceStyled>660.000 đ</RoomCardRightNewPriceStyled> 
+                                <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled> 
                                 <RoomCardRightBottomButtonWrapperStyled>
                                     <RoomCardRightBottomButtonTitleStyled>Đặt ngay</RoomCardRightBottomButtonTitleStyled>
                                     <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
