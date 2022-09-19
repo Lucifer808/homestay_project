@@ -76,7 +76,7 @@ const PesudoContentStyled = styled.span`
     font-size: .8rem;
     font-weight: 300;
 `
-const HeaderLeftStyled = styled.div`
+const HeaderRightStyled = styled.div`
     display: flex;
 `
 const HeaderPartnerButtonStyled = styled.button`
@@ -186,15 +186,17 @@ const Header = () => {
                     </PesudoStyled>
                 </HeaderAddressNewStyled>
             </HeaderMiddleWrapStyled>
-            <HeaderLeftStyled>
+            <HeaderRightStyled>
                 <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
                 <HeaderLanguageStyled src={flag1} />
                 <HeaderMoneyStyled>₫</HeaderMoneyStyled>
                 <Link to="/login">
                     <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
                 </Link>
-                <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
-            </HeaderLeftStyled>
+                <Link to="/register">
+                    <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
+                </Link>
+            </HeaderRightStyled>
         </HeaderWrapperStyled>
         <HeaderBottomStyled>
             <HeaderBottomImgStyled src={bag1} />
