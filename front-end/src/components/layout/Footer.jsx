@@ -9,10 +9,15 @@ const FooterContainerStyled = styled.div`
     height: 60vh;
     background-color: #f6f5f5;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 const FooterWrapperStyled = styled.div`
     display: flex;
-    padding: 2rem 9rem;
+    width: 80rem;
+    justify-content: space-between;
+    padding: 1rem 0;
 `
 const FooterLogoStyled = styled.h2`
     font-family: 'DynaPuff', cursive;

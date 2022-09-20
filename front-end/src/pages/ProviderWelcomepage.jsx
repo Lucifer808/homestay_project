@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import flag1 from '../assets/flag-vn.png';
 import provider_welcome from '../assets/provider_welcome.jpeg';
+import provider_go_live from '../assets/provider-go-live.png';
+import provider_set_prices from '../assets/provider-set-prices.png';
+import provider_sign_in_sign_up from '../assets/provider-sign-in-sign-up.png';
+import provider_upload_details from '../assets/provider-upload-details.png';
 const ProviderWelcomepageContainerStyled = styled.div`
     height: 100%;
     width: 100%;
@@ -114,6 +118,39 @@ const ProviderWelcomepageModalRegisterRightStyled = styled.span`
     text-decoration: underline;
     cursor: pointer;
 `
+const ProviderWelcomepageHeaderBottomStyled = styled.div`
+    margin: 4rem 0;
+`
+const ProviderWelcomepageHeaderBottomTitleWrapperStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+`
+const ProviderWelcomepageHeaderBottomTitleStyled = styled.h2`
+    
+`
+const ProviderWelcomepageHeaderBottomContentContainerStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+const ProviderWelcomepageHeaderBottomContentWrapperStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 1rem;
+    width: 14rem;
+`
+const ProviderWelcomepageHeaderBottomContentImageStyled = styled.img`
+    width: 8rem;
+`
+const ProviderWelcomepageHeaderBottomContentStyled = styled.p`
+    font-weight: 500;
+    margin: auto;
+`
 const ProviderWelcomepage = () => {
   return (
     <ProviderWelcomepageContainerStyled>
@@ -139,13 +176,38 @@ const ProviderWelcomepage = () => {
                     <ProviderWelcomepageModalSubHeaderStyled>
                         Độc giả toàn cầu, trọng điểm châu Á. Nhận các đặt phòng bạn đã bỏ lỡ bằng cách ghi danh miễn phí trên hệ thống, ngay hôm nay!
                     </ProviderWelcomepageModalSubHeaderStyled>
-                    <ProviderWelcomepageModalButtonRegisterStyled>ĐĂNG NHÀ NGAY</ProviderWelcomepageModalButtonRegisterStyled>
+                    <Link to="homes">
+                        <ProviderWelcomepageModalButtonRegisterStyled>ĐĂNG NHÀ NGAY</ProviderWelcomepageModalButtonRegisterStyled>
+                    </Link>
                     <ProviderWelcomepageModalRegisterWrapperStyled>
                         <ProviderWelcomepageModalRegisterLeftStyled>Bạn đã bắt đầu thủ tục đăng ký rồi à?</ProviderWelcomepageModalRegisterLeftStyled>
                         <ProviderWelcomepageModalRegisterRightStyled>Tiếp tục</ProviderWelcomepageModalRegisterRightStyled>
                     </ProviderWelcomepageModalRegisterWrapperStyled>
                 </ProviderWelcomepageModalWrapperStyled>
             </ProviderWelcomepageHeaderTopStyled>
+            <ProviderWelcomepageHeaderBottomStyled>
+                <ProviderWelcomepageHeaderBottomTitleWrapperStyled>
+                    <ProviderWelcomepageHeaderBottomTitleStyled>Tất cả những gì bạn cần làm là</ProviderWelcomepageHeaderBottomTitleStyled>
+                    <ProviderWelcomepageHeaderBottomContentContainerStyled>
+                        <ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                            <ProviderWelcomepageHeaderBottomContentImageStyled src={provider_sign_in_sign_up} />
+                            <ProviderWelcomepageHeaderBottomContentStyled>Đăng nhâp hoặc đăng ký tài khoản</ProviderWelcomepageHeaderBottomContentStyled>
+                        </ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                        <ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                            <ProviderWelcomepageHeaderBottomContentImageStyled src={provider_upload_details} />
+                            <ProviderWelcomepageHeaderBottomContentStyled>Đăng tải hình ảnh và thông tin về nơi ở</ProviderWelcomepageHeaderBottomContentStyled>
+                        </ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                        <ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                            <ProviderWelcomepageHeaderBottomContentImageStyled src={provider_set_prices} />
+                            <ProviderWelcomepageHeaderBottomContentStyled>Cài đặt mức giá và chọn ngày có phòng trống</ProviderWelcomepageHeaderBottomContentStyled>
+                        </ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                        <ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                            <ProviderWelcomepageHeaderBottomContentImageStyled src={provider_go_live} />
+                            <ProviderWelcomepageHeaderBottomContentStyled>Xem căn hộ của bạn được quảng bá đến du khách</ProviderWelcomepageHeaderBottomContentStyled>
+                        </ProviderWelcomepageHeaderBottomContentWrapperStyled>
+                    </ProviderWelcomepageHeaderBottomContentContainerStyled>
+                </ProviderWelcomepageHeaderBottomTitleWrapperStyled>
+            </ProviderWelcomepageHeaderBottomStyled>
         </ProviderWelcomepageWrapperStyled>
     </ProviderWelcomepageContainerStyled>
   )

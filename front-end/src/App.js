@@ -9,6 +9,8 @@ import Paymentpage from "./pages/Paymentpage";
 import MainLayout from "./components/layout/MainLayout";
 import ProviderLayout from "./components/layout/ProviderLayout";
 import ProviderWelcomepage from "./pages/ProviderWelcomepage";
+import ProviderMainpage from "./pages/ProviderMainpage";
+import ProviderInfopage from "./pages/ProviderInfopage";
 function App() {
   return (
     <>
@@ -23,6 +25,8 @@ function App() {
         </Route>
         <Route path="/provider" element={<ProviderLayout />}>
           <Route index element={<ProviderWelcomepage />} />
+          <Route path="/provider/homes" element={<ProviderMainpage />} />
+          <Route path="/provider/contract" element={<ProviderInfopage />} />
         </Route>
       </Routes>
     </>
