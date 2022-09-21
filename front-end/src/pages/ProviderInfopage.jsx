@@ -35,7 +35,7 @@ const ProviderInfoRightWrapperStyled = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: #f9f9f9;
   border-left: 1px solid #ccc;
