@@ -188,7 +188,7 @@ const ProviderInfo = () => {
           </ProviderInfoTopContentChoiceContainerStyled>
           <ProviderInfoTopContentBottomTitleStyled>Quy mô chổ nghỉ</ProviderInfoTopContentBottomTitleStyled>
           <ProviderInfoTopContentBottomAreaWrapperStyled>
-            <ProviderInfoTopContentBottomAreaInputStyled placeholder={0} type="number" min={0}/>
+            <ProviderInfoTopContentBottomAreaInputStyled placeholder={0} type="number" min={0} required={true}/>
             <ProviderInfoTopContentBottomAreaTitleStyled>mét vuông</ProviderInfoTopContentBottomAreaTitleStyled>
           </ProviderInfoTopContentBottomAreaWrapperStyled>
         </ProviderInfoTopWrapperStyled>

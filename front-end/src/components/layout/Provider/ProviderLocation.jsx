@@ -26,6 +26,59 @@ const ProviderLocationTopSubHeaderStyled = styled.span`
   font-size: .9rem;
   font-weight: 300;
 `
+const ProviderLocationBottomWrapperStyled = styled.div`
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: .2rem;
+  background-color: #fff;
+  margin-top: 1rem;
+`
+const ProviderLocationBottomTitleStyled = styled.p`
+  font-size: .9rem;
+  font-weight: 600;
+  margin: .8rem 0;
+`
+const ProviderLocationBottomInputStyled = styled.input`
+  width: 60%;
+  padding: .7rem 1rem;
+  border: 1px solid #ccc;
+  &:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+  }
+`
+const ProviderLocationBottomInputHalfLocationContainerStyled = styled.div`
+  width: 60%;
+`
+const ProviderLocationBottomInputHalfContainerStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+const ProviderLocationBottomInputHalfWrapperStyled = styled.div``
+const ProviderLocationBottomSelectHalfStyled = styled.select`
+  width: 15rem;
+  padding: .7rem 1rem;
+  border: 1px solid #ccc;
+  &:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+  }
+
+`
+const ProviderLocationBottomOptionHalfStyled = styled.option``
+const ProviderLocationBottomZipInputHalfStyled = styled.input`
+  width: 15rem;
+  padding: .7rem 1rem;
+  border: 1px solid #ccc;
+  &:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+  }
+`
 const ProviderLocation = () => {
   return (
     <ProviderLocationContainerStyled>
@@ -37,9 +90,37 @@ const ProviderLocation = () => {
           </ProviderLocationHeaderLeftWrapperStyled>
           <ProviderLocationHeaderRightImageStyled src={provider_ec_location} />
         </ProviderLocationHeaderWrapperStyled>
-        <ProviderLocationTopHeaderStyled>Cơ sở kinh doanh</ProviderLocationTopHeaderStyled>
+        <ProviderLocationTopHeaderStyled>Vị trí</ProviderLocationTopHeaderStyled>
         <ProviderLocationTopSubHeaderStyled>Đây có phải là vị trí chính xác của chỗ nghỉ không? Nếu không thì hãy kéo cái ghim đến vị trí chính xác.</ProviderLocationTopSubHeaderStyled>
       </ProviderLocationWrapperStyled>
+      <ProviderLocationBottomWrapperStyled>
+        <ProviderLocationBottomTitleStyled>Địa chỉ</ProviderLocationBottomTitleStyled>
+        <ProviderLocationBottomInputStyled placeholder='Điền địa chỉ ở đây'/>
+        <ProviderLocationBottomTitleStyled>Tên tòa nhà, tầng và căn hộ (không bắt buộc)</ProviderLocationBottomTitleStyled>
+        <ProviderLocationBottomInputStyled placeholder='Điền ở đây'/>
+        <ProviderLocationBottomInputHalfLocationContainerStyled>
+          <ProviderLocationBottomInputHalfContainerStyled>
+            <ProviderLocationBottomInputHalfWrapperStyled>
+              <ProviderLocationBottomTitleStyled>Quốc gia</ProviderLocationBottomTitleStyled>
+              <ProviderLocationBottomSelectHalfStyled />
+            </ProviderLocationBottomInputHalfWrapperStyled>
+            <ProviderLocationBottomInputHalfWrapperStyled>
+              <ProviderLocationBottomTitleStyled>Tiểu bang / Tỉnh</ProviderLocationBottomTitleStyled>
+              <ProviderLocationBottomSelectHalfStyled />
+            </ProviderLocationBottomInputHalfWrapperStyled>
+          </ProviderLocationBottomInputHalfContainerStyled>
+          <ProviderLocationBottomInputHalfContainerStyled>
+            <ProviderLocationBottomInputHalfWrapperStyled>
+              <ProviderLocationBottomTitleStyled>Thành phố</ProviderLocationBottomTitleStyled>
+              <ProviderLocationBottomSelectHalfStyled />
+            </ProviderLocationBottomInputHalfWrapperStyled>
+            <ProviderLocationBottomInputHalfWrapperStyled>
+              <ProviderLocationBottomTitleStyled>Mã bưu điện (không bắt buộc)</ProviderLocationBottomTitleStyled>
+              <ProviderLocationBottomZipInputHalfStyled />
+            </ProviderLocationBottomInputHalfWrapperStyled>
+          </ProviderLocationBottomInputHalfContainerStyled>
+        </ProviderLocationBottomInputHalfLocationContainerStyled>
+      </ProviderLocationBottomWrapperStyled>
     </ProviderLocationContainerStyled>
   )
 }
