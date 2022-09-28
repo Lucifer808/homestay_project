@@ -164,9 +164,9 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <ProviderMainBottomSubContentRightButtonStyled>
-                                    Chọn
-                                </ProviderMainBottomSubContentRightButtonStyled>
+                                <Link to="/provider/enterprise">
+                                    <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
+                                </Link>
                             </ProviderMainBottomSubContentContainerStyled>
                         </ProviderMainBottomContentRightWrapperStyled>
                     </ProviderMainBottomContentBottonWrapperStyled>

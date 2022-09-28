@@ -23,13 +23,13 @@ const ProviderDescHeaderRightImageStyled = styled.img`
   height: 8rem;
 `
 const ProviderDescTopHeaderStyled = styled.h4`
-font-size: 1.2rem;
-margin: 1rem 0;
+  font-size: 1.2rem;
+  margin: 1rem 0;
 `
 const ProviderDescTopSubHeaderStyled = styled.p`
-font-size: .9rem;
-font-weight: 300;
-margin: 1rem 0;
+  font-size: .9rem;
+  font-weight: 300;
+  margin-top: 1rem;
 `
 const ProviderDescTopWrapperStyled = styled.div`
   padding: 1rem;

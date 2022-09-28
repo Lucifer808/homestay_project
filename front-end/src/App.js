@@ -11,6 +11,7 @@ import ProviderLayout from "./components/layout/ProviderLayout";
 import ProviderWelcomepage from "./pages/ProviderWelcomepage";
 import ProviderMainpage from "./pages/ProviderMainpage";
 import ProviderInfopage from "./pages/ProviderInfopage";
+import EnterpriseInfopage from "./pages/EnterpriseInfopage";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
           <Route index element={<ProviderWelcomepage />} />
           <Route path="/provider/homes" element={<ProviderMainpage />} />
           <Route path="/provider/contract" element={<ProviderInfopage />} />
+          <Route path="/provider/enterprise" element={<EnterpriseInfopage />} />
         </Route>
       </Routes>
     </>

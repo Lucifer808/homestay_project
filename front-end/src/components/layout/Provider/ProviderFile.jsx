@@ -104,10 +104,10 @@ const ProviderFileBottomInputHalfStyled = styled.input`
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
   }
 `
-const ProviderFileBottomOptionHalfStyled = styled.option``
+// const ProviderFileBottomOptionHalfStyled = styled.option``
 const ProviderFileBottomTitleStyled = styled.p`
   font-size: .9rem;
-  font-weight: 600;
+  font-weight: 500;
   margin: .8rem 0;
 `
 const ProviderFileBottomInputFullContainerStyled = styled.div``
@@ -171,19 +171,106 @@ const ProviderFile = () => {
         <ProviderFileTopSubHeaderStyled>Để tuân thủ các cam kết với cơ quan quản lý người tiêu dùng, chúng tôi phải thu thập những thông tin sau từ các đối tác.</ProviderFileTopSubHeaderStyled>
         <ProviderFileTopWrapperStyled>
           <ProviderFileTopChoiceWrapperStyled>
-            <ProviderFileTopChoiceStyled type="radio" name="kind"/>
+            <ProviderFileTopChoiceStyled type="radio" name="kind" value="business"/>
             <ProviderFileTopChoiceTitleWrapperStyled>
               <ProviderFileTopChoiceTitleStyled>Tôi làm chủ nhà cho chính tôi</ProviderFileTopChoiceTitleStyled>
               <ProviderFileTopChoiceSubTitleStyled>Chủ nhà tư nhân – bất kỳ bên nào đang cho thuê một chỗ nghỉ hoặc các chỗ nghỉ cho các mục đích ngoài thương mại, kinh doanh, hoặc nghề nghiệp của mình</ProviderFileTopChoiceSubTitleStyled>
             </ProviderFileTopChoiceTitleWrapperStyled>
           </ProviderFileTopChoiceWrapperStyled>
           <ProviderFileTopChoiceWrapperStyled>
-            <ProviderFileTopChoiceStyled type="radio" name="kind"/>
+            <ProviderFileTopChoiceStyled type="radio" name="kind" value="single"/>
             <ProviderFileTopChoiceTitleWrapperStyled>
               <ProviderFileTopChoiceTitleStyled>Tôi đại diện cho một công ty</ProviderFileTopChoiceTitleStyled>
               <ProviderFileTopChoiceSubTitleStyled>Chủ nhà chuyên nghiệp – bất kỳ bên nào đang cho thuê một chỗ nghỉ hoặc các chỗ nghỉ cho các mục đích liên quan đến thương mại, kinh doanh, hoặc nghề nghiệp của mình (quý đối tác là công ty quản lý chỗ nghỉ)</ProviderFileTopChoiceSubTitleStyled>
             </ProviderFileTopChoiceTitleWrapperStyled>
           </ProviderFileTopChoiceWrapperStyled>
+        </ProviderFileTopWrapperStyled>
+        <ProviderFileTopHeaderTitleStyled>Chi tiết công ty</ProviderFileTopHeaderTitleStyled>
+        <ProviderFileTopHeaderStyled>Thông tin công ty</ProviderFileTopHeaderStyled>
+        <ProviderFileTopSubHeaderStyled>Vui lòng nhập thông tin công ty của quý đối tác</ProviderFileTopSubHeaderStyled>
+        <ProviderFileTopWrapperStyled>
+          <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Tên pháp lý của công ty</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputAddressFullStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
+          <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Địa chỉ công ty</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputAddressFullStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Quốc gia</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
+          <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Mã vùng</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputAddressFullStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
+        </ProviderFileTopWrapperStyled>
+        <ProviderFileTopHeaderStyled>Thông tin người chủ hưởng lợi lớn nhất</ProviderFileTopHeaderStyled>
+        <ProviderFileTopSubHeaderStyled>Vui lòng cung cấp tên của người chủ hưởng lợi sau cùng của công ty. Đây là bất kỳ cá nhân nào sở hữu 20% công ty trở lên, trực tiếp hoặc thông qua công ty mẹ HOẶC cá nhân có thẩm quyền, trách nhiệm, và quyền ra quyết định cao nhất về công ty này (ví dụ: T)</ProviderFileTopSubHeaderStyled>
+        <ProviderFileTopWrapperStyled>
+          <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Tên</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputHalfStyled placeholder='Duy'/>
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Họ</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputHalfStyled placeholder='Nguyen'/>
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Quốc tịch</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled/>
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+            <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Địa chỉ (không bắt buộc)</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputAddressFullStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Quốc gia</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
+          <ProviderFileBottomInputHalfLocationContainerStyled>
+            <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Mã vùng (không bắt buộc)</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomInputHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
+          <ProviderFileBottomInputHalfContainerStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Ngày sinh</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Tháng sinh</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+              <ProviderFileBottomInputHalfWrapperStyled>
+                <ProviderFileBottomTitleStyled>Năm sinh</ProviderFileBottomTitleStyled>
+                <ProviderFileBottomSelectHalfStyled />
+              </ProviderFileBottomInputHalfWrapperStyled>
+            </ProviderFileBottomInputHalfContainerStyled>
+          </ProviderFileBottomInputHalfLocationContainerStyled>
         </ProviderFileTopWrapperStyled>
         <ProviderFileTopHeaderTitleStyled>Chi tiết chủ nhà</ProviderFileTopHeaderTitleStyled>
         <ProviderFileTopHeaderStyled>Chọn/Đổi hình đại diện trong hồ sơ (không bắt buộc)</ProviderFileTopHeaderStyled>
