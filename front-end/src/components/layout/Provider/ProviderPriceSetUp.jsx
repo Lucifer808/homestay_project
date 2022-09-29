@@ -68,7 +68,7 @@ const ProviderPriceBottomInputPriceTitleStyled = styled.p`
 const ProviderPriceTopSubContentStyled = styled.p`
   font-size: .9rem;
   font-weight: 300;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 `
 const ProviderPriceBottomCheckboxStyled = styled.input`
   cursor: pointer;
@@ -115,6 +115,7 @@ const ProviderPriceSetUp = () => {
         <ProviderPriceTopHeaderStyled>Giá mỗi đêm</ProviderPriceTopHeaderStyled>
         <ProviderPriceTopSubHeaderStyled>Vui lòng nhập giá mỗi đêm của quý đối tác cho chỗ nghỉ này. Nếu quý đối tác đang dùng người quản lý kênh thì chúng tôi sẽ đồng bộ các giá này giữa các nền tảng một khi đã khớp giá.</ProviderPriceTopSubHeaderStyled>
         <ProviderPriceTopWrapperStyled>
+          <ProviderPriceBottomTitleStyled>Giá gốc cho Phòng Tiêu Chuẩn</ProviderPriceBottomTitleStyled>
           <ProviderPriceBottomTitleStyled>Giá tối thiểu mỗi đêm là bao nhiêu?</ProviderPriceBottomTitleStyled>
           <ProviderPriceBottomInputWrapperStyled>
             <ProviderPriceBottomInputStyled type="number" min={0} placeholder="0"/>

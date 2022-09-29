@@ -133,13 +133,6 @@ const EnterpriseInfoTopPolicyChoiceStyled = styled.input`
   margin-bottom: auto;
   margin-top: .2rem;
 `
-const EnterpriseInfoDistanceTopWrapperStyled = styled.div`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: .2rem;
-  background-color: #fff;
-  margin: 2rem 0;
-`
 const EnterpriseInfoDistanceBottomTitleStyled = styled.p`
   font-size: .9rem;
   font-weight: 600;

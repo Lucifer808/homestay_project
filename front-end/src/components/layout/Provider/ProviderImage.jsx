@@ -140,7 +140,6 @@ const ProviderImage = () => {
                 <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
               </ProviderImageBottomElementSelectStyled>
             </ProviderImageBottomElementWrapperStyled>
-            
           </ProviderImageBottomWrapperStyled>
         </ProviderImageTopContainerStyled>
       </ProviderImageWrapperStyled>

@@ -20,9 +20,9 @@ const ProviderFileTopHeaderTitleStyled = styled.h2`
   margin: 2rem 0;
 `
 const ProviderFileTopSubHeaderStyled = styled.p`
-font-size: .9rem;
-font-weight: 300;
-margin: 1rem 0;
+  font-size: .9rem;
+  font-weight: 300;
+  margin: 1rem 0;
 `
 const ProviderFileTopWrapperStyled = styled.div`
   padding: 1rem;

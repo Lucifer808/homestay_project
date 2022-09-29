@@ -34,14 +34,15 @@ const ProviderServiceTopWrapperStyled = styled.div`
   border-radius: .2rem;
   background-color: #fff;
 `
-const ProviderServiceTopChoiceContainerStyled = styled.div``
-const ProviderServiceTopChoiceWrapperStyled = styled.div`
-  margin: 1rem;
+const ProviderServiceTopChoiceContainerStyled = styled.div`
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+`
+const ProviderServiceTopChoiceWrapperStyled = styled.div`
+  margin: .6rem;
+  display: flex;
   justify-content: flex-start;
-  flex: auto;
-  width: 16rem;
+  width: 15rem;
 `
 const ProviderServiceTopChoiceStyled = styled.input`
   top: 0;
@@ -85,29 +86,27 @@ const ProviderService = () => {
           <ProviderServiceTopChoiceContainerStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>khăn các loại</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Khăn các loại</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>bàn/không gian làm việc</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Bàn/không gian làm việc</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>đậu xe miễn phí</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Đậu xe miễn phí</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
               <ProviderServiceTopChoiceTitleStyled>Đồ dùng cơ bản trong nhà bếp (dụng cụ nấu ăn, dầu, nước sốt)</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
-          </ProviderServiceTopChoiceContainerStyled>
-          <ProviderServiceTopChoiceContainerStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>máy điều hòa</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Máy điều hòa</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>chìa khóa thông minh</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Chìa khóa thông minh</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
@@ -115,25 +114,23 @@ const ProviderService = () => {
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>lối vào riêng</ProviderServiceTopChoiceTitleStyled>
-            </ProviderServiceTopChoiceWrapperStyled>
-          </ProviderServiceTopChoiceContainerStyled>
-          <ProviderServiceTopChoiceContainerStyled>
-            <ProviderServiceTopChoiceWrapperStyled>
-              <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>ban công hoặc sân hiên</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Lối vào riêng</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>khu đối diện bãi biển</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Ban công hoặc sân hiên</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>máy sưởi</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Khu đối diện bãi biển</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
             <ProviderServiceTopChoiceWrapperStyled>
               <ProviderServiceTopChoiceStyled type="checkbox" />
-              <ProviderServiceTopChoiceTitleStyled>tivi</ProviderServiceTopChoiceTitleStyled>
+              <ProviderServiceTopChoiceTitleStyled>Máy sưởi</ProviderServiceTopChoiceTitleStyled>
+            </ProviderServiceTopChoiceWrapperStyled>
+            <ProviderServiceTopChoiceWrapperStyled>
+              <ProviderServiceTopChoiceStyled type="checkbox" />
+              <ProviderServiceTopChoiceTitleStyled>Tivi</ProviderServiceTopChoiceTitleStyled>
             </ProviderServiceTopChoiceWrapperStyled>
           </ProviderServiceTopChoiceContainerStyled>
         </ProviderServiceTopWrapperStyled>
@@ -147,28 +144,24 @@ const ProviderService = () => {
               <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
-                  <ProviderServiceTopChoiceTitleStyled>tủ áo</ProviderServiceTopChoiceTitleStyled>
+                  <ProviderServiceTopChoiceTitleStyled>Tủ áo</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
-                  <ProviderServiceTopChoiceTitleStyled>bàn ủi (bàn là)</ProviderServiceTopChoiceTitleStyled>
+                  <ProviderServiceTopChoiceTitleStyled>Bàn ủi (bàn là)</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
-                  <ProviderServiceTopChoiceTitleStyled>máy giặt</ProviderServiceTopChoiceTitleStyled>
-                </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
-                <ProviderServiceTopChoiceWrapperStyled>
-                  <ProviderServiceTopChoiceStyled type="checkbox" />
-                  <ProviderServiceTopChoiceTitleStyled>máy sấy</ProviderServiceTopChoiceTitleStyled>
+                  <ProviderServiceTopChoiceTitleStyled>Máy giặt</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
-                  <ProviderServiceTopChoiceTitleStyled>bộ ga giường</ProviderServiceTopChoiceTitleStyled>
+                  <ProviderServiceTopChoiceTitleStyled>Máy sấy</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
+                <ProviderServiceTopChoiceWrapperStyled>
+                  <ProviderServiceTopChoiceStyled type="checkbox" />
+                  <ProviderServiceTopChoiceTitleStyled>Bộ ga giường</ProviderServiceTopChoiceTitleStyled>
+                </ProviderServiceTopChoiceWrapperStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Quạt (trần hoặc đứng)</ProviderServiceTopChoiceTitleStyled>
@@ -195,8 +188,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Ghế cao cho trẻ con ngồi ăn</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Thiết bị giám sát trẻ</ProviderServiceTopChoiceTitleStyled>
@@ -209,8 +200,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Cũi vải</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Bàn thay tã</ProviderServiceTopChoiceTitleStyled>
@@ -253,8 +242,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Cảm biến báo khói</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Cảm biến báo khí CO</ProviderServiceTopChoiceTitleStyled>
@@ -279,8 +266,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Kiểm tra nhiệt độ cho khách và nhân viên</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Được làm sạch bởi công ty làm sạch chuyên nghiệp</ProviderServiceTopChoiceTitleStyled>
@@ -319,8 +304,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Hồ bơi riêng</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Bồn tắm nước nóng</ProviderServiceTopChoiceTitleStyled>
@@ -333,8 +316,6 @@ const ProviderService = () => {
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Được hút thuốc</ProviderServiceTopChoiceTitleStyled>
                 </ProviderServiceTopChoiceWrapperStyled>
-              </ProviderServiceTopChoiceContainerStyled>
-              <ProviderServiceTopChoiceContainerStyled>
                 <ProviderServiceTopChoiceWrapperStyled>
                   <ProviderServiceTopChoiceStyled type="checkbox" />
                   <ProviderServiceTopChoiceTitleStyled>Lò sưởi trong nhà</ProviderServiceTopChoiceTitleStyled>
