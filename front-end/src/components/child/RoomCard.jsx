@@ -31,6 +31,7 @@ const RoomCardContainerStyled = styled.div`
 `
 const RoomCardWrapperStyled = styled.div`
     display: flex;
+    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: .8rem;
     height: 15rem;
@@ -291,7 +292,7 @@ const RoomCardRightBottomButtonWrapperStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: .2rem 0;
+    margin: .4rem 0;
     background-color: rgb(62, 108, 234);
     border-radius: .2rem;
     border-color: rgb(120, 152, 240);

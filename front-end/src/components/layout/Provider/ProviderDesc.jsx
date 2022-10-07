@@ -29,7 +29,7 @@ const ProviderDescTopHeaderStyled = styled.h4`
 const ProviderDescTopSubHeaderStyled = styled.p`
   font-size: .9rem;
   font-weight: 300;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 `
 const ProviderDescTopWrapperStyled = styled.div`
   padding: 1rem;

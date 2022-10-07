@@ -6,7 +6,9 @@ import FreeBreakfastOutlinedIcon from '@mui/icons-material/FreeBreakfastOutlined
 import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import BookingDetailCard from '../../child/BookingDetailCard';
-const RoomDetailChoiceContainerStyled = styled.div``
+const RoomDetailChoiceContainerStyled = styled.div`
+    width: 100%;
+`
 const RoomDetailChoiceWrapperStyled = styled.div``
 const RoomDetailChoiceTitleWrapperStyled = styled.div`
     border-bottom: 1px solid #ccc;

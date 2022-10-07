@@ -13,3 +13,7 @@ html{
   font-size: 62,5%;
   scroll-behavior: smooth;
 }
+input.input-error,
+select.input-error{
+  border-color: rgb(225, 45, 45);
+}

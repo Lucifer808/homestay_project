@@ -6,7 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 const FooterContainerStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     width: 100vw;
-    height: 60vh;
+    height: 100%;
     background-color: #f6f5f5;
     border-bottom: 1px solid #ccc;
     display: flex;
@@ -16,6 +16,7 @@ const FooterContainerStyled = styled.div`
 const FooterWrapperStyled = styled.div`
     display: flex;
     width: 80rem;
+    height: 100%;
     justify-content: space-between;
     padding: 1rem 0;
 `

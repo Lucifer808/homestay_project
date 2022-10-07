@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 const RegisterpageContainerStyled = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 100%;
 `
 const RegisterpageWrapperStyled = styled.div`
@@ -14,7 +16,7 @@ const RegisterpageWrapperStyled = styled.div`
     align-items: center;
     justify-content: center;
 `
-const RegisterpageStyled = styled.div`
+const RegisterpageStyled = styled.form`
     padding: 2rem;
     width: 34rem;
     height: 100%;
@@ -40,10 +42,11 @@ const RegisterpageInputTitleStyled = styled.span`
 `
 const RegisterpageInputStyled = styled.input`
     margin: .3rem 0;
-    padding: .8rem .3rem;
+    padding: .8rem .4rem;
     outline: 0px;
     border: 1px solid #ccc;
     border-radius: .2rem;
+    transition: all .1s ease-in-out;
     &:focus{
         border-color: rgb(83, 146, 249);
         outline: 0px;
@@ -52,6 +55,10 @@ const RegisterpageInputStyled = styled.input`
     &::placeholder{
         color: #ccc;
     }
+`
+const RegisterpageInputErrorPromptStyled = styled.p`
+    font-size: .9rem;
+    color: rgb(225, 45, 45);
 `
 const RegisterpageAceptEmailStyled = styled.div`
     display: flex;
@@ -199,6 +206,25 @@ const LineThroughtRegisterPolicyWrapperStyled = styled.span`
     text-align: center;
 `
 const Registerpage = () => {
+  const formik = useFormik({
+    initialValues:{
+        lastName: "",
+        firstName: "",
+        email: " ",
+        password: " ",
+        confirmPassword: " "
+    },
+    validationSchema: yup.object({
+        lastName: yup.string()
+        .required("Xin vui lòng nhập Tên hợp lệ (chỉ dùng tiếng Anh)."),
+        firstName: yup.string()
+        .required("Xin vui lòng nhập Họ hợp lệ (chỉ dùng tiếng Anh)."),
+        email: yup.string()
+        .email("Vui lòng nhập Email hợp lệ.")
+        .required("Xin vui lòng nhập Email.")
+    })
+  })
+  
   return (
     <RegisterpageContainerStyled>
         <RegisterpageWrapperStyled>
@@ -208,30 +234,65 @@ const Registerpage = () => {
                     <RegisterpageInputSideHeaderStyled>EMAIL</RegisterpageInputSideHeaderStyled>
                     <RegisterpageInputSideStyled>
                         <RegisterpageInputTitleStyled>Tên</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled placeholder='Tên'/>
+                        <RegisterpageInputStyled 
+                            placeholder='Tên' 
+                            name='lastName'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className={formik.errors.lastName && formik.touched.lastName  ? 'input-error' : ''}
+                        />
+                        {formik.errors.lastName && formik.touched.lastName && (
+                            <RegisterpageInputErrorPromptStyled>{formik.errors.lastName}</RegisterpageInputErrorPromptStyled>
+                        )}
                     </RegisterpageInputSideStyled>
                     <RegisterpageInputSideStyled>
                         <RegisterpageInputTitleStyled>Họ</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled placeholder='Họ'/>
+                        <RegisterpageInputStyled 
+                            placeholder='Họ'
+                            name='firstName'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className={formik.errors.firstName && formik.touched.firstName  ? 'input-error' : ''}
+                        />
+                        {formik.errors.firstName && formik.touched.firstName && (
+                            <RegisterpageInputErrorPromptStyled>{formik.errors.firstName}</RegisterpageInputErrorPromptStyled>
+                        )}
                     </RegisterpageInputSideStyled>
                     <RegisterpageInputSideStyled>
                         <RegisterpageInputTitleStyled>Email</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled placeholder='Email'/>
+                        <RegisterpageInputStyled 
+                            placeholder='Email' 
+                            name='email'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className={formik.errors.email && formik.touched.email  ? 'input-error' : ''}
+                        />
+                        {formik.errors.email && formik.touched.email && (
+                            <RegisterpageInputErrorPromptStyled>{formik.errors.email}</RegisterpageInputErrorPromptStyled>
+                        )}
                     </RegisterpageInputSideStyled>
                     <RegisterpageInputSideStyled>
                         <RegisterpageInputTitleStyled>Mật khẩu</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled placeholder='Mật khẩu'/>
+                        <RegisterpageInputStyled 
+                            placeholder='Mật khẩu' 
+                            name='password'
+                            onChange={formik.handleChange}
+                        />
                     </RegisterpageInputSideStyled>
                     <RegisterpageInputSideStyled>
                         <RegisterpageInputTitleStyled>Xác nhận mật khẩu</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled placeholder='Xác nhận mật khẩu'/>
+                        <RegisterpageInputStyled 
+                            placeholder='Xác nhận mật khẩu' 
+                            name='confirmPassword'
+                            onChange={formik.handleChange}
+                        />
                     </RegisterpageInputSideStyled>
                 </RegisterpageInputSideWrapperStyled>
                 <RegisterpageAceptEmailStyled>
                     <RegisterpageAceptEmailCheckStyled type="checkbox" />
-                    <RegisterpageAceptEmailCheckTitleStyled>Nhận email khuyến mãi độc quyền từ Agoda. Tôi có thể bỏ đăng ký này về sau như đã nêu trong Chính sách Bảo mật.</RegisterpageAceptEmailCheckTitleStyled>
+                    <RegisterpageAceptEmailCheckTitleStyled>Nhận email khuyến mãi độc quyền từ chúng tôi. Tôi có thể bỏ đăng ký này về sau như đã nêu trong Chính sách Bảo mật.</RegisterpageAceptEmailCheckTitleStyled>
                 </RegisterpageAceptEmailStyled>
-                <RegisterpageLoginButtonStyled>Đăng nhập</RegisterpageLoginButtonStyled>
+                <RegisterpageLoginButtonStyled>Đăng ký</RegisterpageLoginButtonStyled>
                 <LineThroughtWrapperStyled>
                     <LineThroughtLeftStyled />
                     <LineThroughtContentWrapperStyled>

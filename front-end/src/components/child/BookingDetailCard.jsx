@@ -71,6 +71,7 @@ const BookingDetailCardBottomWrapperStyled = styled.div`
     background-color: rgb(247, 247, 247);
 `
 const BookingDetailCardBottomContentWrapperStyled = styled.div`
+    width: 100%;
     height: 40rem;
     display: flex;
 `
@@ -166,7 +167,7 @@ const BookingDetailCardBottomRightWrapperStyled = styled.div`
     box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px 0px;
 `
 const BookingDetailCardBottomRightContentContainerStyled = styled.div`
-    width: 16rem;
+    width: 14rem;
     height: 100%;
     border-right: 1px solid #ccc;
     padding: 1rem;
@@ -204,7 +205,7 @@ const BookingDetailCardBottomRightCapacitySubContentStyled = styled.p`
     margin-top: .2rem;
 `
 const BookingDetailCardBottomRightCancelContainerStyled = styled.div`
-    width: 22rem;
+    width: 20rem;
     height: 100%;
     border-right: 1px solid #ccc;
     padding: 1rem;

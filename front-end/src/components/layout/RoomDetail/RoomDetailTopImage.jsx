@@ -76,10 +76,12 @@ const RoomDetailImgWrapperStyled = styled.div`
     display: flex;
     justify-content: space-between;
 `
-const RoomDetailImgLeftWrapperStyled = styled.div``
+const RoomDetailImgLeftWrapperStyled = styled.div`
+    width: 42%;
+`
 const RoomDetailImgLeftStyled = styled.img`
     object-fit: cover;
-    width: 31rem;
+    width: 100%;
     height: 19rem;
     border-top-left-radius: .4rem;
     border-bottom-left-radius: .4rem;
@@ -91,8 +93,14 @@ const RoomDetailImgLeftStyled = styled.img`
 const RoomDetailImgRightWrapperStyled = styled.div`
     position: relative;
 `
-const RoomDetailImgRightTopWrapperStyled = styled.div``
-const RoomDetailImgRightBottomWrapperStyled = styled.div``
+const RoomDetailImgRightTopWrapperStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+const RoomDetailImgRightBottomWrapperStyled = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
 const RoomDetailImgMiniStyled = styled.img`
     margin: 0 0 .2rem .4rem;
     object-fit: cover;
@@ -300,13 +308,13 @@ const RoomDetailTopImage = () => {
     <RoomDetailImgContainerStyled>
         <RoomDetailImgWrapperStyled>
             <RoomDetailImgLeftWrapperStyled>
-            <RoomDetailImgLeftStyled src={room_detail} onClick={handleClickOpen}/>
+                <RoomDetailImgLeftStyled src={room_detail} onClick={handleClickOpen}/>
             </RoomDetailImgLeftWrapperStyled>
             <RoomDetailImgRightWrapperStyled>
                 <RoomDetailImgRightTopWrapperStyled>
                     <RoomDetailImgMiniStyled src={room_detail1} onClick={handleClickOpen}/>
                     <RoomDetailImgMiniStyled src={room_detail2} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={room_detail3}style={{borderTopRightRadius: '.4rem'}} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={room_detail3} onClick={handleClickOpen} style={{borderTopRightRadius: '.4rem'}}/>
                 </RoomDetailImgRightTopWrapperStyled>
                 <RoomDetailImgRightBottomWrapperStyled>
                     <RoomDetailImgMiniStyled src={room_detail5} onClick={handleClickOpen}/>
