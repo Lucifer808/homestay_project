@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import { loginUser } from '../features/userSlice';
 const LoginpageContainerStyled = styled.div`
-    height: 100vh;
+    height: 100%;
     width: 100vw;
 `
 const LoginpageWrapperStyled = styled.div`
@@ -29,7 +32,7 @@ const LoginpageSubHeaderStyled = styled.span`
     margin: 1rem 0;
     font-weight: 300;
 `
-const LoginpageInputSideWrapperStyled = styled.div``
+const LoginpageInputSideWrapperStyled = styled.form``
 const LoginpageInputSideHeaderStyled = styled.h2`
     font-weight: 300;
     margin: 2rem 0;
@@ -177,23 +180,51 @@ const LineThroughtLoginPolicyWrapperStyled = styled.span`
     text-align: center;
 `
 const Loginpage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isAutheticated = useSelector((state) => state.user.isAutheticated);
+  const formik = useFormik({
+    initialValues: {
+        email: "",
+        password: ""
+    },
+    onSubmit: (values) => {
+        dispatch(loginUser(values));
+    }
+  })
+  useEffect(()=>{
+    if(isAutheticated){
+        navigate('/');
+    }
+  },[isAutheticated])
   return (
     <LoginpageContainerStyled>
         <LoginpageWrapperStyled>
             <LoginpageStyled>
                 <LoginpageHeaderStyled>Đăng nhập</LoginpageHeaderStyled>
                 <LoginpageSubHeaderStyled>Để đảm bảo an toàn, xin vui lòng đăng nhập để truy cập vào thông tin</LoginpageSubHeaderStyled>
-                <LoginpageInputSideWrapperStyled>
+                <LoginpageInputSideWrapperStyled onSubmit={formik.handleSubmit}>
                     <LoginpageInputSideHeaderStyled>EMAIL</LoginpageInputSideHeaderStyled>
                     <LoginpageInputSideStyled>
                         <LoginpageInputTitleStyled>Email</LoginpageInputTitleStyled>
-                        <LoginpageInputStyled placeholder='Email'/>
+                        <LoginpageInputStyled 
+                         placeholder='Email' 
+                         name='email'
+                         type='email' 
+                         onChange={formik.handleChange}
+                        />
                     </LoginpageInputSideStyled>
                     <LoginpageInputSideStyled>
                         <LoginpageInputTitleStyled>Mật khẩu</LoginpageInputTitleStyled>
-                        <LoginpageInputStyled placeholder='Mật khẩu'/>
+                        <LoginpageInputStyled 
+                         placeholder='Mật khẩu'
+                         type='password' 
+                         name='password' 
+                         onChange={formik.handleChange}
+                        />
                     </LoginpageInputSideStyled>
-                    <LoginpageLoginButtonStyled>Đăng nhập</LoginpageLoginButtonStyled>
+                    <LoginpageLoginButtonStyled type='submit'>Đăng nhập</LoginpageLoginButtonStyled>
                     <LoginpageNavigateWrapperStyled>
                         <Link to="/register" style={{textDecoration: 'none'}}>
                             <LoginpageNavigateTitleStyled>Tạo tài khoản</LoginpageNavigateTitleStyled>

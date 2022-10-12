@@ -1,10 +1,12 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import flag1 from '../../assets/flag-vn.png';
 import bag1 from '../../assets/Bags-heart.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { selectIsAutheticated, selectLoading, selectUsers } from '../../features/userSlice';
 import QuickSearch from '../child/QuickSearch';
+import { useSelector } from 'react-redux';
+import UserOptions from '../child/UserOptions';
 const HeaderStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     height: 100%;
@@ -77,6 +79,9 @@ const PesudoContentStyled = styled.span`
     font-weight: 300;
 `
 const HeaderRightStyled = styled.div`
+    display: flex;
+`
+const HeaderAuthRightStyled = styled.div`
     display: flex;
 `
 const HeaderPartnerButtonStyled = styled.button`
@@ -170,6 +175,8 @@ const HeaderBottomButtonStyled = styled.button`
 `
 const Header = () => {
   const location = useLocation();
+  const usereData = useSelector(selectUsers);
+  const isAutheticated = useSelector(selectIsAutheticated);
   return (
     <HeaderStyled>
         <HeaderWrapperStyled>
@@ -190,12 +197,16 @@ const Header = () => {
                 <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
                 <HeaderLanguageStyled src={flag1} />
                 <HeaderMoneyStyled>₫</HeaderMoneyStyled>
-                <Link to="/login">
-                    <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
-                </Link>
-                <Link to="/register">
-                    <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
-                </Link>
+                { isAutheticated ? <UserOptions user={usereData} /> : (
+                    <HeaderAuthRightStyled>
+                        <Link to="/login">
+                            <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
+                        </Link>
+                        <Link to="/register">
+                            <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
+                        </Link>
+                    </HeaderAuthRightStyled>
+                )}
             </HeaderRightStyled>
         </HeaderWrapperStyled>
         <HeaderBottomStyled>

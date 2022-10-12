@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AppleIcon from '@mui/icons-material/Apple';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerNewUser, getUsers } from '../features/userSlice';
+import Loader from '../../src/components/child/Loader';
+import { Link } from 'react-router-dom';
 const RegisterpageContainerStyled = styled.div`
     width: 100%;
     height: 100%;
@@ -64,9 +68,7 @@ const RegisterpageAceptEmailStyled = styled.div`
     display: flex;
 
 `
-const RegisterpageAceptEmailCheckStyled = styled.input`
-    margin-bottom: auto;
-`
+const RegisterpageAceptEmailCheckStyled = styled.input``
 const RegisterpageAceptEmailCheckTitleStyled = styled.span`
     display: inline-block;
     font-size: .9rem;
@@ -206,6 +208,8 @@ const LineThroughtRegisterPolicyWrapperStyled = styled.span`
     text-align: center;
 `
 const Registerpage = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.user.isLoading);
   const formik = useFormik({
     initialValues:{
         lastName: "",
@@ -221,99 +225,128 @@ const Registerpage = () => {
         .required("Xin vui lòng nhập Họ hợp lệ (chỉ dùng tiếng Anh)."),
         email: yup.string()
         .email("Vui lòng nhập Email hợp lệ.")
-        .required("Xin vui lòng nhập Email.")
-    })
+        .required("Xin vui lòng nhập Email."),
+        password: yup.string()
+        .min(8, "Mật khẩu phải có ít nhất 8 kí tự.")
+        .required("Vui lòng nhập mật khẩu hợp lệ."),
+        confirmPassword: yup.string()
+        .oneOf([yup.ref('password'), null], "Mật khẩu nhập lại không chính xác")
+        .required("Vui lòng nhập mật khẩu xác nhận.")
+    }),
+    onSubmit: (values) => {
+        const {lastName, firstName, email, password} = values;
+        dispatch(registerNewUser({lastName, firstName, email, password}))
+    }
   })
   
+  useEffect(() =>{
+    dispatch(getUsers());
+  },[dispatch])
   return (
     <RegisterpageContainerStyled>
-        <RegisterpageWrapperStyled>
-            <RegisterpageStyled>
-                <RegisterpageHeaderStyled>Đăng ký</RegisterpageHeaderStyled>
-                <RegisterpageInputSideWrapperStyled>
-                    <RegisterpageInputSideHeaderStyled>EMAIL</RegisterpageInputSideHeaderStyled>
-                    <RegisterpageInputSideStyled>
-                        <RegisterpageInputTitleStyled>Tên</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled 
-                            placeholder='Tên' 
-                            name='lastName'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className={formik.errors.lastName && formik.touched.lastName  ? 'input-error' : ''}
-                        />
-                        {formik.errors.lastName && formik.touched.lastName && (
-                            <RegisterpageInputErrorPromptStyled>{formik.errors.lastName}</RegisterpageInputErrorPromptStyled>
-                        )}
-                    </RegisterpageInputSideStyled>
-                    <RegisterpageInputSideStyled>
-                        <RegisterpageInputTitleStyled>Họ</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled 
-                            placeholder='Họ'
-                            name='firstName'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className={formik.errors.firstName && formik.touched.firstName  ? 'input-error' : ''}
-                        />
-                        {formik.errors.firstName && formik.touched.firstName && (
-                            <RegisterpageInputErrorPromptStyled>{formik.errors.firstName}</RegisterpageInputErrorPromptStyled>
-                        )}
-                    </RegisterpageInputSideStyled>
-                    <RegisterpageInputSideStyled>
-                        <RegisterpageInputTitleStyled>Email</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled 
-                            placeholder='Email' 
-                            name='email'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            className={formik.errors.email && formik.touched.email  ? 'input-error' : ''}
-                        />
-                        {formik.errors.email && formik.touched.email && (
-                            <RegisterpageInputErrorPromptStyled>{formik.errors.email}</RegisterpageInputErrorPromptStyled>
-                        )}
-                    </RegisterpageInputSideStyled>
-                    <RegisterpageInputSideStyled>
-                        <RegisterpageInputTitleStyled>Mật khẩu</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled 
-                            placeholder='Mật khẩu' 
-                            name='password'
-                            onChange={formik.handleChange}
-                        />
-                    </RegisterpageInputSideStyled>
-                    <RegisterpageInputSideStyled>
-                        <RegisterpageInputTitleStyled>Xác nhận mật khẩu</RegisterpageInputTitleStyled>
-                        <RegisterpageInputStyled 
-                            placeholder='Xác nhận mật khẩu' 
-                            name='confirmPassword'
-                            onChange={formik.handleChange}
-                        />
-                    </RegisterpageInputSideStyled>
-                </RegisterpageInputSideWrapperStyled>
-                <RegisterpageAceptEmailStyled>
-                    <RegisterpageAceptEmailCheckStyled type="checkbox" />
-                    <RegisterpageAceptEmailCheckTitleStyled>Nhận email khuyến mãi độc quyền từ chúng tôi. Tôi có thể bỏ đăng ký này về sau như đã nêu trong Chính sách Bảo mật.</RegisterpageAceptEmailCheckTitleStyled>
-                </RegisterpageAceptEmailStyled>
-                <RegisterpageLoginButtonStyled>Đăng ký</RegisterpageLoginButtonStyled>
-                <LineThroughtWrapperStyled>
-                    <LineThroughtLeftStyled />
-                    <LineThroughtContentWrapperStyled>
-                        <LineThroughtContentStyled>Hoặc đăng nhập bằng</LineThroughtContentStyled>
-                    </LineThroughtContentWrapperStyled>
-                    <LineThroughtRightStyled />
-                </LineThroughtWrapperStyled>
-                <LineThroughtAnotherLoginWrapperStyled>
-                    <LineThroughtAnotherLoginButtonStyled><GoogleIcon sx={{marginRight: '.4rem'}}/>Google</LineThroughtAnotherLoginButtonStyled>
-                    <LineThroughtAnotherLoginButtonWrapperStyled>
-                        <LineThroughtAnotherLoginButtonHalfStyled><FacebookOutlinedIcon sx={{marginRight: '.4rem'}}/>Facebook</LineThroughtAnotherLoginButtonHalfStyled>
-                        <LineThroughtAnotherLoginButtonHalfStyled><AppleIcon sx={{marginRight: '.4rem'}}/>Apple</LineThroughtAnotherLoginButtonHalfStyled>
-                    </LineThroughtAnotherLoginButtonWrapperStyled>
-                </LineThroughtAnotherLoginWrapperStyled>
-                <LineThroughtWrapperStyled>
-                    <LineThroughtFullStyled />
-                </LineThroughtWrapperStyled>
-                <LineThroughtNavigateLoginButtonStyled>Bạn đã có tài khoản? Đăng nhập ngay</LineThroughtNavigateLoginButtonStyled>
-                <LineThroughtRegisterPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Looking.</LineThroughtRegisterPolicyWrapperStyled>
-            </RegisterpageStyled>
-        </RegisterpageWrapperStyled>
+        {loading ? <Loader /> : (
+             <RegisterpageWrapperStyled>
+             <RegisterpageStyled onSubmit={formik.handleSubmit}>
+                 <RegisterpageHeaderStyled>Đăng ký</RegisterpageHeaderStyled>
+                 <RegisterpageInputSideWrapperStyled>
+                     <RegisterpageInputSideHeaderStyled>EMAIL</RegisterpageInputSideHeaderStyled>
+                     <RegisterpageInputSideStyled>
+                         <RegisterpageInputTitleStyled>Tên</RegisterpageInputTitleStyled>
+                         <RegisterpageInputStyled 
+                             placeholder='Tên' 
+                             name='lastName'
+                             onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                             className={formik.errors.lastName && formik.touched.lastName  ? 'input-error' : ''}
+                         />
+                         {formik.errors.lastName && formik.touched.lastName && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.lastName}</RegisterpageInputErrorPromptStyled>
+                         )}
+                     </RegisterpageInputSideStyled>
+                     <RegisterpageInputSideStyled>
+                         <RegisterpageInputTitleStyled>Họ</RegisterpageInputTitleStyled>
+                         <RegisterpageInputStyled 
+                             placeholder='Họ'
+                             name='firstName'
+                             onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                             className={formik.errors.firstName && formik.touched.firstName  ? 'input-error' : ''}
+                         />
+                         {formik.errors.firstName && formik.touched.firstName && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.firstName}</RegisterpageInputErrorPromptStyled>
+                         )}
+                     </RegisterpageInputSideStyled>
+                     <RegisterpageInputSideStyled>
+                         <RegisterpageInputTitleStyled>Email</RegisterpageInputTitleStyled>
+                         <RegisterpageInputStyled 
+                             placeholder='Email' 
+                             name='email'
+                             onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                             className={formik.errors.email && formik.touched.email  ? 'input-error' : ''}
+                         />
+                         {formik.errors.email && formik.touched.email && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.email}</RegisterpageInputErrorPromptStyled>
+                         )}
+                     </RegisterpageInputSideStyled>
+                     <RegisterpageInputSideStyled>
+                         <RegisterpageInputTitleStyled>Mật khẩu</RegisterpageInputTitleStyled>
+                         <RegisterpageInputStyled 
+                             placeholder='Mật khẩu' 
+                             name='password'
+                             onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                             type='password'
+                             className={formik.errors.password && formik.touched.password  ? 'input-error' : ''}
+                         />
+                         {formik.errors.password && formik.touched.password && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.password}</RegisterpageInputErrorPromptStyled>
+                         )}
+                     </RegisterpageInputSideStyled>
+                     <RegisterpageInputSideStyled>
+                         <RegisterpageInputTitleStyled>Xác nhận mật khẩu</RegisterpageInputTitleStyled>
+                         <RegisterpageInputStyled 
+                             placeholder='Xác nhận mật khẩu' 
+                             name='confirmPassword'
+                             type='password'
+                             onChange={formik.handleChange}
+                             onBlur={formik.handleBlur}
+                             className={formik.errors.confirmPassword && formik.touched.confirmPassword  ? 'input-error' : ''}
+                         />
+                         {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.confirmPassword}</RegisterpageInputErrorPromptStyled>
+                         )}
+                     </RegisterpageInputSideStyled>
+                 </RegisterpageInputSideWrapperStyled>
+                 <RegisterpageAceptEmailStyled>
+                     <RegisterpageAceptEmailCheckStyled type="checkbox" />
+                     <RegisterpageAceptEmailCheckTitleStyled>Nhận email khuyến mãi độc quyền từ chúng tôi. Tôi có thể bỏ đăng ký này về sau như đã nêu trong Chính sách Bảo mật.</RegisterpageAceptEmailCheckTitleStyled>
+                 </RegisterpageAceptEmailStyled>
+                 <RegisterpageLoginButtonStyled type='submit'>Đăng ký</RegisterpageLoginButtonStyled>
+                 <LineThroughtWrapperStyled>
+                     <LineThroughtLeftStyled />
+                     <LineThroughtContentWrapperStyled>
+                         <LineThroughtContentStyled>Hoặc đăng nhập bằng</LineThroughtContentStyled>
+                     </LineThroughtContentWrapperStyled>
+                     <LineThroughtRightStyled />
+                 </LineThroughtWrapperStyled>
+                 <LineThroughtAnotherLoginWrapperStyled>
+                     <LineThroughtAnotherLoginButtonStyled><GoogleIcon sx={{marginRight: '.4rem'}}/>Google</LineThroughtAnotherLoginButtonStyled>
+                     <LineThroughtAnotherLoginButtonWrapperStyled>
+                         <LineThroughtAnotherLoginButtonHalfStyled><FacebookOutlinedIcon sx={{marginRight: '.4rem'}}/>Facebook</LineThroughtAnotherLoginButtonHalfStyled>
+                         <LineThroughtAnotherLoginButtonHalfStyled><AppleIcon sx={{marginRight: '.4rem'}}/>Apple</LineThroughtAnotherLoginButtonHalfStyled>
+                     </LineThroughtAnotherLoginButtonWrapperStyled>
+                 </LineThroughtAnotherLoginWrapperStyled>
+                 <LineThroughtWrapperStyled>
+                     <LineThroughtFullStyled />
+                 </LineThroughtWrapperStyled>
+                 <Link to="/login" style={{textDecoration: 'none'}}>
+                    <LineThroughtNavigateLoginButtonStyled>Bạn đã có tài khoản? Đăng nhập ngay</LineThroughtNavigateLoginButtonStyled>
+                 </Link>
+                 <LineThroughtRegisterPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Looking.</LineThroughtRegisterPolicyWrapperStyled>
+             </RegisterpageStyled>
+         </RegisterpageWrapperStyled>
+        )}
     </RegisterpageContainerStyled>
   )
 }
