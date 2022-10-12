@@ -1,7 +1,10 @@
 const usersController = require("../controllers/usersController");
 const express = require("express");
 const router = express.Router();
-
-router.route("/users").get(usersController.getAllUsers);
-
+const { isAuthenticatedUser, authrizeRoles } = require("../middleware/auth");
+router.route("/register").post(usersController.createNewUser);
+router.route("/login").post(usersController.loginUser);
+router.route("/logout").get(usersController.logout);
+router.route("/me").get(isAuthenticatedUser, usersController.getUserDetail);
+router.route("/users").get(isAuthenticatedUser, usersController.getAllUsers);
 module.exports = router;

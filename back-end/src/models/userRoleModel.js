@@ -1,11 +1,18 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class userRole extends Model {}
+  class UserRole extends Model {
+    static associate(models) {
+      UserRole.hasMany(models.Users, {
+        foreignKey: "id",
+        as: "uuid",
+      });
+    }
+  }
 
-  userRole.init(
+  UserRole.init(
     {
-      userRoleId: {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         unique: true,
@@ -13,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: "ur_id",
       },
-      userRoleName: {
+      name: {
         type: DataTypes.STRING,
         field: "ur_name",
       },
-      userRoleType: {
+      type: {
         type: DataTypes.STRING,
         field: "ur_type",
       },
@@ -40,8 +47,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "userRole",
+      modelName: "UserRole",
+      tableName: "user_roles",
+      freezeTableName: true,
+      timestamps: false,
     }
   );
-  return userRole;
+  return UserRole;
 };

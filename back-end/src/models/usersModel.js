@@ -1,11 +1,23 @@
 "use strict";
 const { Model } = require("sequelize");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto-js");
+const jwt = require("jsonwebtoken");
 module.exports = (sequelize, DataTypes) => {
-  class users extends Model {}
+  class Users extends Model {
+    // user associate
+    static associate(models) {
+      Users.belongsTo(models.UserRole, {
+        foreignKey: "us_role",
+        targetKey: "id",
+        as: "uuid",
+      });
+    }
+  }
 
-  users.init(
+  Users.init(
     {
-      usersId: {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         unique: true,
@@ -24,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: "us_password",
       },
-      fristName: {
+      firstName: {
         type: DataTypes.STRING,
         field: "us_firstName",
       },
@@ -52,11 +64,40 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: "us_updatedById",
       },
+      us_role: {
+        type: DataTypes.INTEGER,
+        field: "us_role",
+        defaultValue: 1,
+      },
     },
     {
+      // user hash password
+      hooks: {
+        beforeCreate: async (user, options) => {
+          if (!user.changed("password")) {
+            return user.password;
+          }
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        },
+      },
       sequelize,
-      modelName: "users",
+      modelName: "Users",
+      tableName: "Users",
+      freezeTableName: true,
+      timestamps: false,
     }
   );
-  return users;
+  // User validate password
+  Users.prototype.validatePassword = async function (password) {
+    const comparePassword = await bcrypt.compare(password, this.password);
+    return comparePassword;
+  };
+  // JWT
+  Users.prototype.getJWTToken = function () {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE,
+    });
+  };
+  return Users;
 };

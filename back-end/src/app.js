@@ -2,16 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const errorMiddleware = require("./middleware/error");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-// const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
-// config
-dotenv.config({ path: "back-end/config/config.env" });
 app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: true }));
-// app.use(cookieParser());
+// parse application/json
+app.use(bodyParser.json());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // app.use(fileUpload());
 // Route Users
 const user = require("./routes/usersRoute");
