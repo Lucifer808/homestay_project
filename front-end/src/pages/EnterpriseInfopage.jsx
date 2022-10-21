@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import flag1 from '../assets/flag-vn.png';
 import EnterpriseInfo from '../components/layout/Enterprise/EnterpriseInfo';
 import EnterpriseLocation from '../components/layout/Enterprise/EnterpriseLocation';
 import EnterpriseService from '../components/layout/Enterprise/EnterpriseService';
@@ -42,33 +41,6 @@ const EnterpriseInfoRightWrapperStyled = styled.div`
 `
 const EnterpriseInfoSideStepperWrapperStyled = styled.div`
   width: 12rem;
-`
-const EnterpriseWelcomepageHeaderContainerStyled = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 4rem;
-    background-color: #1174a6;
-`
-const EnterpriseWelcomepageHeaderWrapperStyled = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80rem;
-    height: 100%;
-`
-const HeaderLogoStyled = styled.h2`
-    font-family: 'DynaPuff', cursive;
-    margin-right: 1rem;
-    color: #fff;
-`
-const HeaderRightStyled = styled.div`
-    display: flex;
-`
-const HeaderLanguageStyled = styled.img`
-    margin: auto 1rem;
-    width: 2rem;
-    height: 1.4rem;
 `
 const EnterpriseInfoRightTopWrapperStyled = styled.div`
     height: 90%;
@@ -165,14 +137,6 @@ const EnterpriseInfopage = () => {
   };
   return (
     <EnterpriseInfoContainerStyled>
-      <EnterpriseWelcomepageHeaderContainerStyled>
-          <EnterpriseWelcomepageHeaderWrapperStyled>
-              <HeaderLogoStyled>Looking</HeaderLogoStyled>
-              <HeaderRightStyled>
-                  <HeaderLanguageStyled src={flag1} />
-              </HeaderRightStyled>
-          </EnterpriseWelcomepageHeaderWrapperStyled>
-      </EnterpriseWelcomepageHeaderContainerStyled>
       <EnterpriseInfoWrapperStyled>
         <EnterpriseInfoContentWrapperStyled>
           <EnterpriseInfoLeftWrapperStyled>

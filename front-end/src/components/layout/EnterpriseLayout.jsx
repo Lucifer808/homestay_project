@@ -31,7 +31,7 @@ const HeaderLanguageStyled = styled.img`
     width: 2rem;
     height: 1.4rem;
 `
-const ProviderLayout = () => {
+const EnterpriseLayout = () => {
   return (
     <>
         <EnterpriseWelcomepageHeaderContainerStyled>
@@ -49,4 +49,4 @@ const ProviderLayout = () => {
   )
 }
 
-export default ProviderLayout
+export default EnterpriseLayout

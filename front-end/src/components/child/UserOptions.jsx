@@ -11,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import profileImg from '../../assets/Profile.png';
 // import {logout} from '../../../actions/userAction';
 import {Link, useNavigate} from 'react-router-dom';
+import { logoutUser } from '../../features/userSlice';
 // import { useAlert } from 'react-alert';
 const fadeIn = keyframes `
     from {
@@ -54,7 +55,7 @@ const LoginCateWrapperStyled = styled.div`
     display: none;
     width: 240px;
     list-style-type: none;
-    margin-top: ${props => props.role === 'admin' ? '280px' : '330px'};
+    margin-top: ${props => props.role === 'admin' ? '280px' : '350px'};
     border: 1px solid lightgray;
     z-index: 4;
     animation: ${fadeIn} ease-in .2s;
@@ -99,13 +100,21 @@ const LoginCateListItemOptionStyled = styled.span`
     font-weight: 400;
 
 `
-const LogoutLineStyled = styled.div`
-    background-color: #ccc;
-    width: 100%;
-    height: 1px;
+const LogoutButtonStyled = styled.button`
+    padding: .7rem 4rem;
+    margin: 1rem;
+    cursor: pointer;
+    color: rgb(135, 179, 251);
+    background-color: #fff;
+    border-radius: .2rem;
+    border: 1px solid rgb(135, 179, 251);
+    &:hover {
+      background-color: rgb(135, 179, 251);
+      color: #fff;
+    }
 `
 const LogoutStyled = styled.span`
-    margin-left: 10px;
+    font-size: .9rem;
     font-weight: 400;
 ` 
 const CountNotificationWrapStyled = styled.div`
@@ -125,11 +134,9 @@ const UserOptions = ({user}) => {
   const navigate = useNavigate();
 //   const [imageReview, setImageReview] = useState("/Profile.png");
 //   const alert = useAlert();
-//   const LogoutHandle = () =>{
-//     dispatch(logout());
-//     alert.success('Đăng xuất thành công');
-//     navigate('/')
-//   }
+  const logoutHandle = () =>{
+    dispatch(logoutUser());
+  }
 console.log(user);
   return (
     <>
@@ -185,10 +192,9 @@ console.log(user);
                   </LoginCateListItemStyled>
                 </Link>
               ):''}
-                <LogoutLineStyled />
-              <LoginCateListItemStyled>
+              <LogoutButtonStyled onClick={logoutHandle}>
                 <LogoutStyled>Đăng xuất</LogoutStyled>
-              </LoginCateListItemStyled>
+              </LogoutButtonStyled>
           </LoginCateListStyled>
         </LoginCateWrapperStyled>
       </LoginedContainerStyled>

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import userApi from "../api/userApi";
 const initialState = {
   userData: {},
@@ -43,6 +44,30 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const loadUser = createAsyncThunk(
+  "user/loadUser",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.loadUser();
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.logout();
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -72,13 +97,38 @@ export const userSlice = createSlice({
     },
     [loginUser.pending]: (state) => {
       state.isLoading = true;
+      state.isAutheticated = false;
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isAutheticated = true;
       state.userData = action.payload;
+      toast.success("Đăng nhập thành công!");
     },
     [loginUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [loadUser.pending]: (state) => {
+      state.isLoading = true;
+      state.isAutheticated = false;
+    },
+    [loadUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isAutheticated = true;
+      state.userData = action.payload;
+    },
+    [loadUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isAutheticated = false;
+      state.errorMessage = action.payload;
+    },
+    [logoutUser.fulfilled]: (state) => {
+      state.userData = null;
+      state.isLoading = false;
+      state.isAutheticated = false;
+    },
+    [logoutUser.rejected]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload;
     },

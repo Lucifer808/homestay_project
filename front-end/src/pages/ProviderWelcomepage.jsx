@@ -7,6 +7,8 @@ import provider_go_live from '../assets/provider-go-live.png';
 import provider_set_prices from '../assets/provider-set-prices.png';
 import provider_sign_in_sign_up from '../assets/provider-sign-in-sign-up.png';
 import provider_upload_details from '../assets/provider-upload-details.png';
+import Footer from '../components/layout/Footer';
+import FooterCopyright from '../components/layout/Home/FooterCopyright';
 const ProviderWelcomepageContainerStyled = styled.div`
     height: 100%;
     width: 100%;
@@ -176,7 +178,7 @@ const ProviderWelcomepage = () => {
                     <ProviderWelcomepageModalSubHeaderStyled>
                         Độc giả toàn cầu, trọng điểm châu Á. Nhận các đặt phòng bạn đã bỏ lỡ bằng cách ghi danh miễn phí trên hệ thống, ngay hôm nay!
                     </ProviderWelcomepageModalSubHeaderStyled>
-                    <Link to="homes">
+                    <Link to="choice">
                         <ProviderWelcomepageModalButtonRegisterStyled>ĐĂNG NHÀ NGAY</ProviderWelcomepageModalButtonRegisterStyled>
                     </Link>
                     <ProviderWelcomepageModalRegisterWrapperStyled>
@@ -209,6 +211,8 @@ const ProviderWelcomepage = () => {
                 </ProviderWelcomepageHeaderBottomTitleWrapperStyled>
             </ProviderWelcomepageHeaderBottomStyled>
         </ProviderWelcomepageWrapperStyled>
+        <Footer />
+        <FooterCopyright />
     </ProviderWelcomepageContainerStyled>
   )
 }

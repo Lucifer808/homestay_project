@@ -40,6 +40,39 @@ const HeaderLanguageStyled = styled.img`
     width: 2rem;
     height: 1.4rem;
 `
+const HeaderLoginButtonStyled = styled.button`
+    border: none;
+    border-radius: .3rem;
+    width: 8rem;
+    font-size: .9rem;
+    background-color: transparent;
+    padding: .8rem .4rem;
+    height: 100%;
+    cursor: pointer;
+    color: rgb(135, 179, 251);
+    transition: all .1s linear;
+    &:hover{
+        color: #fff;
+        background-color: rgb(135, 179, 251);
+    }
+`
+const HeaderRegisterButtonStyled = styled.button`
+    border: .05rem solid rgb(135, 179, 251);
+    border-radius: .3rem;
+    width: 8rem;
+    margin-left: 1rem;
+    font-size: .9rem;
+    background-color: transparent;
+    padding: .8rem .4rem;
+    height: 100%;
+    cursor: pointer;
+    color: rgb(135, 179, 251);
+    transition: all .1s linear;
+    &:hover{
+        color: #fff;
+        background-color: rgb(135, 179, 251);
+    }
+`
 const ProviderMainBottomWrapperStyled = styled.div`
     width: 80rem;
     display: flex;
@@ -121,6 +154,12 @@ const ProviderMainpage = () => {
                 <HeaderLogoStyled>Looking</HeaderLogoStyled>
                 <HeaderRightStyled>
                     <HeaderLanguageStyled src={flag1} />
+                    <Link to="/login">
+                        <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
+                    </Link>
+                    <Link to="/register">
+                        <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
+                    </Link>
                 </HeaderRightStyled>
             </ProviderWelcomepageHeaderWrapperStyled>
         </ProviderWelcomepageHeaderContainerStyled>
@@ -145,7 +184,7 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <Link to="/provider/contract">
+                                <Link to="/provider/basics">
                                     <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
                                 </Link>
                             </ProviderMainBottomSubContentContainerStyled>
@@ -164,7 +203,7 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <Link to="/provider/enterprise">
+                                <Link to="/provider/enterprise_basics">
                                     <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
                                 </Link>
                             </ProviderMainBottomSubContentContainerStyled>

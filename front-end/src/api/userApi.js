@@ -17,6 +17,14 @@ const userApi = {
     };
     return axiosClient.post(url, params, config);
   },
+  logout: () => {
+    const url = "logout";
+    return axiosClient.get(url);
+  },
+  loadUser: () => {
+    const url = "me";
+    return axiosClient.get(url);
+  },
 };
 
 export default userApi;

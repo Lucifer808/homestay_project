@@ -1,7 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-const EnterpriseFileContainerStyled = styled.div``
-const EnterpriseFileWrapperStyled = styled.div``
+import StepperEnterprise from '../../child/StepperEnterprise';
+import { Link } from 'react-router-dom';
+const EnterpriseFileContainerStyled = styled.div`
+  width: 100%;
+  height: 100%;
+`
+const EnterpriseFileWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const ProviderContentWrapperStyled = styled.div`
+  width: 80rem;
+  display: flex;
+`
 const EnterpriseFileHeaderWrapperStyled = styled.div`
   margin-bottom: 4rem;
 `
@@ -118,124 +131,194 @@ const EnterpriseFileTopChoiceSubTitleStyled = styled.span`
   font-size: .9rem;
   font-weight: 300;
 `
+const ProviderDescRightWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  padding: 4rem;
+`
+const ProviderDescRightTopWrapperStyled = styled.div`
+    height: 90%;
+    width: 100%;
+`
+const EnterpriseInfoRightBottomWrapperStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 4rem 0;
+`
+const EnterpriseInfoRightBottomBackButtonStyled = styled.button`
+  border: none;
+  border-radius: .3rem;
+  width: 10rem;
+  font-size: .9rem;
+  background-color: transparent;
+  padding: .8rem .4rem;
+  height: 100%;
+  cursor: pointer;
+  color: rgb(135, 179, 251);
+  transition: all .1s linear;
+  border: 1px solid rgb(135, 179, 251);
+  &:hover{
+      color: #fff;
+      background-color: rgb(135, 179, 251);
+  }
+`
+const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
+  background-color: #1174a6;
+  border: none;
+  border-radius: .3rem;
+  width: 10rem;
+  font-size: .9rem;
+  padding: .8rem .4rem;
+  height: 100%;
+  cursor: pointer;
+  color: #fff;
+  transition: all .1s linear;
+  border: 1px solid #1174a6;
+  margin-left: auto;
+  &:hover{
+      color: #fff;
+      background-color: rgb(11, 84, 120);
+  }
+`
 const EnterpriseFile = () => {
   return (
     <EnterpriseFileContainerStyled>
       <EnterpriseFileWrapperStyled>
-        <EnterpriseFileHeaderWrapperStyled>
-          <EnterpriseFileHeaderStyled>Chi tiết tài khoản</EnterpriseFileHeaderStyled>
-          <EnterpriseFileSubHeaderStyled>Vui lòng cung cấp đầy đủ họ tên pháp lý chính thức để lập hợp đồng với Agoda. Chúng tôi sẽ liên hệ với bạn nếu cần có thêm các thông tin khác.</EnterpriseFileSubHeaderStyled>
-        </EnterpriseFileHeaderWrapperStyled>
-        <EnterpriseFileTopHeaderStyled>Họ tên</EnterpriseFileTopHeaderStyled>
-        <EnterpriseFileTopWrapperStyled>
-          <EnterpriseFileBottomInputHalfLocationContainerStyled>
-            <EnterpriseFileBottomInputHalfContainerStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Tên</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomInputHalfStyled placeholder='Duy'/>
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Họ</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomInputHalfStyled placeholder='Nguyen'/>
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-            </EnterpriseFileBottomInputHalfContainerStyled>
-            <EnterpriseFileBottomInputFullContainerStyled>
-              <EnterpriseFileBottomTitleStyled>Tên hiển thị (không bắt buộc)</EnterpriseFileBottomTitleStyled>
-              <EnterpriseFileBottomInputFullStyled placeholder='Duy Nguyen' />
-            </EnterpriseFileBottomInputFullContainerStyled>
-          </EnterpriseFileBottomInputHalfLocationContainerStyled>
-        </EnterpriseFileTopWrapperStyled>
-        <EnterpriseFileTopHeaderStyled>Chi tiết liên lạc</EnterpriseFileTopHeaderStyled>
-        <EnterpriseFileTopWrapperStyled>
-          <EnterpriseFileBottomInputHalfLocationContainerStyled>
-            <EnterpriseFileBottomInputHalfContainerStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Quốc gia</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomSelectHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Số điện thoại</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomInputHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-            </EnterpriseFileBottomInputHalfContainerStyled>
-            <EnterpriseFileBottomInputFullContainerStyled>
-              <EnterpriseFileBottomTitleStyled>Email</EnterpriseFileBottomTitleStyled>
-              <EnterpriseFileBottomInputFullStyled placeholder='autochess1235@gmail.com' />
-              <EnterpriseFileBottomEmailAuthButtonStyled>Xác thực email</EnterpriseFileBottomEmailAuthButtonStyled>
-            </EnterpriseFileBottomInputFullContainerStyled>
-          </EnterpriseFileBottomInputHalfLocationContainerStyled>
-        </EnterpriseFileTopWrapperStyled>
-        <EnterpriseFileTopHeaderStyled>Địa chỉ</EnterpriseFileTopHeaderStyled>
-        <EnterpriseFileTopWrapperStyled>
-          <EnterpriseFileBottomInputHalfLocationContainerStyled>
-            <EnterpriseFileBottomInputHalfContainerStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Quốc gia</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomSelectHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Thành phố</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomSelectHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Tỉnh</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomSelectHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-            </EnterpriseFileBottomInputHalfContainerStyled>
-          </EnterpriseFileBottomInputHalfLocationContainerStyled>
-          <EnterpriseFileBottomInputHalfLocationContainerStyled>
-            <EnterpriseFileBottomInputHalfContainerStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Địa chỉ chính (nơi quý đối tác ở ít nhất 8 tháng của năm)</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomInputAddressFullStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Mã vùng</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomInputHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-            </EnterpriseFileBottomInputHalfContainerStyled>
-          </EnterpriseFileBottomInputHalfLocationContainerStyled>
-          <EnterpriseFileBottomInputHalfLocationContainerStyled>
-            <EnterpriseFileBottomInputHalfContainerStyled>
-              <EnterpriseFileBottomInputHalfWrapperStyled>
-                <EnterpriseFileBottomTitleStyled>Quốc tịch</EnterpriseFileBottomTitleStyled>
-                <EnterpriseFileBottomSelectHalfStyled />
-              </EnterpriseFileBottomInputHalfWrapperStyled>
-            </EnterpriseFileBottomInputHalfContainerStyled>
-          </EnterpriseFileBottomInputHalfLocationContainerStyled>
-        </EnterpriseFileTopWrapperStyled>
-        <EnterpriseFileTopHeaderStyled>Mô tả nhà của bạn</EnterpriseFileTopHeaderStyled>
-        <EnterpriseFileTopSubHeaderStyled>Vui lòng chọn phương thức chi tiền ưa thích của quý đối tác. Thông tin thêm có thể được yêu cầu một khi được xuất bản trên Agoda.</EnterpriseFileTopSubHeaderStyled>
-        <EnterpriseFileTopWrapperStyled>
-          <EnterpriseFileTopChoiceWrapperStyled>
-            <EnterpriseFileTopChoiceStyled type="radio" />
-            <EnterpriseFileTopChoiceTitleWrapperStyled>
-              <EnterpriseFileTopChoiceTitleStyled>UPC</EnterpriseFileTopChoiceTitleStyled>
-              <EnterpriseFileTopChoiceSubTitleStyled>Thẻ Tín Dụng Ảo do Agoda tạo ra, quý đối tác sẽ có thể dễ dàng lấy số Thẻ Thanh toán Đặc biệt thông qua mạng diện rộng Agoda (YCS) với từng đơn đặt phòng riêng.</EnterpriseFileTopChoiceSubTitleStyled>
-            </EnterpriseFileTopChoiceTitleWrapperStyled>
-          </EnterpriseFileTopChoiceWrapperStyled>
-          <EnterpriseFileTopChoiceWrapperStyled>
-            <EnterpriseFileTopChoiceStyled type="radio" />
-            <EnterpriseFileTopChoiceTitleWrapperStyled>
-              <EnterpriseFileTopChoiceTitleStyled>Upc trên Epass</EnterpriseFileTopChoiceTitleStyled>
-              <EnterpriseFileTopChoiceSubTitleStyled>Tự quản lý các giao dịch đặt phòng bằng cách thu tiền một lần cho nhiều đơn đặt phòng, không cần tính tiền VCC cho từng đơn đặt phòng riêng rẽ.</EnterpriseFileTopChoiceSubTitleStyled>
-            </EnterpriseFileTopChoiceTitleWrapperStyled>
-          </EnterpriseFileTopChoiceWrapperStyled>
-          <EnterpriseFileTopChoiceWrapperStyled>
-            <EnterpriseFileTopChoiceStyled type="radio" />
-            <EnterpriseFileTopChoiceTitleWrapperStyled>
-              <EnterpriseFileTopChoiceTitleStyled>Thẻ điện tử</EnterpriseFileTopChoiceTitleStyled>
-              <EnterpriseFileTopChoiceSubTitleStyled>Thẻ hữu hình có chip. Tự quản lý các giao dịch đặt phòng bằng cách thu tiền một lần cho nhiều đơn đặt phòng, không cần tính tiền VCC cho từng đơn đặt phòng riêng rẽ.</EnterpriseFileTopChoiceSubTitleStyled>
-            </EnterpriseFileTopChoiceTitleWrapperStyled>
-          </EnterpriseFileTopChoiceWrapperStyled>
-          <EnterpriseFileTopChoiceWrapperStyled>
-            <EnterpriseFileTopChoiceStyled type="radio" />
-            <EnterpriseFileTopChoiceTitleWrapperStyled>
-              <EnterpriseFileTopChoiceTitleStyled>Tiền gửi trực tiếp vào ngân hàng</EnterpriseFileTopChoiceTitleStyled>
-              <EnterpriseFileTopChoiceSubTitleStyled>Chúng tôi sẽ gửi tiền thanh toán trực tiếp vào tài khoản ngân hàng của quý đối tác sau khi khách hàng rời đi, ghi có trong 30 ngày.</EnterpriseFileTopChoiceSubTitleStyled>
-            </EnterpriseFileTopChoiceTitleWrapperStyled>
-          </EnterpriseFileTopChoiceWrapperStyled>
-        </EnterpriseFileTopWrapperStyled>
+        <ProviderContentWrapperStyled>
+          <StepperEnterprise activeStep={5} />
+          <ProviderDescRightWrapperStyled>
+            <ProviderDescRightTopWrapperStyled>
+              <EnterpriseFileHeaderWrapperStyled>
+                <EnterpriseFileHeaderStyled>Chi tiết tài khoản</EnterpriseFileHeaderStyled>
+                <EnterpriseFileSubHeaderStyled>Vui lòng cung cấp đầy đủ họ tên pháp lý chính thức để lập hợp đồng với Agoda. Chúng tôi sẽ liên hệ với bạn nếu cần có thêm các thông tin khác.</EnterpriseFileSubHeaderStyled>
+              </EnterpriseFileHeaderWrapperStyled>
+              <EnterpriseFileTopHeaderStyled>Họ tên</EnterpriseFileTopHeaderStyled>
+              <EnterpriseFileTopWrapperStyled>
+                <EnterpriseFileBottomInputHalfLocationContainerStyled>
+                  <EnterpriseFileBottomInputHalfContainerStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Tên</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomInputHalfStyled placeholder='Duy'/>
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Họ</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomInputHalfStyled placeholder='Nguyen'/>
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                  </EnterpriseFileBottomInputHalfContainerStyled>
+                  <EnterpriseFileBottomInputFullContainerStyled>
+                    <EnterpriseFileBottomTitleStyled>Tên hiển thị (không bắt buộc)</EnterpriseFileBottomTitleStyled>
+                    <EnterpriseFileBottomInputFullStyled placeholder='Duy Nguyen' />
+                  </EnterpriseFileBottomInputFullContainerStyled>
+                </EnterpriseFileBottomInputHalfLocationContainerStyled>
+              </EnterpriseFileTopWrapperStyled>
+              <EnterpriseFileTopHeaderStyled>Chi tiết liên lạc</EnterpriseFileTopHeaderStyled>
+              <EnterpriseFileTopWrapperStyled>
+                <EnterpriseFileBottomInputHalfLocationContainerStyled>
+                  <EnterpriseFileBottomInputHalfContainerStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Quốc gia</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomSelectHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Số điện thoại</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomInputHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                  </EnterpriseFileBottomInputHalfContainerStyled>
+                  <EnterpriseFileBottomInputFullContainerStyled>
+                    <EnterpriseFileBottomTitleStyled>Email</EnterpriseFileBottomTitleStyled>
+                    <EnterpriseFileBottomInputFullStyled placeholder='autochess1235@gmail.com' />
+                    <EnterpriseFileBottomEmailAuthButtonStyled>Xác thực email</EnterpriseFileBottomEmailAuthButtonStyled>
+                  </EnterpriseFileBottomInputFullContainerStyled>
+                </EnterpriseFileBottomInputHalfLocationContainerStyled>
+              </EnterpriseFileTopWrapperStyled>
+              <EnterpriseFileTopHeaderStyled>Địa chỉ</EnterpriseFileTopHeaderStyled>
+              <EnterpriseFileTopWrapperStyled>
+                <EnterpriseFileBottomInputHalfLocationContainerStyled>
+                  <EnterpriseFileBottomInputHalfContainerStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Quốc gia</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomSelectHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Thành phố</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomSelectHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Tỉnh</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomSelectHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                  </EnterpriseFileBottomInputHalfContainerStyled>
+                </EnterpriseFileBottomInputHalfLocationContainerStyled>
+                <EnterpriseFileBottomInputHalfLocationContainerStyled>
+                  <EnterpriseFileBottomInputHalfContainerStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Địa chỉ chính (nơi quý đối tác ở ít nhất 8 tháng của năm)</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomInputAddressFullStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Mã vùng</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomInputHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                  </EnterpriseFileBottomInputHalfContainerStyled>
+                </EnterpriseFileBottomInputHalfLocationContainerStyled>
+                <EnterpriseFileBottomInputHalfLocationContainerStyled>
+                  <EnterpriseFileBottomInputHalfContainerStyled>
+                    <EnterpriseFileBottomInputHalfWrapperStyled>
+                      <EnterpriseFileBottomTitleStyled>Quốc tịch</EnterpriseFileBottomTitleStyled>
+                      <EnterpriseFileBottomSelectHalfStyled />
+                    </EnterpriseFileBottomInputHalfWrapperStyled>
+                  </EnterpriseFileBottomInputHalfContainerStyled>
+                </EnterpriseFileBottomInputHalfLocationContainerStyled>
+              </EnterpriseFileTopWrapperStyled>
+              <EnterpriseFileTopHeaderStyled>Mô tả nhà của bạn</EnterpriseFileTopHeaderStyled>
+              <EnterpriseFileTopSubHeaderStyled>Vui lòng chọn phương thức chi tiền ưa thích của quý đối tác. Thông tin thêm có thể được yêu cầu một khi được xuất bản trên Agoda.</EnterpriseFileTopSubHeaderStyled>
+              <EnterpriseFileTopWrapperStyled>
+                <EnterpriseFileTopChoiceWrapperStyled>
+                  <EnterpriseFileTopChoiceStyled type="radio" />
+                  <EnterpriseFileTopChoiceTitleWrapperStyled>
+                    <EnterpriseFileTopChoiceTitleStyled>UPC</EnterpriseFileTopChoiceTitleStyled>
+                    <EnterpriseFileTopChoiceSubTitleStyled>Thẻ Tín Dụng Ảo do Agoda tạo ra, quý đối tác sẽ có thể dễ dàng lấy số Thẻ Thanh toán Đặc biệt thông qua mạng diện rộng Agoda (YCS) với từng đơn đặt phòng riêng.</EnterpriseFileTopChoiceSubTitleStyled>
+                  </EnterpriseFileTopChoiceTitleWrapperStyled>
+                </EnterpriseFileTopChoiceWrapperStyled>
+                <EnterpriseFileTopChoiceWrapperStyled>
+                  <EnterpriseFileTopChoiceStyled type="radio" />
+                  <EnterpriseFileTopChoiceTitleWrapperStyled>
+                    <EnterpriseFileTopChoiceTitleStyled>Upc trên Epass</EnterpriseFileTopChoiceTitleStyled>
+                    <EnterpriseFileTopChoiceSubTitleStyled>Tự quản lý các giao dịch đặt phòng bằng cách thu tiền một lần cho nhiều đơn đặt phòng, không cần tính tiền VCC cho từng đơn đặt phòng riêng rẽ.</EnterpriseFileTopChoiceSubTitleStyled>
+                  </EnterpriseFileTopChoiceTitleWrapperStyled>
+                </EnterpriseFileTopChoiceWrapperStyled>
+                <EnterpriseFileTopChoiceWrapperStyled>
+                  <EnterpriseFileTopChoiceStyled type="radio" />
+                  <EnterpriseFileTopChoiceTitleWrapperStyled>
+                    <EnterpriseFileTopChoiceTitleStyled>Thẻ điện tử</EnterpriseFileTopChoiceTitleStyled>
+                    <EnterpriseFileTopChoiceSubTitleStyled>Thẻ hữu hình có chip. Tự quản lý các giao dịch đặt phòng bằng cách thu tiền một lần cho nhiều đơn đặt phòng, không cần tính tiền VCC cho từng đơn đặt phòng riêng rẽ.</EnterpriseFileTopChoiceSubTitleStyled>
+                  </EnterpriseFileTopChoiceTitleWrapperStyled>
+                </EnterpriseFileTopChoiceWrapperStyled>
+                <EnterpriseFileTopChoiceWrapperStyled>
+                  <EnterpriseFileTopChoiceStyled type="radio" />
+                  <EnterpriseFileTopChoiceTitleWrapperStyled>
+                    <EnterpriseFileTopChoiceTitleStyled>Tiền gửi trực tiếp vào ngân hàng</EnterpriseFileTopChoiceTitleStyled>
+                    <EnterpriseFileTopChoiceSubTitleStyled>Chúng tôi sẽ gửi tiền thanh toán trực tiếp vào tài khoản ngân hàng của quý đối tác sau khi khách hàng rời đi, ghi có trong 30 ngày.</EnterpriseFileTopChoiceSubTitleStyled>
+                  </EnterpriseFileTopChoiceTitleWrapperStyled>
+                </EnterpriseFileTopChoiceWrapperStyled>
+              </EnterpriseFileTopWrapperStyled>
+            </ProviderDescRightTopWrapperStyled>
+            <EnterpriseInfoRightBottomWrapperStyled>
+              <Link to="/enterprise/image">
+                <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+              </Link>
+              <Link to="/enterprise/file">
+                <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
+              </Link>
+            </EnterpriseInfoRightBottomWrapperStyled>
+          </ProviderDescRightWrapperStyled>
+        </ProviderContentWrapperStyled>
       </EnterpriseFileWrapperStyled>
     </EnterpriseFileContainerStyled>
   )

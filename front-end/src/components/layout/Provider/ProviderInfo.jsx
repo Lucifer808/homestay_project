@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import provider_ec_basics from '../../../assets/provider-ec-basics.png';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import StepperProvider from '../../child/StepperProvider';
+import { Link } from 'react-router-dom';
 const ProviderInfoContainerStyled = styled.div`
   height: 100%;
   width: 100%;
 `
 const ProviderInfoWrapperStyled = styled.div`
   display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+const ProviderContentWrapperStyled = styled.div`
+  width: 80rem;
+  display: flex;
 `
 const ProviderInfoHeaderWrapperStyled = styled.div`
   display: flex;
@@ -157,115 +163,167 @@ const ProviderInfoBottomAddStyled = styled.p`
   cursor: pointer;
   color: #1174a6;
 `
+const ProviderDescRightWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  padding: 4rem;
+`
+const ProviderDescRightTopWrapperStyled = styled.div`
+    height: 90%;
+    width: 100%;
+`
+const ProviderDescRightBottomWrapperStyled = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* width: 100%; */
+  margin: 4rem 0;
+`
+const ProviderDescRightBottomNextButtonStyled = styled.button`
+  background-color: #1174a6;
+  border: none;
+  border-radius: .3rem;
+  width: 10rem;
+  font-size: .9rem;
+  padding: .8rem .4rem;
+  height: 100%;
+  cursor: pointer;
+  color: #fff;
+  transition: all .1s linear;
+  border: 1px solid #1174a6;
+  &:hover{
+      color: #fff;
+      background-color: rgb(11, 84, 120);
+  }
+`
 const ProviderInfo = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
   return (
     <ProviderInfoContainerStyled>
       <ProviderInfoWrapperStyled>
-        <ProviderInfoHeaderWrapperStyled>
-          <ProviderInfoHeaderLeftWrapperStyled>
-            <ProviderInfoHeaderStyled>Giúp bạn tiếp cận đối tượng khách hàng phù hợp nhất.</ProviderInfoHeaderStyled>
-            <ProviderInfoSubHeaderStyled>Vui lòng cung cấp mọi thông tin được yêu cầu trừ khi có đánh dấu không bắt buộc.</ProviderInfoSubHeaderStyled>
-          </ProviderInfoHeaderLeftWrapperStyled>
-          <ProviderInfoHeaderRightImageStyled src={provider_ec_basics} />
-        </ProviderInfoHeaderWrapperStyled>
-        <ProviderInfoTopHeaderStyled>Cơ sở kinh doanh</ProviderInfoTopHeaderStyled>
-        <ProviderInfoTopWrapperStyled>
-          <ProviderInfoTopContentTitleStyled>Loại hình</ProviderInfoTopContentTitleStyled>
-          <ProviderInfoTopContentSubTitleStyled>Chọn một loại chổ nghỉ</ProviderInfoTopContentSubTitleStyled>
-          <ProviderInfoTopContentChoiceContainerStyled>
-            <ProviderInfoTopContentChoiceWrapperStyled>
-              <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ căn hộ</ProviderInfoTopContentChoiceTitleStyled>
-            </ProviderInfoTopContentChoiceWrapperStyled>
-            <ProviderInfoTopContentChoiceWrapperStyled>
-              <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ nhà trệt</ProviderInfoTopContentChoiceTitleStyled>
-            </ProviderInfoTopContentChoiceWrapperStyled>
-            <ProviderInfoTopContentChoiceWrapperStyled>
-              <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ nhà riêng</ProviderInfoTopContentChoiceTitleStyled>
-            </ProviderInfoTopContentChoiceWrapperStyled>
-            <ProviderInfoTopContentChoiceWrapperStyled>
-              <ProviderInfoTopContentChoiceTitleStyled>Biệt thự</ProviderInfoTopContentChoiceTitleStyled>
-            </ProviderInfoTopContentChoiceWrapperStyled>
-          </ProviderInfoTopContentChoiceContainerStyled>
-          <ProviderInfoTopContentBottomTitleStyled>Quy mô chổ nghỉ</ProviderInfoTopContentBottomTitleStyled>
-          <ProviderInfoTopContentBottomAreaWrapperStyled>
-            <ProviderInfoTopContentBottomAreaInputStyled placeholder={0} type="number" min={0} required={true}/>
-            <ProviderInfoTopContentBottomAreaTitleStyled>mét vuông</ProviderInfoTopContentBottomAreaTitleStyled>
-          </ProviderInfoTopContentBottomAreaWrapperStyled>
-        </ProviderInfoTopWrapperStyled>
-        <ProviderInfoTopHeaderStyled>Chi tiết phòng ở</ProviderInfoTopHeaderStyled>
-        <ProviderInfoBottomWrapperStyled>
-          <ProviderInfoBottomContentWrapperStyled>
-            <ProviderInfoBottomContentTitleStyled>Sức chứa</ProviderInfoBottomContentTitleStyled>
-            <ProviderInfoBottomContentSubTitleStyled>Số lượng người tối đa có thể ngủ thoải mái theo số lượng giường và sofa cung cấp.</ProviderInfoBottomContentSubTitleStyled>
-            <ProviderInfoBottomContentInputWrapperStyled>
-              <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
-              <ProviderInfoBottomContentInputStyled defaultValue={3} type="number" min={0}/>
-              <AddOutlinedIcon />
-            </ProviderInfoBottomContentInputWrapperStyled>
-          </ProviderInfoBottomContentWrapperStyled>
-          <ProviderInfoBottomContentWrapperStyled>
-            <ProviderInfoBottomContentTitleStyled>Phòng tắm</ProviderInfoBottomContentTitleStyled>
-            <ProviderInfoBottomContentSubTitleStyled>Chỉ đếm số lượng phòng tắm trong nơi ở của bạn, không phải phòng tắm chung trong toà nhà hoặc chung cư.</ProviderInfoBottomContentSubTitleStyled>
-            <ProviderInfoBottomContentInputWrapperStyled>
-              <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
-              <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
-              <AddOutlinedIcon />
-            </ProviderInfoBottomContentInputWrapperStyled>
-          </ProviderInfoBottomContentWrapperStyled>
-          <ProviderInfoBottomContentWrapperStyled>
-            <ProviderInfoBottomContentTitleStyled>Phòng ngủ</ProviderInfoBottomContentTitleStyled>
-            <ProviderInfoBottomContentSubTitleStyled>Nếu chỗ ở của bạn là phòng gác mái hoặc studio, số lượng phòng ngủ là 0.</ProviderInfoBottomContentSubTitleStyled>
-            <ProviderInfoBottomContentInputWrapperStyled>
-              <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
-              <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
-              <AddOutlinedIcon />
-            </ProviderInfoBottomContentInputWrapperStyled>
-          </ProviderInfoBottomContentWrapperStyled>
-        </ProviderInfoBottomWrapperStyled>
-        <ProviderInfoBottomBonusWrapperStyled>
-          <ProviderInfoBottomBonusContentWrapperStyled>
-            <ProviderInfoBottomBonusContentTitleStyled>Phòng 1</ProviderInfoBottomBonusContentTitleStyled>
-            <ProviderInfoBottomContentInputContainerStyled>
-              <ProviderInfoBottomContentInputWrapperStyled>
-                <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
-                <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
-                <AddOutlinedIcon />
-              </ProviderInfoBottomContentInputWrapperStyled>
-              <ProviderInfoBottomContentSelectStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đơn</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đôi nhỏ</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đôi</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường Queen</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường King</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường Super King</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường tầng</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường sofa</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>nệm futon</ProviderInfoBottomContentOptionStyled>
-              </ProviderInfoBottomContentSelectStyled>
-            </ProviderInfoBottomContentInputContainerStyled>
-            <ProviderInfoBottomAddStyled>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
-            <ProviderInfoBottomBonusContentTitleStyled>Không gian chung</ProviderInfoBottomBonusContentTitleStyled>
-            <ProviderInfoBottomContentInputContainerStyled>
-              <ProviderInfoBottomContentInputWrapperStyled>
-                <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
-                <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
-                <AddOutlinedIcon />
-              </ProviderInfoBottomContentInputWrapperStyled>
-              <ProviderInfoBottomContentSelectStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đơn</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đôi nhỏ</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường đôi</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường Queen</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường King</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường Super King</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường tầng</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>giường sofa</ProviderInfoBottomContentOptionStyled>
-                <ProviderInfoBottomContentOptionStyled>nệm futon</ProviderInfoBottomContentOptionStyled>
-              </ProviderInfoBottomContentSelectStyled>
-            </ProviderInfoBottomContentInputContainerStyled>
-            <ProviderInfoBottomAddStyled>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
-          </ProviderInfoBottomBonusContentWrapperStyled>
-        </ProviderInfoBottomBonusWrapperStyled>
+        <ProviderContentWrapperStyled>
+          <StepperProvider activeStep={0} />
+          <ProviderDescRightWrapperStyled>
+            <ProviderDescRightTopWrapperStyled>
+              <ProviderInfoHeaderWrapperStyled>
+                <ProviderInfoHeaderLeftWrapperStyled>
+                  <ProviderInfoHeaderStyled>Giúp bạn tiếp cận đối tượng khách hàng phù hợp nhất.</ProviderInfoHeaderStyled>
+                  <ProviderInfoSubHeaderStyled>Vui lòng cung cấp mọi thông tin được yêu cầu trừ khi có đánh dấu không bắt buộc.</ProviderInfoSubHeaderStyled>
+                </ProviderInfoHeaderLeftWrapperStyled>
+                <ProviderInfoHeaderRightImageStyled src={provider_ec_basics} />
+              </ProviderInfoHeaderWrapperStyled>
+              <ProviderInfoTopHeaderStyled>Cơ sở kinh doanh</ProviderInfoTopHeaderStyled>
+              <ProviderInfoTopWrapperStyled>
+                <ProviderInfoTopContentTitleStyled>Loại hình</ProviderInfoTopContentTitleStyled>
+                <ProviderInfoTopContentSubTitleStyled>Chọn một loại chổ nghỉ</ProviderInfoTopContentSubTitleStyled>
+                <ProviderInfoTopContentChoiceContainerStyled>
+                  <ProviderInfoTopContentChoiceWrapperStyled>
+                    <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ căn hộ</ProviderInfoTopContentChoiceTitleStyled>
+                  </ProviderInfoTopContentChoiceWrapperStyled>
+                  <ProviderInfoTopContentChoiceWrapperStyled>
+                    <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ nhà trệt</ProviderInfoTopContentChoiceTitleStyled>
+                  </ProviderInfoTopContentChoiceWrapperStyled>
+                  <ProviderInfoTopContentChoiceWrapperStyled>
+                    <ProviderInfoTopContentChoiceTitleStyled>Toàn bộ nhà riêng</ProviderInfoTopContentChoiceTitleStyled>
+                  </ProviderInfoTopContentChoiceWrapperStyled>
+                  <ProviderInfoTopContentChoiceWrapperStyled>
+                    <ProviderInfoTopContentChoiceTitleStyled>Biệt thự</ProviderInfoTopContentChoiceTitleStyled>
+                  </ProviderInfoTopContentChoiceWrapperStyled>
+                </ProviderInfoTopContentChoiceContainerStyled>
+                <ProviderInfoTopContentBottomTitleStyled>Quy mô chổ nghỉ</ProviderInfoTopContentBottomTitleStyled>
+                <ProviderInfoTopContentBottomAreaWrapperStyled>
+                  <ProviderInfoTopContentBottomAreaInputStyled placeholder={0} type="number" min={0} required={true}/>
+                  <ProviderInfoTopContentBottomAreaTitleStyled>mét vuông</ProviderInfoTopContentBottomAreaTitleStyled>
+                </ProviderInfoTopContentBottomAreaWrapperStyled>
+              </ProviderInfoTopWrapperStyled>
+              <ProviderInfoTopHeaderStyled>Chi tiết phòng ở</ProviderInfoTopHeaderStyled>
+              <ProviderInfoBottomWrapperStyled>
+                <ProviderInfoBottomContentWrapperStyled>
+                  <ProviderInfoBottomContentTitleStyled>Sức chứa</ProviderInfoBottomContentTitleStyled>
+                  <ProviderInfoBottomContentSubTitleStyled>Số lượng người tối đa có thể ngủ thoải mái theo số lượng giường và sofa cung cấp.</ProviderInfoBottomContentSubTitleStyled>
+                  <ProviderInfoBottomContentInputWrapperStyled>
+                    <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
+                    <ProviderInfoBottomContentInputStyled defaultValue={3} type="number" min={0}/>
+                    <AddOutlinedIcon />
+                  </ProviderInfoBottomContentInputWrapperStyled>
+                </ProviderInfoBottomContentWrapperStyled>
+                <ProviderInfoBottomContentWrapperStyled>
+                  <ProviderInfoBottomContentTitleStyled>Phòng tắm</ProviderInfoBottomContentTitleStyled>
+                  <ProviderInfoBottomContentSubTitleStyled>Chỉ đếm số lượng phòng tắm trong nơi ở của bạn, không phải phòng tắm chung trong toà nhà hoặc chung cư.</ProviderInfoBottomContentSubTitleStyled>
+                  <ProviderInfoBottomContentInputWrapperStyled>
+                    <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
+                    <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
+                    <AddOutlinedIcon />
+                  </ProviderInfoBottomContentInputWrapperStyled>
+                </ProviderInfoBottomContentWrapperStyled>
+                <ProviderInfoBottomContentWrapperStyled>
+                  <ProviderInfoBottomContentTitleStyled>Phòng ngủ</ProviderInfoBottomContentTitleStyled>
+                  <ProviderInfoBottomContentSubTitleStyled>Nếu chỗ ở của bạn là phòng gác mái hoặc studio, số lượng phòng ngủ là 0.</ProviderInfoBottomContentSubTitleStyled>
+                  <ProviderInfoBottomContentInputWrapperStyled>
+                    <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
+                    <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
+                    <AddOutlinedIcon />
+                  </ProviderInfoBottomContentInputWrapperStyled>
+                </ProviderInfoBottomContentWrapperStyled>
+              </ProviderInfoBottomWrapperStyled>
+              <ProviderInfoBottomBonusWrapperStyled>
+                <ProviderInfoBottomBonusContentWrapperStyled>
+                  <ProviderInfoBottomBonusContentTitleStyled>Phòng 1</ProviderInfoBottomBonusContentTitleStyled>
+                  <ProviderInfoBottomContentInputContainerStyled>
+                    <ProviderInfoBottomContentInputWrapperStyled>
+                      <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
+                      <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
+                      <AddOutlinedIcon />
+                    </ProviderInfoBottomContentInputWrapperStyled>
+                    <ProviderInfoBottomContentSelectStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đơn</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đôi nhỏ</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đôi</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường Queen</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường King</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường Super King</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường tầng</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường sofa</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>nệm futon</ProviderInfoBottomContentOptionStyled>
+                    </ProviderInfoBottomContentSelectStyled>
+                  </ProviderInfoBottomContentInputContainerStyled>
+                  <ProviderInfoBottomAddStyled>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
+                  <ProviderInfoBottomBonusContentTitleStyled>Không gian chung</ProviderInfoBottomBonusContentTitleStyled>
+                  <ProviderInfoBottomContentInputContainerStyled>
+                    <ProviderInfoBottomContentInputWrapperStyled>
+                      <RemoveOutlinedIcon style={{cursor: 'pointer', }}/>
+                      <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
+                      <AddOutlinedIcon />
+                    </ProviderInfoBottomContentInputWrapperStyled>
+                    <ProviderInfoBottomContentSelectStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đơn</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đôi nhỏ</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường đôi</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường Queen</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường King</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường Super King</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường tầng</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>giường sofa</ProviderInfoBottomContentOptionStyled>
+                      <ProviderInfoBottomContentOptionStyled>nệm futon</ProviderInfoBottomContentOptionStyled>
+                    </ProviderInfoBottomContentSelectStyled>
+                  </ProviderInfoBottomContentInputContainerStyled>
+                  <ProviderInfoBottomAddStyled>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
+                </ProviderInfoBottomBonusContentWrapperStyled>
+              </ProviderInfoBottomBonusWrapperStyled>
+            </ProviderDescRightTopWrapperStyled>
+            <ProviderDescRightBottomWrapperStyled>
+              <Link to="/provider/location">
+                <ProviderDescRightBottomNextButtonStyled >TIẾP THEO</ProviderDescRightBottomNextButtonStyled>
+              </Link>
+            </ProviderDescRightBottomWrapperStyled>
+          </ProviderDescRightWrapperStyled>
+        </ProviderContentWrapperStyled>
       </ProviderInfoWrapperStyled>
     </ProviderInfoContainerStyled>
   )

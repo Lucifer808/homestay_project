@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import provider_ec_photos from '../../../assets/provider-ec-photos.png';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import img_detail from '../../../assets/img_detail.jpeg';
-const ProviderImageContainerStyled = styled.div``
-const ProviderImageWrapperStyled = styled.div``
+import StepperProvider from '../../child/StepperProvider';
+import { Link } from 'react-router-dom';
+const ProviderImageContainerStyled = styled.div`
+  height: 100%;
+  width: 100%;
+`
+const ProviderImageWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const ProviderContentWrapperStyled = styled.div`
+  width: 80rem;
+  display: flex;
+`
 const ProviderImageHeaderWrapperStyled = styled.div`
   display: flex;
   justify-content: space-between;
@@ -96,52 +109,125 @@ const ProviderImageBottomElementSelectStyled = styled.select`
   border: 1px solid #ccc;
 `
 const ProviderImageBottomElementOptionStyled = styled.option``
+const ProviderDescRightWrapperStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  padding: 4rem;
+`
+const ProviderDescRightTopWrapperStyled = styled.div`
+    height: 90%;
+    width: 100%;
+`
+const EnterpriseInfoRightBottomWrapperStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 4rem 0;
+`
+const EnterpriseInfoRightBottomBackButtonStyled = styled.button`
+  border: none;
+  border-radius: .3rem;
+  width: 10rem;
+  font-size: .9rem;
+  background-color: transparent;
+  padding: .8rem .4rem;
+  height: 100%;
+  cursor: pointer;
+  color: rgb(135, 179, 251);
+  transition: all .1s linear;
+  border: 1px solid rgb(135, 179, 251);
+  &:hover{
+      color: #fff;
+      background-color: rgb(135, 179, 251);
+  }
+`
+const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
+  background-color: #1174a6;
+  border: none;
+  border-radius: .3rem;
+  width: 10rem;
+  font-size: .9rem;
+  padding: .8rem .4rem;
+  height: 100%;
+  cursor: pointer;
+  color: #fff;
+  transition: all .1s linear;
+  border: 1px solid #1174a6;
+  margin-left: auto;
+  &:hover{
+      color: #fff;
+      background-color: rgb(11, 84, 120);
+  }
+`
 const ProviderImage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
   return (
     <ProviderImageContainerStyled>
       <ProviderImageWrapperStyled>
-        <ProviderImageHeaderWrapperStyled>
-          <ProviderImageHeaderLeftWrapperStyled>
-            <ProviderImageHeaderStyled>Cho khách hàng xem những gì họ đang bỏ lỡ.</ProviderImageHeaderStyled>
-            <ProviderImageSubHeaderStyled>Hình ảnh rất quan trọng đối với du khách. Hãy đăng càng nhiều ảnh chất lượng cao càng tốt. Bạn có thể thêm ảnh về sau. Agoda có sẵn những bí kíp đăng tải ảnh chất lượng để thu hút nhiều đặt phòng hơn.</ProviderImageSubHeaderStyled>
-          </ProviderImageHeaderLeftWrapperStyled>
-          <ProviderImageHeaderRightImageStyled src={provider_ec_photos} />
-        </ProviderImageHeaderWrapperStyled>
-        <ProviderImageTopContainerStyled>
-          <ProviderImageTopWrapperStyled>
-            <ProviderImageTopLeftWrapperStyled>
-              <ProviderImageTopLeftImgStyled src={img_detail}/>
-              <ProviderImageTopLeftImgTagWrapperStyled>
-                <ProviderImageTopLeftImgTagStyled>Ảnh chính</ProviderImageTopLeftImgTagStyled>
-              </ProviderImageTopLeftImgTagWrapperStyled>
-            </ProviderImageTopLeftWrapperStyled>
-            <ProviderImageTopRightWrapperStyled>
-              <CloudUploadOutlinedIcon style={{fontSize: '4rem', color: '#1174a6'}}/>
-              <ProviderImageTopRightTitleStyled>Kéo và thả ảnh của bạn vào đây</ProviderImageTopRightTitleStyled>
-              <ProviderImageTopRightButtonStyled>CHỌN ẢNH</ProviderImageTopRightButtonStyled>
-            </ProviderImageTopRightWrapperStyled>
-          </ProviderImageTopWrapperStyled>
-          <ProviderImageBottomWrapperStyled>
-            <ProviderImageBottomElementWrapperStyled>
-              <ProviderImageBottomElementImageStyled src={img_detail}/>
-              <ProviderImageBottomElementSelectStyled>
-                <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-              </ProviderImageBottomElementSelectStyled>
-            </ProviderImageBottomElementWrapperStyled>
-            <ProviderImageBottomElementWrapperStyled>
-              <ProviderImageBottomElementImageStyled src={img_detail}/>
-              <ProviderImageBottomElementSelectStyled>
-                <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-              </ProviderImageBottomElementSelectStyled>
-            </ProviderImageBottomElementWrapperStyled>
-            <ProviderImageBottomElementWrapperStyled>
-              <ProviderImageBottomElementImageStyled src={img_detail}/>
-              <ProviderImageBottomElementSelectStyled>
-                <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-              </ProviderImageBottomElementSelectStyled>
-            </ProviderImageBottomElementWrapperStyled>
-          </ProviderImageBottomWrapperStyled>
-        </ProviderImageTopContainerStyled>
+        <ProviderContentWrapperStyled>
+          <StepperProvider activeStep={5} />
+          <ProviderDescRightWrapperStyled>
+            <ProviderDescRightTopWrapperStyled>
+              <ProviderImageHeaderWrapperStyled>
+                <ProviderImageHeaderLeftWrapperStyled>
+                  <ProviderImageHeaderStyled>Cho khách hàng xem những gì họ đang bỏ lỡ.</ProviderImageHeaderStyled>
+                  <ProviderImageSubHeaderStyled>Hình ảnh rất quan trọng đối với du khách. Hãy đăng càng nhiều ảnh chất lượng cao càng tốt. Bạn có thể thêm ảnh về sau. Agoda có sẵn những bí kíp đăng tải ảnh chất lượng để thu hút nhiều đặt phòng hơn.</ProviderImageSubHeaderStyled>
+                </ProviderImageHeaderLeftWrapperStyled>
+                <ProviderImageHeaderRightImageStyled src={provider_ec_photos} />
+              </ProviderImageHeaderWrapperStyled>
+              <ProviderImageTopContainerStyled>
+                <ProviderImageTopWrapperStyled>
+                  <ProviderImageTopLeftWrapperStyled>
+                    <ProviderImageTopLeftImgStyled src={img_detail}/>
+                    <ProviderImageTopLeftImgTagWrapperStyled>
+                      <ProviderImageTopLeftImgTagStyled>Ảnh chính</ProviderImageTopLeftImgTagStyled>
+                    </ProviderImageTopLeftImgTagWrapperStyled>
+                  </ProviderImageTopLeftWrapperStyled>
+                  <ProviderImageTopRightWrapperStyled>
+                    <CloudUploadOutlinedIcon style={{fontSize: '4rem', color: '#1174a6'}}/>
+                    <ProviderImageTopRightTitleStyled>Kéo và thả ảnh của bạn vào đây</ProviderImageTopRightTitleStyled>
+                    <ProviderImageTopRightButtonStyled>CHỌN ẢNH</ProviderImageTopRightButtonStyled>
+                  </ProviderImageTopRightWrapperStyled>
+                </ProviderImageTopWrapperStyled>
+                <ProviderImageBottomWrapperStyled>
+                  <ProviderImageBottomElementWrapperStyled>
+                    <ProviderImageBottomElementImageStyled src={img_detail}/>
+                    <ProviderImageBottomElementSelectStyled>
+                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
+                    </ProviderImageBottomElementSelectStyled>
+                  </ProviderImageBottomElementWrapperStyled>
+                  <ProviderImageBottomElementWrapperStyled>
+                    <ProviderImageBottomElementImageStyled src={img_detail}/>
+                    <ProviderImageBottomElementSelectStyled>
+                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
+                    </ProviderImageBottomElementSelectStyled>
+                  </ProviderImageBottomElementWrapperStyled>
+                  <ProviderImageBottomElementWrapperStyled>
+                    <ProviderImageBottomElementImageStyled src={img_detail}/>
+                    <ProviderImageBottomElementSelectStyled>
+                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
+                    </ProviderImageBottomElementSelectStyled>
+                  </ProviderImageBottomElementWrapperStyled>
+                </ProviderImageBottomWrapperStyled>
+              </ProviderImageTopContainerStyled>
+            </ProviderDescRightTopWrapperStyled>
+            <EnterpriseInfoRightBottomWrapperStyled>
+              <Link to="/provider/price">
+                <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+              </Link>
+              <Link to="/provider/file">
+                <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
+              </Link>
+            </EnterpriseInfoRightBottomWrapperStyled>
+          </ProviderDescRightWrapperStyled>
+        </ProviderContentWrapperStyled>
       </ProviderImageWrapperStyled>
     </ProviderImageContainerStyled>
   )
