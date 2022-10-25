@@ -89,8 +89,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   // User validate password
-  Users.prototype.validatePassword = async function (password) {
-    const comparePassword = await bcrypt.compare(password, this.password);
+  Users.prototype.validatePassword = function (password) {
+    const comparePassword = bcrypt.compareSync(password, this.password);
     return comparePassword;
   };
   // JWT
