@@ -184,7 +184,7 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <Link to="/provider/basics">
+                                <Link to="/provider">
                                     <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
                                 </Link>
                             </ProviderMainBottomSubContentContainerStyled>
@@ -203,7 +203,7 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <Link to="/provider/enterprise_basics">
+                                <Link to="/enterprise">
                                     <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
                                 </Link>
                             </ProviderMainBottomSubContentContainerStyled>

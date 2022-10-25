@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import flag1 from '../../assets/flag-vn.png';
 import bag1 from '../../assets/Bags-heart.svg';
 import { Link, useLocation } from 'react-router-dom';
-import { selectIsAutheticated, selectLoading, selectUsers } from '../../features/userSlice';
+import { selectIsAutheticated, selectLoading, selectUser } from '../../features/userSlice';
 import QuickSearch from '../child/QuickSearch';
 import { useSelector } from 'react-redux';
 import UserOptions from '../child/UserOptions';
@@ -175,7 +175,7 @@ const HeaderBottomButtonStyled = styled.button`
 `
 const Header = () => {
   const location = useLocation();
-  const usereData = useSelector(selectUsers);
+  const usereData = useSelector(selectUser);
   const isAutheticated = useSelector(selectIsAutheticated);
   return (
     <HeaderStyled>

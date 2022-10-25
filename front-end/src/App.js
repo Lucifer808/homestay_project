@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { store } from "./store";
-import { loadUser } from "./features/userSlice";
+import { loadUser, selectUser } from "./features/userSlice";
 import Homepage from "./pages/Homepage";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
@@ -29,10 +30,13 @@ import EnterpriseRoomDetail from "./components/layout/Enterprise/EnterpriseRoomD
 import EnterpriseImage from "./components/layout/Enterprise/EnterpriseImage";
 import EnterpriseLayout from "./components/layout/EnterpriseLayout";
 import EnterpriseFile from "./components/layout/Enterprise/EnterpriseFile";
+import AdminProtectedRoute from "./routes/AdminProtectedRoute";
+import AdminHomepage from "./components/admin/AdminHomepage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+  const selectData = useSelector(selectUser);
   return (
     <>
       <ToastContainer
@@ -77,6 +81,12 @@ function App() {
           />
           <Route path="/enterprise/image" element={<EnterpriseImage />} />
           <Route path="/enterprise/file" element={<EnterpriseFile />} />
+        </Route>
+        <Route
+          path="/admin"
+          element={<AdminProtectedRoute isAdmin={selectData} />}
+        >
+          <Route path="/admin/ecommerce" index element={<AdminHomepage />} />
         </Route>
       </Routes>
     </>

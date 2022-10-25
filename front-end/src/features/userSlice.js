@@ -5,7 +5,7 @@ const initialState = {
   userData: {},
   isLoading: false,
   isAutheticated: false,
-  errorMessage: "",
+  errorMessage: {},
 };
 
 export const getUsers = createAsyncThunk(
@@ -103,11 +103,13 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.isAutheticated = true;
       state.userData = action.payload;
+      state.errorMessage = {};
       toast.success("Đăng nhập thành công!");
     },
     [loginUser.rejected]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload;
+      toast.error(state.errorMessage.message);
     },
     [loadUser.pending]: (state) => {
       state.isLoading = true;
@@ -135,7 +137,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const selectUsers = (state) => state.user.userData;
+export const selectUser = (state) => state.user.userData;
 export const selectLoading = (state) => state.user.isLoading;
 export const selectIsAutheticated = (state) => state.user.isAutheticated;
 

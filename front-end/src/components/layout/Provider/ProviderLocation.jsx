@@ -82,7 +82,7 @@ const ProviderLocationBottomSelectHalfStyled = styled.select`
   }
 
 `
-const ProviderLocationBottomOptionHalfStyled = styled.option``
+// const ProviderLocationBottomOptionHalfStyled = styled.option``
 const ProviderLocationBottomZipInputHalfStyled = styled.input`
   width: 15rem;
   padding: .7rem 1rem;
@@ -199,7 +199,7 @@ const ProviderLocation = () => {
                 </ProviderLocationBottomInputHalfLocationContainerStyled>
               </ProviderLocationBottomWrapperStyled>
               <EnterpriseInfoRightBottomWrapperStyled>
-                <Link to="/provider/basics">
+                <Link to="/provider">
                   <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
                 </Link>
                 <Link to="/provider/desc">

@@ -137,7 +137,6 @@ const UserOptions = ({user}) => {
   const logoutHandle = () =>{
     dispatch(logoutUser());
   }
-console.log(user);
   return (
     <>
       <LoginedContainerStyled>
