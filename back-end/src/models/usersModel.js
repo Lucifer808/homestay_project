@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "uuid",
       });
+      Users.hasMany(models.UserRetalRegistration, {
+        foreignKey: "id",
+        as: "rr_userId",
+      });
     }
   }
 

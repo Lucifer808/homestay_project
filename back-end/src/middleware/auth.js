@@ -17,10 +17,10 @@ exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
 
 exports.authrizeRoles = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      next(
+    if (!roles.includes(req.user.us_role)) {
+      return next(
         new ErrorHandler(
-          `Người dùng ${req.user.role} không có quyền truy cập vào trang. Xin vui lòng quay lại!`,
+          `Người dùng ${req.user.lastName} không có quyền truy cập vào trang. Xin vui lòng quay lại!`,
           403
         )
       );

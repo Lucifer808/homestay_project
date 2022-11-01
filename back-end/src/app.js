@@ -15,6 +15,9 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 // Route Users
 const user = require("./routes/usersRoute");
 app.use("/api/v1", user);
+// Route Admin
+const admin = require("./routes/adminRoute");
+app.use("/api/v1", admin);
 // Middleware handler error
 app.use(errorMiddleware);
 module.exports = app;

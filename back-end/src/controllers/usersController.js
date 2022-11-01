@@ -1,5 +1,4 @@
 const db = require("../models/index");
-const usersService = require("../service/usersService");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");

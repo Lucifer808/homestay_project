@@ -1,7 +1,15 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserRetalRegistration extends Model {}
+  class UserRetalRegistration extends Model {
+    static associate(modles) {
+      UserRetalRegistration.belongsTo(modles.Users, {
+        foreignKey: "rr_user",
+        targetKey: "id",
+        as: "rr_userId",
+      });
+    }
+  }
 
   UserRetalRegistration.init(
     {
@@ -32,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       updatedById: {
         type: DataTypes.INTEGER,
         field: "rr_updatedById",
+      },
+      rr_user: {
+        type: DataTypes.INTEGER,
+        field: "rr_user",
       },
     },
     {
