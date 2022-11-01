@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
-import { CiChat1 } from 'react-icons/ci';
+import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
@@ -10,7 +10,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 const AdminHeaderContainerStyled = styled.div`
+    position: relative;
     width: 100%;
     height: 3rem;
     padding: 1rem;
@@ -56,6 +58,17 @@ const AdminHeaderRightAvatarWrapperStyled = styled.div`
 const AdminHeaderRightWelcomeStyled = styled.p`
   margin-right: 1rem;
 `
+const theme = createTheme({
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          padding: "0 !important",
+        },
+      },
+    },
+  },
+});
 const settings = ['Thông tin cá nhân', 'Trang quản lý', 'Tài khoản', 'Đăng xuất'];
 const AdminHeader = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -79,7 +92,7 @@ const AdminHeader = () => {
             </Tooltip>
             <Tooltip title="Tin nhắn" arrow>
               <AdminHeaderRightIconsWrapperStyled>
-                <CiChat1 />
+                <MdOutlineChatBubbleOutline fontSize={23} />
               </AdminHeaderRightIconsWrapperStyled>
             </Tooltip>
             <Tooltip title="Thông báo" arrow>
@@ -90,35 +103,37 @@ const AdminHeader = () => {
             </Tooltip>
             <AdminHeaderRightAvatarWrapperStyled>
               <AdminHeaderRightWelcomeStyled>Hi, Duy Nguyen</AdminHeaderRightWelcomeStyled>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+              <ThemeProvider theme={theme}>
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Typography sx={{padding: '10px'}} textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </ThemeProvider>
             </AdminHeaderRightAvatarWrapperStyled>
           </AdminHeaderRightWrapperStyled>
         </AdminHeaderWrapperStyled>

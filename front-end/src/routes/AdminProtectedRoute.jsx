@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../features/userSlice';
 import Loader from '../components/child/Loader';
 import AdminHeader from '../components/admin/AdminHeader';
 import AdminSidebar from '../components/admin/AdminSidebar';
 import { selectActiveMenu } from '../features/adminSlice';
+import { getAllRetalRegistration } from '../features/adminSlice';
 const AdminLayoutContainerStyled = styled.div`
     width: 100%;
     height: 100%;
 `
 const AdminLayoutWrapperStyled = styled.div`
     display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
 `
 const AdminLayoutRightWrapperStyled = styled.div`
     flex: 4;
     background-color: rgb(249 250 251);
+    overflow-y: auto;
 `
 const AdminLayoutLeftWrapperStyled = styled.div`
     height: 100vh;
@@ -29,6 +34,10 @@ const AdminLayoutLeftWrapperStyled = styled.div`
 const AdminProtectedRoute = () => {
   const selectUserData = useSelector(selectUser);
   const selectOpenMenu = useSelector(selectActiveMenu);
+  const dispatch = useDispatch();
+  useEffect(() =>{
+    dispatch(getAllRetalRegistration());
+  },[dispatch])
   return (
     <>
         {selectUserData && selectUserData.user ? (

@@ -32,6 +32,9 @@ import EnterpriseLayout from "./components/layout/EnterpriseLayout";
 import EnterpriseFile from "./components/layout/Enterprise/EnterpriseFile";
 import AdminProtectedRoute from "./routes/AdminProtectedRoute";
 import AdminHomepage from "./components/admin/AdminHomepage";
+import AdminEcommercepage from "./components/admin/pages/AdminEcommercepage";
+import AdminServicespage from "./components/admin/pages/AdminServicespage";
+import AdminTypeOfServicespage from "./components/admin/pages/AdminTypeOfServicespage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -86,7 +89,13 @@ function App() {
           path="/admin"
           element={<AdminProtectedRoute isAdmin={selectData} />}
         >
-          <Route path="/admin/ecommerce" index element={<AdminHomepage />} />
+          <Route path="/admin" index element={<AdminHomepage />} />
+          <Route path="/admin/ecommerce" element={<AdminEcommercepage />} />
+          <Route path="/admin/services" element={<AdminServicespage />} />
+          <Route
+            path="/admin/type-of-services"
+            element={<AdminTypeOfServicespage />}
+          />
         </Route>
       </Routes>
     </>

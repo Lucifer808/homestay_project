@@ -165,7 +165,7 @@ const EnterpriseService = () => {
                 </EnterpriseServiceTopChoiceContainerStyled>
               </EnterpriseServiceTopWrapperStyled>
               <EnterpriseServiceTopHeaderStyled>Thông tin quan trọng</EnterpriseServiceTopHeaderStyled>
-              <EnterpriseServiceTopSubHeaderStyled>Các dịch vụ này có trong hầu hết các chỗ nghỉ thành công của chúng tôi</EnterpriseServiceTopSubHeaderStyled>
+              <EnterpriseServiceTopSubHeaderStyled>Các dịch vụ này có trong hầu hết các chỗ nghỉ thành công của chúng tôi.</EnterpriseServiceTopSubHeaderStyled>
               <EnterpriseServiceTopWrapperStyled>
                 <EnterpriseServiceTopChoiceContainerStyled>
                   <EnterpriseServiceTopChoiceWrapperStyled>
@@ -279,7 +279,7 @@ const EnterpriseService = () => {
                 </EnterpriseServiceTopChoiceContainerStyled>
               </EnterpriseServiceTopWrapperStyled>
               <EnterpriseServiceTopHeaderStyled>Thông tin thanh toán</EnterpriseServiceTopHeaderStyled>
-              <EnterpriseServiceTopSubHeaderStyled>Khách có thể chọn thanh toán tại chỗ nghỉ, hãy đảm bảo cho du khách biết những phương thức quý đối tác chấp nhận</EnterpriseServiceTopSubHeaderStyled>
+              <EnterpriseServiceTopSubHeaderStyled>Khách có thể chọn thanh toán tại chỗ nghỉ, hãy đảm bảo cho du khách biết những phương thức quý đối tác chấp nhận.</EnterpriseServiceTopSubHeaderStyled>
               <EnterpriseServiceTopWrapperStyled>
                 <EnterpriseServiceTopChoiceContainerStyled>
                   <EnterpriseServiceTopChoiceWrapperStyled>

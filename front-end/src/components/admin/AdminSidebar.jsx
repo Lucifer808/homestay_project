@@ -114,7 +114,7 @@ const AdminSidebar = () => {
                                     style={{textDecoration: 'none'}}
                                 >
                                     {link.icon}
-                                    <AdminMenuItemSpanStyled>{link.name}</AdminMenuItemSpanStyled>
+                                    <AdminMenuItemSpanStyled>{link.subTitle}</AdminMenuItemSpanStyled>
                                 </NavLink>
                                 ))}
                             </AdminMenuItemWrapperStyled>

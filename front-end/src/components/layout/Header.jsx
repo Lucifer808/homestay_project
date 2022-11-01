@@ -194,7 +194,9 @@ const Header = () => {
                 </HeaderAddressNewStyled>
             </HeaderMiddleWrapStyled>
             <HeaderRightStyled>
-                <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
+                <Link to="/homes">
+                    <HeaderPartnerButtonStyled>Đăng ký cho thuê nhà</HeaderPartnerButtonStyled>
+                </Link>
                 <HeaderLanguageStyled src={flag1} />
                 <HeaderMoneyStyled>₫</HeaderMoneyStyled>
                 { isAutheticated ? <UserOptions user={usereData} /> : (

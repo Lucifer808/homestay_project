@@ -8,12 +8,10 @@ import "./index.css";
 
 const rootElement = document.getElementById("root");
 render(
-  <StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   rootElement
 );
