@@ -35,6 +35,7 @@ import AdminHomepage from "./components/admin/AdminHomepage";
 import AdminEcommercepage from "./components/admin/pages/AdminEcommercepage";
 import AdminServicespage from "./components/admin/pages/AdminServicespage";
 import AdminTypeOfServicespage from "./components/admin/pages/AdminTypeOfServicespage";
+import AdminTypeOfAccommodationpage from "./components/admin/pages/AdminTypeOfAccommodationpage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -95,6 +96,10 @@ function App() {
           <Route
             path="/admin/type-of-services"
             element={<AdminTypeOfServicespage />}
+          />
+          <Route
+            path="/admin/type-of-accommodation"
+            element={<AdminTypeOfAccommodationpage />}
           />
         </Route>
       </Routes>

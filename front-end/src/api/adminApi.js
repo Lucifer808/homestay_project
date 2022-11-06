@@ -40,6 +40,26 @@ const adminApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.delete(url, params, config);
   },
+  allTypeOfAccommodationHeader: () => {
+    const url = "/all-type-of-accommodation-header";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
+  allTypeOfAccommodation: () => {
+    const url = "/all-type-of-accommodation";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
+  createTypeOfAccommodation: (params) => {
+    const url = "/create-type-of-accommodation";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
+  updateTypeOfAccommodation: (params) => {
+    const url = "/update-type-of-accommodation";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.put(url, params, config);
+  },
 };
 
 export default adminApi;

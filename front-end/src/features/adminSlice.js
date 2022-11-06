@@ -6,7 +6,10 @@ const initialState = {
   services: [],
   service: {},
   typeOfServices: [],
+  typeOfAccommodations: [],
+  typeOfAccommodationsHeader: [],
   typeOfService: {},
+  typeOfAccommodation: {},
   activeMenu: true,
   isLoading: false,
   success: false,
@@ -108,6 +111,55 @@ export const deleteTypeOfService = createAsyncThunk(
     }
   }
 );
+
+export const getAllTypeOfAccommodation = createAsyncThunk(
+  "admin/all-type-of-accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.allTypeOfAccommodation();
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
+export const createTypeOfAccommodation = createAsyncThunk(
+  "admin/create_type_accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.createTypeOfAccommodation(params);
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
+export const updateTypeOfAccommodation = createAsyncThunk(
+  "admin/update_type_accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.updateTypeOfAccommodation(params);
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
+export const getAllTypeOfAccommodationHeader = createAsyncThunk(
+  "admin/all-type-of-accommodation-header",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.allTypeOfAccommodationHeader();
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -233,6 +285,58 @@ export const adminSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [getAllTypeOfAccommodation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllTypeOfAccommodation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.typeOfAccommodations = action.payload;
+    },
+    [getAllTypeOfAccommodation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [createTypeOfAccommodation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createTypeOfAccommodation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.success = true;
+      state.typeOfAccommodation = action.payload;
+      toast.success("Thêm loại dịch vụ thành công!");
+    },
+    [createTypeOfAccommodation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+
+    [updateTypeOfAccommodation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateTypeOfAccommodation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.success = true;
+      toast.success("Thay đổi thành công!");
+    },
+    [updateTypeOfAccommodation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [getAllTypeOfAccommodationHeader.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllTypeOfAccommodationHeader.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.typeOfAccommodationsHeader = action.payload;
+    },
+    [getAllTypeOfAccommodationHeader.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -246,5 +350,8 @@ export const selectServices = (state) => state.admin.services;
 export const selectService = (state) => state.admin.service;
 export const selectTypeOfServices = (state) => state.admin.typeOfServices;
 export const selectActiveMenu = (state) => state.admin.activeMenu;
-
+export const selectTypeOfAccommodations = (state) =>
+  state.admin.typeOfAccommodations;
+export const selectTypeOfAccommodationsHeader = (state) =>
+  state.admin.typeOfAccommodationsHeader;
 export default adminSlice.reducer;

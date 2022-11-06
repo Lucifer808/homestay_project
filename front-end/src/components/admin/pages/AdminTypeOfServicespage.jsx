@@ -200,7 +200,7 @@ const AdminTypeOfServicespage = () => {
               <StyledLink to="/admin">
                 Trang chủ
               </StyledLink>
-              <Typography color="text.primary">Danh sách loại dịch vụ</Typography>
+              <Typography color="text.disabled">Danh sách loại dịch vụ</Typography>
             </Breadcrumbs>
           </div>
         </AdminServicespageHeaderWrapperStyled>

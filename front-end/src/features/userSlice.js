@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import userApi from "../api/userApi";
 const initialState = {
+  bedTypeList: [],
+  bedConfigurations: [],
   userData: {},
   isLoading: false,
   isAutheticated: false,
@@ -68,10 +70,67 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+export const getAllBedTypeList = createAsyncThunk(
+  "user/all_bed_type_list",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.allBedType();
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    addBedConfig(state, action) {
+      const itemIndex = state.bedConfigurations.findIndex(
+        (item) => item.optionId === action.payload.optionId
+      );
+      if (itemIndex >= 0) {
+        state.bedConfigurations[itemIndex].bedTypeId = action.payload.bedTypeId;
+      } else {
+        const tempBedConfig = {
+          ...action.payload,
+          bedTypeId: action.payload.bedTypeId,
+        };
+        state.bedConfigurations.push(tempBedConfig);
+      }
+    },
+    increaseBedConfig(state, action) {
+      const itemIndex = state.bedConfigurations.findIndex(
+        (item) => item.optionId === action.payload
+      );
+      if (itemIndex >= 0) {
+        state.bedConfigurations[itemIndex].noOfBed += 1;
+      }
+    },
+    decreaseBedConfig(state, action) {
+      const itemIndex = state.bedConfigurations.findIndex(
+        (item) => item.optionId === action.payload
+      );
+
+      if (state.bedConfigurations[itemIndex].noOfBed > 1) {
+        state.bedConfigurations[itemIndex].noOfBed -= 1;
+      } else if (state.bedConfigurations[itemIndex].noOfBed === 1) {
+        state.bedConfigurations[itemIndex].noOfBed = 1;
+      }
+    },
+    removeFromBedConfig(state, action) {
+      state.bedConfigurations.map((item) => {
+        if (item.optionId === action.payload) {
+          const newCart = state.bedConfigurations.filter(
+            (item) => item.optionId !== action.payload
+          );
+          state.bedConfigurations = newCart;
+        }
+        return state;
+      });
+    },
+  },
   extraReducers: {
     [getUsers.pending]: (state) => {
       state.isLoading = true;
@@ -134,11 +193,33 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = action.payload;
     },
+    [getAllBedTypeList.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllBedTypeList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.bedTypeList = action.payload;
+    },
+    [getAllBedTypeList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
+export const {
+  addBedConfig,
+  increaseBedConfig,
+  decreaseBedConfig,
+  removeFromBedConfig,
+} = userSlice.actions;
+
 export const selectUser = (state) => state.user.userData;
 export const selectLoading = (state) => state.user.isLoading;
+export const selectBedTypeList = (state) => state.user.bedTypeList;
+export const selectedBedConfigurations = (state) =>
+  state.user.bedConfigurations;
 export const selectIsAutheticated = (state) => state.user.isAutheticated;
 
 export default userSlice.reducer;

@@ -1,10 +1,10 @@
 import { AiOutlineCalendar, AiOutlineShoppingCart } from "react-icons/ai";
 import { FiShoppingBag, FiEdit } from "react-icons/fi";
-import { BsKanban } from "react-icons/bs";
+import { BsChatDots } from "react-icons/bs";
 import { GrGroup } from "react-icons/gr";
-import { BiColorFill } from "react-icons/bi";
 import { IoMdContacts } from "react-icons/io";
 import { RiContactsLine } from "react-icons/ri";
+import { BiBuildings, BiBuilding } from "react-icons/bi";
 export const optionsData = [
   {
     id: 1,
@@ -51,9 +51,9 @@ export const links = [
     title: "Quản Lý Người Dùng",
     links: [
       {
-        subTitle: "Đơn đặt chổ",
-        name: "orders",
-        icon: <AiOutlineShoppingCart />,
+        subTitle: "Khách hàng",
+        name: "customers",
+        icon: <RiContactsLine />,
       },
       {
         subTitle: "Đối tác cá nhân",
@@ -65,30 +65,45 @@ export const links = [
         name: "enterprise",
         icon: <GrGroup />,
       },
-      {
-        subTitle: "Khách hàng",
-        name: "customers",
-        icon: <RiContactsLine />,
-      },
     ],
   },
   {
     title: "Quản Lý Dịch Vụ",
     links: [
       {
-        subTitle: "Danh sách dịch vụ",
+        subTitle: "Dịch vụ",
         name: "services",
         icon: <AiOutlineCalendar />,
       },
       {
-        subTitle: "Danh sách loại dịch vụ",
+        subTitle: "Loại dịch vụ",
         name: "type-of-services",
         icon: <FiEdit />,
       },
+    ],
+  },
+  {
+    title: "Quản Lý Kinh Doanh",
+    links: [
       {
-        subTitle: "Danh sách bình luận",
-        name: "kanban",
-        icon: <BsKanban />,
+        subTitle: "Bình luận",
+        name: "comments",
+        icon: <BsChatDots />,
+      },
+      {
+        subTitle: "Đơn đặt chổ",
+        name: "orders",
+        icon: <AiOutlineShoppingCart />,
+      },
+      {
+        subTitle: "Chỗ nghỉ",
+        name: "accommodation",
+        icon: <BiBuilding />,
+      },
+      {
+        subTitle: "Loại hình chỗ nghỉ",
+        name: "type-of-accommodation",
+        icon: <BiBuildings />,
       },
     ],
   },

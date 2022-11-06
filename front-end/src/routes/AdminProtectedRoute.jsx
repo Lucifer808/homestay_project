@@ -34,10 +34,6 @@ const AdminLayoutLeftWrapperStyled = styled.div`
 const AdminProtectedRoute = () => {
   const selectUserData = useSelector(selectUser);
   const selectOpenMenu = useSelector(selectActiveMenu);
-  const dispatch = useDispatch();
-  useEffect(() =>{
-    dispatch(getAllRetalRegistration());
-  },[dispatch])
   return (
     <>
         {selectUserData && selectUserData.user ? (

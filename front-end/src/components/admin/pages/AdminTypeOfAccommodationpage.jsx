@@ -2,12 +2,12 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { getAllService,
-         selectServices, 
-         createServiceReset, 
-         createService, 
-         selectSuccess, 
-         updateService } from '../../../features/adminSlice';
+import { createServiceReset,
+         selectSuccess,
+         getAllTypeOfAccommodation,
+         selectTypeOfAccommodations, 
+         updateTypeOfAccommodation,
+         createTypeOfAccommodation} from '../../../features/adminSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -17,9 +17,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { Toolbar } from '@material-ui/core';
 import Popup from '../components/Popup';
 import { Link } from 'react-router-dom';
-import AdminServicesForm from '../child/AdminServicesForm';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-
+import AdminTypeOfAccommodationForm from '../child/AdminTypeOfAccommodationForm';
 const AdminServicespageContainerStyled = styled.div`
   padding: 1rem;
 `
@@ -76,30 +75,30 @@ const StyledLink = styled(Link)`
         text-decoration: underline;
     }
 `;
-const AdminServicespage = () => {
+const AdminTypeOfAccommodationpage = () => {
   const dispatch = useDispatch();
-  const selectServicesData = useSelector(selectServices);
+  const selectTypeOfAccommodationsData = useSelector(selectTypeOfAccommodations);
   const selectSuccessData = useSelector(selectSuccess);
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   useEffect(() =>{
-    dispatch(getAllService());
+    dispatch(getAllTypeOfAccommodation());
     if(selectSuccessData){
       dispatch(createServiceReset());
       setOpenPopup(false);
     }
   },[dispatch, selectSuccessData]);
-  const addOrEdit = (item, resetForm, openChildPopup) => {
-    if (item.id && openChildPopup === false){
-      dispatch(updateService(item));
+  const addOrEdit = (item, resetForm) => {
+    if (item.id){
+      dispatch(updateTypeOfAccommodation(item));
       resetForm();
       setRecordForEdit(null);
       setOpenPopup(false);
     }
-    else if(item.name && item.desc && item.active && openChildPopup === false){
-      dispatch(createService(item));
+    else{
+      dispatch(createTypeOfAccommodation(item));
       resetForm();
       setRecordForEdit(null);
       setOpenPopup(false);
@@ -112,21 +111,21 @@ const AdminServicespage = () => {
   }
   const columns = useMemo(
     () => [
-        { field: 'id', headerName: 'Mã', minWidth: 40, flex: 1 },
+        { field: 'id', headerName: 'Mã', minWidth: 60, flex: 1 },
         { field: 'name', headerName: 'Tên', minWidth: 200, flex: 1 },
-        { field: 'desc', headerName: 'Mô tả', minWidth: 180, flex: 1 },
+        { field: 'desc', headerName: 'Mô tả', minWidth: 400, flex: 1 },
         {
         field: 'active',
         headerName: 'Hiện hành',
-        minWidth: 120,
+        minWidth: 80,
         editable: true,
         flex: 1,
         type: "boolean"
         },
         {
-          field: 'svts_id',
-          headerName: 'Loại dịch vụ',
-          minWidth: 120,
+          field: 'thta_id',
+          headerName: 'Đối tượng',
+          minWidth: 220,
           editable: true,
           flex: 1,
           valueGetter: (params) => {
@@ -199,7 +198,7 @@ const AdminServicespage = () => {
             >
                 <DataGrid
                 columns={columns}
-                rows={selectServicesData}
+                rows={selectTypeOfAccommodationsData}
                 getRowId={(row) => row.id}
                 rowsPerPageOptions={[5, 10, 20]}
                 pageSize={pageSize}
@@ -235,7 +234,7 @@ const AdminServicespage = () => {
             onClose={() => setOpenPopup(false)} 
             maxWidth="md"
         >
-                <AdminServicesForm
+                <AdminTypeOfAccommodationForm
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit} 
                 />
@@ -244,4 +243,4 @@ const AdminServicespage = () => {
   )
 }
 
-export default AdminServicespage
+export default AdminTypeOfAccommodationpage

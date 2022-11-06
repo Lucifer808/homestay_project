@@ -25,6 +25,11 @@ const userApi = {
     const url = "me";
     return axiosClient.get(url);
   },
+  allBedType: () => {
+    const url = "all-bed-type-list";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
 };
 
 export default userApi;
