@@ -1,20 +1,16 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserTypeOfServices extends Model {
+  class userTypeOfAccommodationsHeader extends Model {
     static associate(modles) {
-      UserTypeOfServices.hasMany(modles.Users, {
+      userTypeOfAccommodationsHeader.hasMany(modles.userTypeOfAccommodations, {
         foreignKey: "id",
-        sourceKey: "createdById",
-      });
-      UserTypeOfServices.hasMany(modles.UserServices, {
-        foreignKey: "id",
-        as: "svts_id",
+        as: "thta_id",
       });
     }
   }
 
-  UserTypeOfServices.init(
+  userTypeOfAccommodationsHeader.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -22,50 +18,38 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         autoIncrement: true,
         allowNull: false,
-        field: "ts_id",
+        field: "th_id",
       },
       name: {
         type: DataTypes.STRING,
-        field: "ts_nameOfTypeServices",
-      },
-      desc: {
-        type: DataTypes.STRING,
-        field: "ts_descOfTypeServices",
-      },
-      active: {
-        type: DataTypes.BOOLEAN,
-        field: "ts_active",
+        field: "th_name",
       },
       createdAt: {
         type: DataTypes.DATE(3),
-        field: "ts_createdAt",
+        field: "th_createdAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       updatedAt: {
         type: DataTypes.DATE(3),
-        field: "ts_updatedAt",
+        field: "th_updatedAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       createdById: {
         type: DataTypes.INTEGER,
-        field: "ts_createdById",
-        references: {
-          model: "Users",
-          key: "id",
-        },
+        field: "th_createdById",
       },
       updatedById: {
         type: DataTypes.INTEGER,
-        field: "ts_updatedById",
+        field: "th_updatedById",
       },
     },
     {
       sequelize,
-      modelName: "UserTypeOfServices",
-      tableName: "type_services",
+      modelName: "userTypeOfAccommodationsHeader",
+      tableName: "type_accommodates_header",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return UserTypeOfServices;
+  return userTypeOfAccommodationsHeader;
 };

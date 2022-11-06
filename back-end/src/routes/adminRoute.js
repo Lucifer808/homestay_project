@@ -12,7 +12,7 @@ router
   );
 router
   .route("/all-service")
-  .get(isAuthenticatedUser, authrizeRoles(1), adminController.getAllService);
+  .get(isAuthenticatedUser, adminController.getAllService);
 router
   .route("/create-service")
   .post(isAuthenticatedUser, authrizeRoles(1), adminController.createService);
@@ -21,11 +21,7 @@ router
   .put(isAuthenticatedUser, authrizeRoles(1), adminController.updateService);
 router
   .route("/all-type-of-service")
-  .get(
-    isAuthenticatedUser,
-    authrizeRoles(1),
-    adminController.getAllTypeOfService
-  );
+  .get(isAuthenticatedUser, adminController.getAllTypeOfService);
 router
   .route("/create-type-of-service")
   .post(
@@ -47,4 +43,26 @@ router
     authrizeRoles(1),
     adminController.deleteTypeOfService
   );
+router
+  .route("/all-type-of-accommodation")
+  .get(isAuthenticatedUser, adminController.getAllTypeOfAccommodation);
+
+router
+  .route("/create-type-of-accommodation")
+  .post(
+    isAuthenticatedUser,
+    authrizeRoles(1),
+    adminController.createTypeOfAccommodation
+  );
+
+router
+  .route("/update-type-of-accommodation")
+  .put(
+    isAuthenticatedUser,
+    authrizeRoles(1),
+    adminController.updateTypeOfAccommodation
+  );
+router
+  .route("/all-type-of-accommodation-header")
+  .get(isAuthenticatedUser, adminController.getAllTypeOfAccommodationHeader);
 module.exports = router;

@@ -1,20 +1,24 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserTypeOfServices extends Model {
+  class userTypeOfAccommodations extends Model {
     static associate(modles) {
-      UserTypeOfServices.hasMany(modles.Users, {
+      userTypeOfAccommodations.hasMany(modles.userAccommodations, {
         foreignKey: "id",
-        sourceKey: "createdById",
+        as: "acta_id",
       });
-      UserTypeOfServices.hasMany(modles.UserServices, {
-        foreignKey: "id",
-        as: "svts_id",
-      });
+      userTypeOfAccommodations.belongsTo(
+        modles.userTypeOfAccommodationsHeader,
+        {
+          foreignKey: "ta_th",
+          targetKey: "id",
+          as: "thta_id",
+        }
+      );
     }
   }
 
-  UserTypeOfServices.init(
+  userTypeOfAccommodations.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -22,50 +26,50 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         autoIncrement: true,
         allowNull: false,
-        field: "ts_id",
+        field: "ta_id",
       },
       name: {
         type: DataTypes.STRING,
-        field: "ts_nameOfTypeServices",
+        field: "ta_nameOfAccommodates",
       },
       desc: {
         type: DataTypes.STRING,
-        field: "ts_descOfTypeServices",
+        field: "ta_desc",
       },
       active: {
         type: DataTypes.BOOLEAN,
-        field: "ts_active",
+        field: "ta_active",
       },
       createdAt: {
         type: DataTypes.DATE(3),
-        field: "ts_createdAt",
+        field: "ta_createdAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       updatedAt: {
         type: DataTypes.DATE(3),
-        field: "ts_updatedAt",
+        field: "ta_updatedAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       createdById: {
         type: DataTypes.INTEGER,
-        field: "ts_createdById",
-        references: {
-          model: "Users",
-          key: "id",
-        },
+        field: "ta_createdById",
       },
       updatedById: {
         type: DataTypes.INTEGER,
-        field: "ts_updatedById",
+        field: "ta_updatedById",
+      },
+      ta_th: {
+        type: DataTypes.INTEGER,
+        field: "ta_th",
       },
     },
     {
       sequelize,
-      modelName: "UserTypeOfServices",
-      tableName: "type_services",
+      modelName: "userTypeOfAccommodations",
+      tableName: "type_accommodates",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return UserTypeOfServices;
+  return userTypeOfAccommodations;
 };

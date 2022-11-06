@@ -7,4 +7,7 @@ router.route("/login").post(usersController.loginUser);
 router.route("/logout").get(usersController.logout);
 router.route("/me").get(isAuthenticatedUser, usersController.getUserDetail);
 router.route("/users").get(isAuthenticatedUser, usersController.getAllUsers);
+router
+  .route("/all-bed-type-list")
+  .get(isAuthenticatedUser, usersController.getAllBedTypeList);
 module.exports = router;

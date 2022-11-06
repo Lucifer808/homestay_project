@@ -73,3 +73,9 @@ exports.getUserDetail = catchAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+exports.getAllBedTypeList = catchAsyncError(async (req, res, next) => {
+  const allBedTypeList = await db.BedTypeList.findAll();
+
+  res.status(200).json(allBedTypeList);
+});

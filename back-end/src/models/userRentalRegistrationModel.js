@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        field: "rr_status",
+        field: "rr_name",
       },
       createdAt: {
         type: DataTypes.DATE,
