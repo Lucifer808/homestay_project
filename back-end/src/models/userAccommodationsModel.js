@@ -80,12 +80,8 @@ module.exports = (sequelize, DataTypes) => {
         field: "ac_ta",
       },
       ac_propertyRegistrationId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         field: "ac_propertyRegistrationId",
-      },
-      ac_propertyTypeId: {
-        type: DataTypes.INTEGER,
-        field: "ac_propertyTypeId",
       },
     },
     {

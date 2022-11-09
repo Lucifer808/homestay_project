@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       noOfBathrooms: {
         type: DataTypes.INTEGER,
-        field: "ac_desc",
+        field: "da_noOfBathrooms",
       },
       createdById: {
         type: DataTypes.INTEGER,
@@ -36,5 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
+  DetailAccommodations.removeAttribute("id");
   return DetailAccommodations;
 };

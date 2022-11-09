@@ -1,17 +1,11 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class RetalRegistration extends Model {
-    static associate(modles) {
-      RetalRegistration.belongsTo(modles.Users, {
-        foreignKey: "rr_user",
-        targetKey: "id",
-        as: "rr_userId",
-      });
-    }
+  class Room extends Model {
+    static associate(modles) {}
   }
 
-  RetalRegistration.init(
+  Room.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,46 +13,42 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         autoIncrement: true,
         allowNull: false,
-        field: "rr_id",
+        field: "ro_id",
       },
-      status: {
-        type: DataTypes.STRING,
-        field: "rr_status",
+      noOfBed: {
+        type: DataTypes.INTEGER,
+        field: "ro_numOfBed",
       },
       createdAt: {
         type: DataTypes.DATE(3),
-        field: "rr_createdAt",
+        field: "ro_createdAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       updatedAt: {
         type: DataTypes.DATE(3),
-        field: "rr_updatedAt",
+        field: "ro_updatedAt",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       createdById: {
         type: DataTypes.INTEGER,
-        field: "rr_createdById",
+        field: "ro_createdById",
       },
       updatedById: {
         type: DataTypes.INTEGER,
-        field: "rr_updatedById",
+        field: "ro_updatedById",
       },
-      rr_user: {
+      ro_tb: {
         type: DataTypes.INTEGER,
-        field: "rr_user",
-      },
-      ac_propertyRegistrationId: {
-        type: DataTypes.STRING,
-        field: "rr_propertyRegistratonId",
+        field: "ro_tb",
       },
     },
     {
       sequelize,
-      modelName: "RetalRegistration",
-      tableName: "retal_registration",
+      modelName: "Room",
+      tableName: "room",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return RetalRegistration;
+  return Room;
 };
