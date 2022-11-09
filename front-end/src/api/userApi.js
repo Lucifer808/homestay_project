@@ -30,6 +30,11 @@ const userApi = {
     const config = {};
     return axiosClient.get(url, config);
   },
+  allTypeOfAccommodation: () => {
+    const url = "/all-type-of-accommodation";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
 };
 
 export default userApi;

@@ -4,11 +4,18 @@ import provider_ec_basics from '../../../assets/provider-ec-basics.png';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import StepperProvider from '../../child/StepperProvider';
-import { Link } from 'react-router-dom';
-import { getAllTypeOfAccommodation, selectTypeOfAccommodations } from '../../../features/adminSlice';
-import { addBedConfig, getAllBedTypeList, selectBedTypeList, selectedBedConfigurations } from '../../../features/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { addBedConfig,
+         getAllBedTypeList,
+         selectedCommonSpaceGroupList, 
+         selectedBedConfigurations,
+         addCommonSpace, 
+         providerInfoSubmit, 
+         getAllUserTypeOfAccommodation, 
+         selectUserTypeOfAccommodations } from '../../../features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ProviderInfoBedConfig from './components/ProviderInfoBedConfig';
+import ProviderInfoCommonSpace from './components/ProviderInfoCommonSpace';
 const ProviderInfoContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -211,8 +218,8 @@ const initialValuesF = {
   typeOfAccommodation: "",
   sizeSqm: "",
   accommodates: 1,
-  numberOfBathrooms: 1,
-  numberOfBedrooms: 1
+  noOfBathrooms: 1,
+  noOfBedrooms: 1,
 }
 const initialBedConfig = {
   bedTypeId: "1",
@@ -223,9 +230,14 @@ const ProviderInfo = () => {
   const [values, setValues] = useState(initialValuesF);
   const [addOptions, setAddOptions] = useState(1);
   const dispatch = useDispatch();
-  const selectTypeOfAccommodationsData = useSelector(selectTypeOfAccommodations);
+  const navigate = useNavigate();
+  const [addCommonSpaceOptions, setAddCommonSpaceOptions] = useState(1);
+  const selectTypeOfAccommodationsData = useSelector(selectUserTypeOfAccommodations);
   const selectedBedConfigurationsData = useSelector(selectedBedConfigurations);
+  const selectedCommonSpaceGroupListData = useSelector(selectedCommonSpaceGroupList);
   const typeOfAcommodations = selectTypeOfAccommodationsData.filter(item => item.ta_th === 1);
+  var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+  var ac_propertyRegistrationId = randLetter + Date.now();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -233,13 +245,16 @@ const ProviderInfo = () => {
       [name]: value
     })
   }
-  console.log(values)
   const handleChangeBedConfig = (params) => {
     dispatch(addBedConfig(params));
   }
+  const handleChangeCommonSpace = (params) => {
+    dispatch(addCommonSpace(params));
+  }
   useEffect(() => {
-    dispatch(getAllTypeOfAccommodation());
+    dispatch(getAllUserTypeOfAccommodation());
     dispatch(addBedConfig(initialBedConfig));
+    dispatch(addCommonSpace(initialBedConfig));
     window.scrollTo(0, 0);
   }, [dispatch])
   const increaseQuantity = (key) => {
@@ -253,18 +268,34 @@ const ProviderInfo = () => {
       noOfBed: 1,
       optionId: addOptions
     }
-    dispatch(addBedConfig(tempItem))
+    dispatch(addBedConfig(tempItem));
+  }
+  const autoInsertCommonSpaceData = () => {
+    const tempItem = {
+      bedTypeId: "1",
+      noOfBed: 1,
+      optionId: addCommonSpaceOptions
+    }
+    dispatch(addCommonSpace(tempItem));
   }
   const decreaseQuantity = (key) => {
     if(values.hasOwnProperty(key)){
       if(values[key] >1){
         setValues({...values, [key]: values[key] - 1})
       }else{
+        key === 'noOfBedrooms' ? 
+        setValues({...values, [key]: 0})
+        :
         setValues({...values, [key]: 1})
-
       }
     }     
   }
+  const handleSubmitInfo = (e) => {
+    e.preventDefault();
+    dispatch(providerInfoSubmit({...values, selectedBedConfigurationsData, selectedCommonSpaceGroupListData, ac_propertyRegistrationId}));
+    navigate("/provider/location");
+  }
+  console.log(values)
   return (
     <ProviderInfoContainerStyled>
       <ProviderInfoWrapperStyled>
@@ -330,30 +361,30 @@ const ProviderInfo = () => {
                   <ProviderInfoBottomContentTitleStyled>Phòng tắm</ProviderInfoBottomContentTitleStyled>
                   <ProviderInfoBottomContentSubTitleStyled>Chỉ đếm số lượng phòng tắm trong nơi ở của bạn, không phải phòng tắm chung trong toà nhà hoặc chung cư.</ProviderInfoBottomContentSubTitleStyled>
                   <ProviderInfoBottomContentInputWrapperStyled>
-                    <RemoveOutlinedIcon style={{cursor: 'pointer'}} onClick={() => decreaseQuantity('numberOfBathrooms')}/>
+                    <RemoveOutlinedIcon style={{cursor: 'pointer'}} onClick={() => decreaseQuantity('noOfBathrooms')}/>
                     <ProviderInfoBottomContentInputStyled 
-                      name='numberOfBathrooms'
-                      value={values.numberOfBathrooms}
+                      name='noOfBathrooms'
+                      value={values.noOfBathrooms}
                       type="number" 
                       min={1}
                       onChange={handleChange}
                     />
-                    <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={() => increaseQuantity('numberOfBathrooms')}/>
+                    <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={() => increaseQuantity('noOfBathrooms')}/>
                   </ProviderInfoBottomContentInputWrapperStyled>
                 </ProviderInfoBottomContentWrapperStyled>
                 <ProviderInfoBottomContentWrapperStyled>
                   <ProviderInfoBottomContentTitleStyled>Phòng ngủ</ProviderInfoBottomContentTitleStyled>
                   <ProviderInfoBottomContentSubTitleStyled>Nếu chỗ ở của bạn là phòng gác mái hoặc studio, số lượng phòng ngủ là 0.</ProviderInfoBottomContentSubTitleStyled>
                   <ProviderInfoBottomContentInputWrapperStyled>
-                    <RemoveOutlinedIcon style={{cursor: 'pointer'}} onClick={() => decreaseQuantity('numberOfBedrooms')}/>
+                    <RemoveOutlinedIcon style={{cursor: 'pointer'}} onClick={() => decreaseQuantity('noOfBedrooms')}/>
                     <ProviderInfoBottomContentInputStyled 
-                      name='numberOfBedrooms'
-                      value={values.numberOfBedrooms}
+                      name='noOfBedrooms'
+                      value={values.noOfBedrooms}
                       type="number" 
-                      min={1}
+                      min={0}
                       onChange={handleChange}
                     />
-                    <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={() => increaseQuantity('numberOfBedrooms')}/>
+                    <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={() => increaseQuantity('noOfBedrooms')}/>
                   </ProviderInfoBottomContentInputWrapperStyled>
                 </ProviderInfoBottomContentWrapperStyled>
               </ProviderInfoBottomWrapperStyled>
@@ -363,31 +394,15 @@ const ProviderInfo = () => {
                   {selectedBedConfigurationsData && selectedBedConfigurationsData.map((item, i) => <ProviderInfoBedConfig quantity={item.noOfBed} key={i} checkIsActive={item.optionId} handleChangeBedConfig={handleChangeBedConfig}/>) }
                   <ProviderInfoBottomAddStyled onClick={() => {setAddOptions(addOptions + 1); autoInsertData();}}>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
                   <ProviderInfoBottomBonusContentTitleStyled>Không gian chung</ProviderInfoBottomBonusContentTitleStyled>
-                  <ProviderInfoBottomContentInputBottomContainerStyled>
-                    <ProviderInfoBottomContentInputWrapperStyled>
-                      <RemoveOutlinedIcon style={{cursor: 'pointer'}}/>
-                      <ProviderInfoBottomContentInputStyled defaultValue={1} type="number" min={0}/>
-                      <AddOutlinedIcon style={{cursor: 'pointer'}}/>
-                    </ProviderInfoBottomContentInputWrapperStyled>
-                    <ProviderInfoBottomContentSelectStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường đơn</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường đôi nhỏ</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường đôi</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường Queen</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường King</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường Super King</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường tầng</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>giường sofa</ProviderInfoBottomContentOptionStyled>
-                      <ProviderInfoBottomContentOptionStyled>nệm futon</ProviderInfoBottomContentOptionStyled>
-                    </ProviderInfoBottomContentSelectStyled>
-                  </ProviderInfoBottomContentInputBottomContainerStyled>
-                  <ProviderInfoBottomAddStyled>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
+                  <ProviderInfoBottomContentSubTitleStyled>Có thêm giường ở khu vực không gian chung không?</ProviderInfoBottomContentSubTitleStyled>
+                  {selectedCommonSpaceGroupListData && selectedCommonSpaceGroupListData.map((item, i) => <ProviderInfoCommonSpace quantity={item.noOfBed} key={i} checkIsActive={item.optionId} handleChangeCommonSpace={handleChangeCommonSpace}/>)}
+                  <ProviderInfoBottomAddStyled onClick={() => {setAddCommonSpaceOptions(addCommonSpaceOptions + 1); autoInsertCommonSpaceData();}}>THÊM LOẠI GIƯỜNG KHÁC</ProviderInfoBottomAddStyled>
                 </ProviderInfoBottomBonusContentWrapperStyled>
               </ProviderInfoBottomBonusWrapperStyled>
             </ProviderDescRightTopWrapperStyled>
             <ProviderDescRightBottomWrapperStyled>
               <Link to="/provider/location">
-                <ProviderDescRightBottomNextButtonStyled type='submit'>TIẾP THEO</ProviderDescRightBottomNextButtonStyled>
+                <ProviderDescRightBottomNextButtonStyled type='submit' onClick={handleSubmitInfo}>TIẾP THEO</ProviderDescRightBottomNextButtonStyled>
               </Link>
             </ProviderDescRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { selectBedTypeList, getAllBedTypeList, increaseBedConfig, selectedBedConfigurations, decreaseBedConfig, removeFromBedConfig } from '../../../../features/userSlice';
+import { selectBedTypeList, getAllBedTypeList, removeFromBedConfig, increaseCommonSpace, decreaseCommonSpace, removeCommonSpace } from '../../../../features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { TiDelete } from 'react-icons/ti'
 const ProviderInfoBottomContentInputContainerStyled = styled.div`
@@ -42,8 +42,8 @@ const ProviderInfoBottomContentSelectStyled = styled.select`
   }
 `
 const ProviderInfoBottomContentOptionStyled = styled.option``
-const ProviderInfoBedConfig = (props) => {
-  const {handleChangeBedConfig, checkIsActive, quantity} = props;
+const ProviderInfoCommonSpace = (props) => {
+  const {handleChangeCommonSpace, checkIsActive, quantity} = props;
   const dispatch = useDispatch();
   const selectBedTypeListData = useSelector(selectBedTypeList);
   const handleChangeInChild = (e) => {
@@ -52,19 +52,19 @@ const ProviderInfoBedConfig = (props) => {
       [name]: value,
       optionId: checkIsActive
     }
-    handleChangeBedConfig(params);
+    handleChangeCommonSpace(params);
   }
   useEffect(() => {
     dispatch(getAllBedTypeList());
   },[dispatch])
   const handleIncrease = () =>{
-    dispatch(increaseBedConfig(checkIsActive));
+    dispatch(increaseCommonSpace(checkIsActive));
   }
   const handleDecrease = () =>{
-    dispatch(decreaseBedConfig(checkIsActive));
+    dispatch(decreaseCommonSpace(checkIsActive));
   }
   const handleRemove = () =>{
-    dispatch(removeFromBedConfig(checkIsActive));
+    dispatch(removeCommonSpace(checkIsActive));
   }
   return (
     <ProviderInfoBottomContentInputContainerStyled>
@@ -84,4 +84,4 @@ const ProviderInfoBedConfig = (props) => {
     </ProviderInfoBottomContentInputContainerStyled>
   )
 }
-export default ProviderInfoBedConfig
+export default ProviderInfoCommonSpace
