@@ -1,9 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class userAccommodations extends Model {
+  class Accommodations extends Model {
     static associate(modles) {
-      userAccommodations.belongsTo(modles.userTypeOfAccommodations, {
+      Accommodations.belongsTo(modles.TypeOfAccommodations, {
         foreignKey: "ac_ta",
         targetKey: "id",
         as: "acta_id",
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  userAccommodations.init(
+  Accommodations.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -25,13 +25,37 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: "ac_name",
       },
-      address: {
+      desc: {
         type: DataTypes.STRING,
-        field: "ac_address",
+        field: "ac_desc",
       },
       rating: {
         type: DataTypes.INTEGER,
         field: "ac_rating",
+      },
+      area: {
+        type: DataTypes.INTEGER,
+        field: "ac_area",
+      },
+      policy: {
+        type: DataTypes.STRING,
+        field: "ac_policy",
+      },
+      recommend: {
+        type: DataTypes.STRING,
+        field: "ac_reccommend",
+      },
+      howToGetThere: {
+        type: DataTypes.STRING,
+        field: "ac_howToGetThere",
+      },
+      paymentMethod: {
+        type: DataTypes.STRING,
+        field: "ac_paymentMethods",
+      },
+      priceBase: {
+        type: DataTypes.INTEGER,
+        field: "ac_basePrice",
       },
       createdAt: {
         type: DataTypes.DATE(3),
@@ -55,14 +79,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: "ac_ta",
       },
+      ac_propertyRegistrationId: {
+        type: DataTypes.INTEGER,
+        field: "ac_propertyRegistrationId",
+      },
+      ac_propertyTypeId: {
+        type: DataTypes.INTEGER,
+        field: "ac_propertyTypeId",
+      },
     },
     {
       sequelize,
-      modelName: "userAccommodations",
+      modelName: "Accommodations",
       tableName: "accommodates",
       freezeTableName: true,
       timestamps: false,
+      charset: "utf8",
+      collate: "utf8_unicode_ci",
     }
   );
-  return userAccommodations;
+  return Accommodations;
 };

@@ -3,7 +3,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const { sequelize } = require("../models");
 exports.getAllRetalRegistration = catchAsyncError(async (req, res, next) => {
-  let allRetalRegistration = await db.UserRetalRegistration.findAll({
+  let allRetalRegistration = await db.RetalRegistration.findAll({
     include: [
       {
         model: db.Users,
@@ -35,10 +35,10 @@ exports.getAllRetalRegistration = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllService = catchAsyncError(async (req, res, next) => {
-  let allService = await db.UserServices.findAll({
+  let allService = await db.Services.findAll({
     include: [
       {
-        model: db.UserTypeOfServices,
+        model: db.TypeOfServices,
         as: "svts_id",
       },
     ],
@@ -63,7 +63,7 @@ exports.getAllService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.createService = catchAsyncError(async (req, res, next) => {
-  let createService = await db.UserServices.create({
+  let createService = await db.Services.create({
     ...req.body,
     createdById: req.user.id,
   });
@@ -74,7 +74,7 @@ exports.createService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updateService = catchAsyncError(async (req, res, next) => {
-  let updateService = await db.UserServices.update(
+  let updateService = await db.Services.update(
     {
       ...req.body,
       updatedAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
@@ -91,7 +91,7 @@ exports.updateService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllTypeOfService = catchAsyncError(async (req, res, next) => {
-  let allTypeOfService = await db.UserTypeOfServices.findAll({
+  let allTypeOfService = await db.TypeOfServices.findAll({
     attributes: [
       "id",
       "name",
@@ -112,7 +112,7 @@ exports.getAllTypeOfService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.createTypeOfService = catchAsyncError(async (req, res, next) => {
-  let createTypeOfService = await db.UserTypeOfServices.create({
+  let createTypeOfService = await db.TypeOfServices.create({
     ...req.body,
     createdById: req.user.id,
   });
@@ -123,7 +123,7 @@ exports.createTypeOfService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updateTypeOfService = catchAsyncError(async (req, res, next) => {
-  let updateTypeOfService = await db.UserTypeOfServices.update(
+  let updateTypeOfService = await db.TypeOfServices.update(
     {
       ...req.body,
       updatedAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
@@ -140,7 +140,7 @@ exports.updateTypeOfService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deleteTypeOfService = catchAsyncError(async (req, res, next) => {
-  let updateTypeOfService = await db.UserTypeOfServices.destroy({
+  let updateTypeOfService = await db.TypeOfServices.destroy({
     where: { id: req.params.id },
   });
   if (!updateTypeOfService) {
@@ -150,10 +150,10 @@ exports.deleteTypeOfService = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
-  let allTypeOfAccommodation = await db.userTypeOfAccommodations.findAll({
+  let allTypeOfAccommodation = await db.TypeOfAccommodations.findAll({
     include: [
       {
-        model: db.userTypeOfAccommodationsHeader,
+        model: db.TypeOfAccommodationsHeader,
         as: "thta_id",
       },
     ],
@@ -180,7 +180,7 @@ exports.getAllTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
 exports.getAllTypeOfAccommodationHeader = catchAsyncError(
   async (req, res, next) => {
     let AllTypeOfAccommodationHeader =
-      await db.userTypeOfAccommodationsHeader.findAll({
+      await db.TypeOfAccommodationsHeader.findAll({
         attributes: [
           "id",
           "name",
@@ -200,7 +200,7 @@ exports.getAllTypeOfAccommodationHeader = catchAsyncError(
 );
 
 exports.createTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
-  let createTypeOfAccommodation = await db.userTypeOfAccommodations.create({
+  let createTypeOfAccommodation = await db.TypeOfAccommodations.create({
     ...req.body,
     createdById: req.user.id,
   });
@@ -211,7 +211,7 @@ exports.createTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updateTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
-  let updateTypeOfAccommodation = await db.userTypeOfAccommodations.update(
+  let updateTypeOfAccommodation = await db.TypeOfAccommodations.update(
     {
       ...req.body,
       updatedAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
@@ -228,10 +228,10 @@ exports.updateTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllAccommodation = catchAsyncError(async (req, res, next) => {
-  let allAccommodation = await db.userAccommodations.findAll({
+  let allAccommodation = await db.Accommodations.findAll({
     include: [
       {
-        model: db.userTypeOfAccommodations,
+        model: db.TypeOfAccommodations,
         as: "acta_id",
       },
     ],

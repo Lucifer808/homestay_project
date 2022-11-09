@@ -13,21 +13,21 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         autoIncrement: true,
         allowNull: false,
-        field: "bt_id",
+        field: "tb_id",
       },
       name: {
         type: DataTypes.STRING,
-        field: "bt_name",
+        field: "tb_name",
       },
       desc: {
         type: DataTypes.STRING,
-        field: "bt_desc",
+        field: "tb_desc",
       },
     },
     {
       sequelize,
       modelName: "BedTypeList",
-      tableName: "bed_typeList",
+      tableName: "type_beds",
       freezeTableName: true,
       timestamps: false,
     }

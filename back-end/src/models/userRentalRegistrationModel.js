@@ -1,9 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserRetalRegistration extends Model {
+  class RetalRegistration extends Model {
     static associate(modles) {
-      UserRetalRegistration.belongsTo(modles.Users, {
+      RetalRegistration.belongsTo(modles.Users, {
         foreignKey: "rr_user",
         targetKey: "id",
         as: "rr_userId",
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  UserRetalRegistration.init(
+  RetalRegistration.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -21,17 +21,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: "rr_id",
       },
-      name: {
+      status: {
         type: DataTypes.STRING,
-        field: "rr_name",
+        field: "rr_status",
       },
       createdAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATE(3),
         field: "rr_createdAt",
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       updatedAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATE(3),
         field: "rr_updatedAt",
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP(4)"),
       },
       createdById: {
         type: DataTypes.INTEGER,
@@ -45,14 +47,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: "rr_user",
       },
+      ac_propertyRegistrationId: {
+        type: DataTypes.INTEGER,
+        field: "rr_propertyRegistratonId",
+      },
     },
     {
       sequelize,
-      modelName: "UserRetalRegistration",
+      modelName: "RetalRegistration",
       tableName: "retal_registration",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return UserRetalRegistration;
+  return RetalRegistration;
 };

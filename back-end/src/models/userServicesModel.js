@@ -1,9 +1,9 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class UserServices extends Model {
+  class Services extends Model {
     static associate(modles) {
-      UserServices.belongsTo(modles.UserTypeOfServices, {
+      Services.belongsTo(modles.TypeOfServices, {
         foreignKey: "sv_ts",
         targetKey: "id",
         as: "svts_id",
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  UserServices.init(
+  Services.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -58,11 +58,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "UserServices",
+      modelName: "Services",
       tableName: "services",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return UserServices;
+  return Services;
 };

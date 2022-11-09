@@ -1,24 +1,21 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class userTypeOfAccommodations extends Model {
+  class TypeOfAccommodations extends Model {
     static associate(modles) {
-      userTypeOfAccommodations.hasMany(modles.userAccommodations, {
+      TypeOfAccommodations.hasMany(modles.Accommodations, {
         foreignKey: "id",
         as: "acta_id",
       });
-      userTypeOfAccommodations.belongsTo(
-        modles.userTypeOfAccommodationsHeader,
-        {
-          foreignKey: "ta_th",
-          targetKey: "id",
-          as: "thta_id",
-        }
-      );
+      TypeOfAccommodations.belongsTo(modles.TypeOfAccommodationsHeader, {
+        foreignKey: "ta_th",
+        targetKey: "id",
+        as: "thta_id",
+      });
     }
   }
 
-  userTypeOfAccommodations.init(
+  TypeOfAccommodations.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -65,11 +62,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "userTypeOfAccommodations",
+      modelName: "TypeOfAccommodations",
       tableName: "type_accommodates",
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return userTypeOfAccommodations;
+  return TypeOfAccommodations;
 };
