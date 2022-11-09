@@ -4,7 +4,7 @@ import flag1 from '../assets/flag-vn.png';
 import provider_multi_unit from '../assets/provider-multi-unit.png';
 import provider_single_unit from '../assets/provider-single-unit.png';
 import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const ProviderMainContainerStyled = styled.div`
     height: 100%;
     width: 100%;
@@ -147,6 +147,11 @@ const ProviderMainBottomSubContentRightSubContentStyled = styled.p`
     margin: .4rem 0;
 `
 const ProviderMainpage = () => {
+  const navigate = useNavigate();
+  const handleNewProviderInfo = () => {
+    const ac_propertyRegistrationId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
+    navigate(`/provider?p=${ac_propertyRegistrationId}`);
+  }
   return (
     <ProviderMainContainerStyled>
         <ProviderWelcomepageHeaderContainerStyled>
@@ -184,9 +189,7 @@ const ProviderMainpage = () => {
                                         </ProviderMainBottomSubContentRightSubContentStyled>
                                     </ProviderMainBottomSubContentRightWrapperStyled>
                                 </ProviderMainBottomSubContentWrapperStyled>
-                                <Link to="/provider">
-                                    <ProviderMainBottomSubContentRightButtonStyled>Chọn</ProviderMainBottomSubContentRightButtonStyled>
-                                </Link>
+                                <ProviderMainBottomSubContentRightButtonStyled onClick={handleNewProviderInfo}>Chọn</ProviderMainBottomSubContentRightButtonStyled>
                             </ProviderMainBottomSubContentContainerStyled>
                         </ProviderMainBottomContentLeftWrapperStyled>
                         <ProviderMainBottomContentRightWrapperStyled>

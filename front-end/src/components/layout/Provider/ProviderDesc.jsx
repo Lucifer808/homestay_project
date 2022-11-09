@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import provider_ec_desc from '../../../assets/provider-ec-description.png';
 import Rating from '@mui/material/Rating';
@@ -129,7 +129,23 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+const initialValuesF = {
+  nameOfAcommodation: "" ,
+  desc: "",
+  recommend: "",
+  policy: "",
+  howToGetThere: "",
+  rating: 0
+}
 const ProviderDesc = () => {
+  const [values, setValues] = useState(initialValuesF);
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
   const ratingOptions = {
     value: 5,
     size: 'medium'
@@ -154,32 +170,61 @@ const ProviderDesc = () => {
               <ProviderDescTopHeaderStyled>Đặt tên cho nhà</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Hãy tận dụng, và làm cho nó nghe có vẻ hấp dẫn. Đừng lo lắng, chúng tôi sẽ tạo các ngôn ngữ khác bằng mẫu dịch chuẩn.</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <ProviderDescTopInputStyled placeholder='Ví dụ: Romantic beach getaway, perfect for honeymooners'/>
+                <ProviderDescTopInputStyled 
+                  placeholder='Ví dụ: Romantic beach getaway, perfect for honeymooners'
+                  name="nameOfAcommodation"
+                  value={values.name}
+                  onChange={handleChange}
+                />
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Mô tả nhà của bạn</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Những đặc điểm nổi bật của căn hộ để thu hút du khách.</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <ProviderDescTopTextAreaStyled rows={5} placeholder='Ví dụ:&#10;• Cách phương tiện công cộng 5 phút đi bộ &#10;• Phù hợp cho gia đình &#10;• Không gian thoáng đãng với tầm nhìn đẹp và tràn đây ánh sáng tự nhiên'/>
+                <ProviderDescTopTextAreaStyled 
+                  rows={5}
+                  name="desc"
+                  value={values.desc}
+                  onChange={handleChange} 
+                  placeholder='Ví dụ:&#10;• Cách phương tiện công cộng 5 phút đi bộ &#10;• Phù hợp cho gia đình &#10;• Không gian thoáng đãng với tầm nhìn đẹp và tràn đây ánh sáng tự nhiên'
+                />
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Gợi ý vui chơi ăn uống tại địa phương (không bắt buộc)</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Có điểm tham quan du lịch, nhà hàng hay hoạt động vui chơi giải trí nào ở gần đây không?</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <ProviderDescTopTextAreaStyled rows={5} placeholder='Ví dụ:&#10;• 5 phút đi bộ đến điểm tham quan phổ biến&#10;• Cách quán ăn nổi tiếng 10 phút đi bộ&#10;• Chỉ 5 phút đi bộ đến quán bar nhộn nhịp'/>
+                <ProviderDescTopTextAreaStyled 
+                  rows={5} 
+                  name="recommend"
+                  value={values.recommend}
+                  onChange={handleChange} 
+                  placeholder='Ví dụ:&#10;• 5 phút đi bộ đến điểm tham quan phổ biến&#10;• Cách quán ăn nổi tiếng 10 phút đi bộ&#10;• Chỉ 5 phút đi bộ đến quán bar nhộn nhịp'
+                />
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Quy tắc của chỗ nghỉ (tùy chọn)</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Báo trước cho du khách những quy định cụ thể trong nhà</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <ProviderDescTopTextAreaStyled rows={5} placeholder='Ví dụ:&#10;• Không tụ tập hay tổ chức tiệc tùng&#10;• Giữ yên lặng sau 11:00 PM&#10;• Không xả rác xuống đường ống'/>
+                <ProviderDescTopTextAreaStyled 
+                  rows={5} 
+                  name="policy"
+                  value={values.policy}
+                  onChange={handleChange} 
+                  placeholder='Ví dụ:&#10;• Không tụ tập hay tổ chức tiệc tùng&#10;• Giữ yên lặng sau 11:00 PM&#10;• Không xả rác xuống đường ống'
+                />
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Khách có thể đến chỗ nghỉ bằng cách nào?</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Hãy giúp khách dễ dàng tìm được chỗ nghỉ và giảm khả năng hủy bỏ và các vấn đề vào ngày nhận phòng. Chúng tôi sẽ gửi những hướng dẫn này cho khách sau khi xác nhận đặt phòng cùng với địa chỉ của quý đối tác và đường dẫn đến bản đồ Google. Quý đối tác cũng</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <ProviderDescTopTextAreaStyled rows={5} placeholder='Ví dụ:&#10;• Đi tàu tuyến sân bay đến... (từ sân bay ra thành phố)&#10;• Chuyển tuyến tàu lửa hướng đi đến ga... (đi lại trong thành phố)&#10;• Vui lòng gửi tin nhắn cho tôi sau khi chuyển tàu (hướng dẫn cá nhân)'/>
+                <ProviderDescTopTextAreaStyled 
+                  rows={5} 
+                  name="howToGetThere"
+                  value={values.howToGetThere}
+                  onChange={handleChange} 
+                  placeholder='Ví dụ:&#10;• Đi tàu tuyến sân bay đến... (từ sân bay ra thành phố)&#10;• Chuyển tuyến tàu lửa hướng đi đến ga... (đi lại trong thành phố)&#10;• Vui lòng gửi tin nhắn cho tôi sau khi chuyển tàu (hướng dẫn cá nhân)'
+                />
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Xếp hạng sao</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Đánh giá để giúp khách hàng hình dung cụ thể hơn về nơi ở.</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <Rating {...ratingOptions}/>
+                <Rating {...ratingOptions} name="rating" value={values.rating} onChange={(e, rating) => { setValues({...values, rating})}}/>
               </ProviderDescTopWrapperStyled>
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>

@@ -4,9 +4,9 @@ import userApi from "../api/userApi";
 const initialState = {
   bedTypeList: [],
   bedConfigurations: [],
-  commonSpaceGroupList: [],
   userTypeOfAccommodations: [],
   userData: {},
+  success: false,
   isLoading: false,
   isAutheticated: false,
   errorMessage: {},
@@ -96,6 +96,18 @@ export const getAllUserTypeOfAccommodation = createAsyncThunk(
   }
 );
 
+export const createRegistraionInfo = createAsyncThunk(
+  "user/create_registration_info",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationInfo(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -143,54 +155,6 @@ export const userSlice = createSlice({
         }
         return state;
       });
-    },
-    addCommonSpace(state, action) {
-      const itemIndex = state.commonSpaceGroupList.findIndex(
-        (item) => item.optionId === action.payload.optionId
-      );
-      if (itemIndex >= 0) {
-        state.commonSpaceGroupList[itemIndex].bedTypeId =
-          action.payload.bedTypeId;
-      } else {
-        const tempBedConfig = {
-          ...action.payload,
-          bedTypeId: action.payload.bedTypeId,
-        };
-        state.commonSpaceGroupList.push(tempBedConfig);
-      }
-    },
-    increaseCommonSpace(state, action) {
-      const itemIndex = state.commonSpaceGroupList.findIndex(
-        (item) => item.optionId === action.payload
-      );
-      if (itemIndex >= 0) {
-        state.commonSpaceGroupList[itemIndex].noOfBed += 1;
-      }
-    },
-    decreaseCommonSpace(state, action) {
-      const itemIndex = state.commonSpaceGroupList.findIndex(
-        (item) => item.optionId === action.payload
-      );
-
-      if (state.commonSpaceGroupList[itemIndex].noOfBed > 1) {
-        state.commonSpaceGroupList[itemIndex].noOfBed -= 1;
-      } else if (state.commonSpaceGroupList[itemIndex].noOfBed === 1) {
-        state.commonSpaceGroupList[itemIndex].noOfBed = 1;
-      }
-    },
-    removeCommonSpace(state, action) {
-      state.commonSpaceGroupList.map((item) => {
-        if (item.optionId === action.payload) {
-          const newCommonSpaceGroupList = state.commonSpaceGroupList.filter(
-            (item) => item.optionId !== action.payload
-          );
-          state.commonSpaceGroupList = newCommonSpaceGroupList;
-        }
-        return state;
-      });
-    },
-    providerInfoSubmit(state, action) {
-      console.log("payload", action.payload);
     },
   },
   extraReducers: {
@@ -279,6 +243,17 @@ export const userSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [createRegistraionInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionInfo.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+    },
+    [createRegistraionInfo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -287,11 +262,6 @@ export const {
   increaseBedConfig,
   decreaseBedConfig,
   removeFromBedConfig,
-  addCommonSpace,
-  increaseCommonSpace,
-  decreaseCommonSpace,
-  removeCommonSpace,
-  providerInfoSubmit,
 } = userSlice.actions;
 
 export const selectUser = (state) => state.user.userData;
@@ -299,8 +269,6 @@ export const selectLoading = (state) => state.user.isLoading;
 export const selectBedTypeList = (state) => state.user.bedTypeList;
 export const selectedBedConfigurations = (state) =>
   state.user.bedConfigurations;
-export const selectedCommonSpaceGroupList = (state) =>
-  state.user.commonSpaceGroupList;
 export const selectUserTypeOfAccommodations = (state) =>
   state.user.userTypeOfAccommodations;
 export const selectIsAutheticated = (state) => state.user.isAutheticated;

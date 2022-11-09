@@ -73,7 +73,7 @@ const ProviderInfoBedConfig = (props) => {
             <ProviderInfoBottomContentInputStyled>{quantity}</ProviderInfoBottomContentInputStyled>
             <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={handleIncrease}/>
         </ProviderInfoBottomContentInputWrapperStyled>
-        <ProviderInfoBottomContentSelectStyled name='bedTypeId' onChange={handleChangeInChild}>
+        <ProviderInfoBottomContentSelectStyled name='ro_tb' onChange={handleChangeInChild}>
             {selectBedTypeListData && selectBedTypeListData.map(item => (
             <ProviderInfoBottomContentOptionStyled key={item.id} value={item.id}>{item.name}</ProviderInfoBottomContentOptionStyled>
             ))}

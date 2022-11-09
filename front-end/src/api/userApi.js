@@ -35,6 +35,11 @@ const userApi = {
     const config = {};
     return axiosClient.get(url, config);
   },
+  createRegistrationInfo: (params) => {
+    const url = "/create-registration-info";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default userApi;
