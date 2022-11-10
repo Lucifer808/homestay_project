@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: "ro_tb",
       },
+      ro_propertyRegistrationId: {
+        type: DataTypes.STRING,
+        field: "ro_propertyRegistrationId",
+      },
     },
     {
       sequelize,

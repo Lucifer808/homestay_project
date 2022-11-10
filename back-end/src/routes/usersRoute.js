@@ -11,9 +11,6 @@ router
   .route("/all-bed-type-list")
   .get(isAuthenticatedUser, usersController.getAllBedTypeList);
 router
-  .route("/create-registration")
-  .post(isAuthenticatedUser, usersController.createRentalRegistration);
-router
   .route("/create-registration-info")
   .post(isAuthenticatedUser, usersController.createRegistraionInfo);
 module.exports = router;

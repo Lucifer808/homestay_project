@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: "rr_user",
       },
-      ac_propertyRegistrationId: {
+      rr_propertyRegistrationId: {
         type: DataTypes.STRING,
         field: "rr_propertyRegistratonId",
       },

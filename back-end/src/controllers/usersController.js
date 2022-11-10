@@ -2,6 +2,19 @@ const db = require("../models/index");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
+// async function updateOrCreate(model, where, newItem, userId) {
+//   console.log(newItem);
+//   // First try to find the record
+//   const foundItem = await model.findOne({ where });
+//   if (!foundItem) {
+//     // Item not found, create a new one
+//     const item = await model.create(newItem);
+//     return { item, created: true };
+//   }
+//   // Found an item, update it
+//   const item = await model.update(newItem, { where });
+//   return { item, created: false };
+// }
 exports.getAllUsers = catchAsyncError(async (req, res, next) => {
   let users = await db.Users.findAll({
     include: [
@@ -92,18 +105,9 @@ exports.getAllRentalRegistration = catchAsyncError(async (req, res, next) => {
   res.status(200).json(allRentalRegistration);
 });
 
-exports.createRentalRegistration = catchAsyncError(async (req, res, next) => {
-  const ac_propertyRegistrationId = req.query.p;
-  const createNewRentalRegistration = db.RetalRegistration.create({
-    ac_propertyRegistrationId,
-    createdById: req.user.id,
-  });
-  res.status(200).json(createNewRentalRegistration);
-});
-
 exports.createRegistraionInfo = catchAsyncError(async (req, res, next) => {
   const {
-    ac_propertyRegistrationId,
+    propertyRegistrationId,
     accommodates,
     noOfBathrooms,
     noOfBedrooms,
@@ -111,36 +115,70 @@ exports.createRegistraionInfo = catchAsyncError(async (req, res, next) => {
     typeOfAccommodation,
     bedConfiguaration,
   } = req.body;
-  const createNewRentalInfo = await db.RetalRegistration.create({
-    createdById: req.user.id,
-    ac_propertyRegistrationId,
+  const foundRental = await db.RetalRegistration.findOne({
+    where: { rr_propertyRegistrationId: propertyRegistrationId },
   });
-  if (!createNewRentalInfo) {
-    return next(new ErrorHandler("Xảy ra lỗi khi thêm mới đơn đăng ký!", 401));
+  if (!foundRental) {
+    const createNewRentalInfo = await db.RetalRegistration.create({
+      createdById: req.user.id,
+      rr_propertyRegistrationId: propertyRegistrationId,
+    });
+    if (!createNewRentalInfo) {
+      return next(
+        new ErrorHandler("Xảy ra lỗi khi thêm mới đơn đăng ký!", 401)
+      );
+    }
+  } else {
+    const updateRentalInfo = await db.RetalRegistration.update(
+      {
+        updatedById: req.user.id,
+        rr_propertyRegistrationId: propertyRegistrationId,
+      },
+      { where: { rr_propertyRegistrationId: propertyRegistrationId } }
+    );
+    if (!updateRentalInfo) {
+      return next(
+        new ErrorHandler("Xảy ra lỗi khi cập nhật đơn đăng ký!", 401)
+      );
+    }
   }
-  const createNewAcommodationInfo = await db.Accommodations.create({
-    area: sizeSqm,
-    ac_ta: typeOfAccommodation,
-    ac_propertyRegistrationId,
-    createdById: req.user.id,
+
+  const foundAcommodation = await db.Accommodations.findOne({
+    where: { ac_propertyRegistrationId: propertyRegistrationId },
   });
-  if (!createNewAcommodationInfo) {
-    return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
-  }
-  const createNewDetailAcommodationsInfo = await db.DetailAccommodations.create(
-    {
+  if (!foundAcommodation) {
+    const createNewAcommodationInfo = await db.Accommodations.create({
+      area: sizeSqm,
       accommodates,
       noOfBedrooms,
       noOfBathrooms,
+      ac_ta: typeOfAccommodation,
+      ac_propertyRegistrationId: propertyRegistrationId,
       createdById: req.user.id,
+    });
+    if (!createNewAcommodationInfo) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
     }
-  );
-  if (!createNewDetailAcommodationsInfo) {
-    return next(
-      new ErrorHandler("Xảy ra lỗi khi thêm mới chi tiết nơi ở !", 401)
+  } else {
+    const updateAcommodationInfo = await db.Accommodations.update(
+      {
+        area: sizeSqm,
+        accommodates,
+        noOfBedrooms,
+        noOfBathrooms,
+        ac_ta: typeOfAccommodation,
+        ac_propertyRegistrationId: propertyRegistrationId,
+        updatedById: req.user.id,
+      },
+      { where: { ac_propertyRegistrationId: propertyRegistrationId } }
     );
+    if (!updateAcommodationInfo) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
+    }
   }
-  const createNewRoomInfo = await db.Room.bulkCreate(bedConfiguaration);
+  const createNewRoomInfo = await db.Room.bulkCreate(bedConfiguaration, {
+    updateOnDuplicate: ["ro_propertyRegistrationId"],
+  });
   if (!createNewRoomInfo) {
     return next(new ErrorHandler("Xảy ra lỗi khi thêm mới phòng !", 401));
   }
