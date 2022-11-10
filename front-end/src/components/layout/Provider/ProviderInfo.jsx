@@ -204,11 +204,6 @@ const initialValuesF = {
   noOfBathrooms: 1,
   noOfBedrooms: 1,
 }
-const initialBedConfig = {
-  ro_tb: "1",
-  noOfBed: 1,
-  optionId: 0
-}
 const ProviderInfo = () => {
   const [values, setValues] = useState(initialValuesF);
   const [addOptions, setAddOptions] = useState(1);
@@ -218,6 +213,13 @@ const ProviderInfo = () => {
   const selectTypeOfAccommodationsData = useSelector(selectUserTypeOfAccommodations);
   const selectedBedConfigurationsData = useSelector(selectedBedConfigurations);
   const typeOfAcommodations = selectTypeOfAccommodationsData.filter(item => item.ta_th === 1);
+  const propertyRegistrationId = searchParams.get('p');
+  const initialBedConfig = {
+    ro_tb: "1",
+    noOfBed: 1,
+    optionId: 0,
+    ro_propertyRegistrationId: propertyRegistrationId
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -242,7 +244,8 @@ const ProviderInfo = () => {
     const tempItem = {
       ro_tb: "1",
       noOfBed: 1,
-      optionId: addOptions
+      optionId: addOptions,
+      ro_propertyRegistrationId: propertyRegistrationId
     }
     dispatch(addBedConfig(tempItem));
   }
@@ -260,7 +263,7 @@ const ProviderInfo = () => {
   }
   const handleSubmitInfo = (e) => {
     e.preventDefault();
-    dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData }));
+    dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData, propertyRegistrationId }));
     navigate("/provider/location");
   }
   console.log(values)

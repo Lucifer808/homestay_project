@@ -117,11 +117,11 @@ export const userSlice = createSlice({
         (item) => item.optionId === action.payload.optionId
       );
       if (itemIndex >= 0) {
-        state.bedConfigurations[itemIndex].bedTypeId = action.payload.bedTypeId;
+        state.bedConfigurations[itemIndex].ro_tb = action.payload.ro_tb;
       } else {
         const tempBedConfig = {
           ...action.payload,
-          bedTypeId: action.payload.bedTypeId,
+          ro_tb: action.payload.ro_tb,
         };
         state.bedConfigurations.push(tempBedConfig);
       }
@@ -204,6 +204,7 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.isAutheticated = true;
       state.userData = action.payload;
+      state.errorMessage = {};
     },
     [loadUser.rejected]: (state, action) => {
       state.isLoading = false;
@@ -214,6 +215,7 @@ export const userSlice = createSlice({
       state.userData = null;
       state.isLoading = false;
       state.isAutheticated = false;
+      state.errorMessage = {};
     },
     [logoutUser.rejected]: (state, action) => {
       state.isLoading = false;
@@ -225,6 +227,7 @@ export const userSlice = createSlice({
     [getAllBedTypeList.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.bedTypeList = action.payload;
+      state.errorMessage = {};
     },
     [getAllBedTypeList.rejected]: (state, action) => {
       state.isLoading = false;
@@ -237,6 +240,7 @@ export const userSlice = createSlice({
     [getAllUserTypeOfAccommodation.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.userTypeOfAccommodations = action.payload;
+      state.errorMessage = {};
     },
     [getAllUserTypeOfAccommodation.rejected]: (state, action) => {
       state.isLoading = false;
@@ -249,6 +253,7 @@ export const userSlice = createSlice({
     [createRegistraionInfo.fulfilled]: (state) => {
       state.isLoading = false;
       state.success = true;
+      state.errorMessage = {};
     },
     [createRegistraionInfo.rejected]: (state, action) => {
       state.isLoading = false;

@@ -1,8 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import provider_ec_location from '../../../assets/provider-ec-location.png';
 import StepperProvider from '../../child/StepperProvider';
+import Loader from '../../child/Loader';
+import Maps from '../../child/Maps';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { Country, State, City }  from 'country-state-city';
+import Divider from "@material-ui/core/Divider";
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 const ProviderLocationContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -75,18 +87,20 @@ const ProviderLocationBottomSelectHalfStyled = styled.select`
   width: 15rem;
   padding: .7rem 1rem;
   border: 1px solid #ccc;
+  color: #999;
+
   &:focus{
     border-color: #66afe9;
     outline: 0;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
   }
-
 `
-// const ProviderLocationBottomOptionHalfStyled = styled.option``
+const ProviderLocationBottomOptionHalfStyled = styled.option``
 const ProviderLocationBottomZipInputHalfStyled = styled.input`
   width: 15rem;
-  padding: .7rem 1rem;
+  padding: 1.2rem 1rem;
   border: 1px solid #ccc;
+  border-radius: .2rem;
   &:focus{
     border-color: #66afe9;
     outline: 0;
@@ -148,7 +162,22 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+const ProviderLocationBottomMapWrapperStyled = styled.div`
+  display: none;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  height: 30rem;
+  border-radius: .2rem;
+  background-color: #fff;
+  margin-top: 1rem;
+`
 const ProviderLocation = () => {
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [selectPosition, setSelectPosition] = useState(null);
+  const [selectCountryPosition, setSelectCountryPosition] = useState(null);
+  console.log(selectCountryPosition)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
@@ -179,17 +208,55 @@ const ProviderLocation = () => {
                   <ProviderLocationBottomInputHalfContainerStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Quốc gia</ProviderLocationBottomTitleStyled>
-                      <ProviderLocationBottomSelectHalfStyled />
+                      <FormControl sx={{ width: '15rem' }}>
+                        <Select
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          defaultValue=""
+                          displayEmpty
+                        >
+                          {Country && Country.getAllCountries().map((item) => (
+                            <MenuItem key={item.isoCode} value={item.isoCode} onClick={() => setSelectCountryPosition(item)}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Tiểu bang / Tỉnh</ProviderLocationBottomTitleStyled>
-                      <ProviderLocationBottomSelectHalfStyled />
+                      <FormControl sx={{ width: '15rem' }}>
+                        <Select
+                          value={state}
+                          onChange={(e) => setState(e.target.value)}
+                          defaultValue=""
+                          displayEmpty
+                        >
+                          {State && State.getStatesOfCountry(country).map((item) => (
+                            <MenuItem key={item.isoCode} value={item.isoCode}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
                   </ProviderLocationBottomInputHalfContainerStyled>
                   <ProviderLocationBottomInputHalfContainerStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Thành phố</ProviderLocationBottomTitleStyled>
-                      <ProviderLocationBottomSelectHalfStyled />
+                       <FormControl sx={{ width: '15rem' }}>
+                        <Select
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          displayEmpty
+                        >
+                          {City && City.getCitiesOfState(country, state).map((item, i) => (
+                            <MenuItem key={i} value={item} onClick={() => setSelectPosition(item)}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Mã bưu điện (không bắt buộc)</ProviderLocationBottomTitleStyled>
@@ -197,6 +264,9 @@ const ProviderLocation = () => {
                     </ProviderLocationBottomInputHalfWrapperStyled>
                   </ProviderLocationBottomInputHalfContainerStyled>
                 </ProviderLocationBottomInputHalfLocationContainerStyled>
+                <ProviderLocationBottomMapWrapperStyled>
+                  <Maps selectPosition={selectPosition} selectCountryPosition={selectCountryPosition}/>
+                </ProviderLocationBottomMapWrapperStyled>
               </ProviderLocationBottomWrapperStyled>
               <EnterpriseInfoRightBottomWrapperStyled>
                 <Link to="/provider">
