@@ -12,5 +12,14 @@ router
   .get(isAuthenticatedUser, usersController.getAllBedTypeList);
 router
   .route("/create-registration-info")
-  .post(isAuthenticatedUser, usersController.createRegistraionInfo);
+  .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionInfo);
+router
+  .route("/create-registration-location")
+  .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionLocation);
+router
+  .route("/create-registration-desc")
+  .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionDesc);
+router
+  .route("/user-get-all-service")
+  .get(isAuthenticatedUser, usersController.userGetAllService);
 module.exports = router;

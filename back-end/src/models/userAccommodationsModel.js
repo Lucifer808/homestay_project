@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: "ac_id",
       },
-      name: {
+      nameOfAcommodation: {
         type: DataTypes.STRING,
         field: "ac_name",
       },
@@ -56,6 +56,22 @@ module.exports = (sequelize, DataTypes) => {
       priceBase: {
         type: DataTypes.INTEGER,
         field: "ac_basePrice",
+      },
+      accommodates: {
+        type: DataTypes.INTEGER,
+        field: "ac_accomodates",
+      },
+      noOfBedrooms: {
+        type: DataTypes.INTEGER,
+        field: "ac_numOfBedrooms",
+      },
+      noOfBathrooms: {
+        type: DataTypes.INTEGER,
+        field: "ac_numOfBathrooms",
+      },
+      address: {
+        type: DataTypes.STRING,
+        field: "ac_address",
       },
       createdAt: {
         type: DataTypes.DATE(3),
