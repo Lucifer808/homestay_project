@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import provider_ec_desc from '../../../assets/provider-ec-description.png';
 import Rating from '@mui/material/Rating';
 import StepperProvider from '../../child/StepperProvider';
-import { Link } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import{ createRegistraionDesc } from '../../../features/userSlice';
 const ProviderDescContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -64,7 +68,8 @@ const ProviderDescTopTextAreaStyled = styled.textarea`
   width: 100%;
   height: auto;
   padding: .8rem .4rem;
-  border: 1px solid #ccc;
+  resize: none;
+  border: ${props => props.ChangeBorder === true ? '1px solid rgb(225, 45, 45)' : '1px solid #ccc' } ;
   &:focus{
     border-color: #66afe9;
     outline: 0;
@@ -74,7 +79,7 @@ const ProviderDescTopTextAreaStyled = styled.textarea`
     color: #999;
   }
 `
-const ProviderDescRightWrapperStyled = styled.div`
+const ProviderDescRightWrapperStyled = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -129,36 +134,53 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
-const initialValuesF = {
-  nameOfAcommodation: "" ,
-  desc: "",
-  recommend: "",
-  policy: "",
-  howToGetThere: "",
-  rating: 0
-}
+const RegisterpageInputErrorPromptStyled = styled.p`
+  font-size: .8rem;
+  color: rgb(225, 45, 45);
+  margin: .4rem 0;
+`
 const ProviderDesc = () => {
-  const [values, setValues] = useState(initialValuesF);
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    })
-  }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const propertyRegistrationId = searchParams.get('p');
+  const formik = useFormik({
+    initialValues: {
+      nameOfAcommodation: "" ,
+      desc: "",
+      recommend: "",
+      policy: "",
+      howToGetThere: "",
+      rating: 0
+    },
+    validationSchema: yup.object({
+      nameOfAcommodation: yup.string().required("Xin vui lòng đặt tên cho chỗ nghỉ !"),
+      desc: yup.string().required("Vui lòng nhập mô tả nơi ở !"),
+      howToGetThere: yup.string().required("Vui lòng nhập cách khách có thể đến chỗ nghỉ !"),
+      rating: yup.number().min(1, "Vui lòng nhập số sao chỗ nghỉ")
+    }),
+    onSubmit: (values) => {
+      const {nameOfAcommodation, desc, recommend, policy, howToGetThere, rating} = values;
+      dispatch(createRegistraionDesc({nameOfAcommodation, desc, recommend, policy, howToGetThere, rating, propertyRegistrationId}))
+      navigate(`/provider/services?p=${propertyRegistrationId}`)
+    }
+  })
   const ratingOptions = {
     value: 5,
     size: 'medium'
   }
+  const handleBack = () => {
+    navigate(`/provider/location?p=${propertyRegistrationId}`)
+  }
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [])
+  }, []);
   return (
     <ProviderDescContainerStyled>
       <ProviderDescWrapperStyled>
         <ProviderContentWrapperStyled>
           <StepperProvider activeStep={2} />
-          <ProviderDescRightWrapperStyled>
+          <ProviderDescRightWrapperStyled onSubmit={formik.handleSubmit}>
             <ProviderDescRightTopWrapperStyled>
               <ProviderDescHeaderWrapperStyled>
                 <ProviderDescHeaderLeftWrapperStyled>
@@ -173,9 +195,13 @@ const ProviderDesc = () => {
                 <ProviderDescTopInputStyled 
                   placeholder='Ví dụ: Romantic beach getaway, perfect for honeymooners'
                   name="nameOfAcommodation"
-                  value={values.name}
-                  onChange={handleChange}
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  className={formik.errors.nameOfAcommodation && formik.touched.nameOfAcommodation  ? 'input-error' : ''}
                 />
+                {formik.errors.nameOfAcommodation && formik.touched.nameOfAcommodation && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.nameOfAcommodation}</RegisterpageInputErrorPromptStyled>
+                )}
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Mô tả nhà của bạn</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Những đặc điểm nổi bật của căn hộ để thu hút du khách.</ProviderDescTopSubHeaderStyled>
@@ -183,10 +209,15 @@ const ProviderDesc = () => {
                 <ProviderDescTopTextAreaStyled 
                   rows={5}
                   name="desc"
-                  value={values.desc}
-                  onChange={handleChange} 
+                  value={formik.values.desc}
+                  onChange={formik.handleChange}
+                  ChangeBorder={formik.errors.desc && formik.touched.desc  ? true : false}
                   placeholder='Ví dụ:&#10;• Cách phương tiện công cộng 5 phút đi bộ &#10;• Phù hợp cho gia đình &#10;• Không gian thoáng đãng với tầm nhìn đẹp và tràn đây ánh sáng tự nhiên'
+                  style={{outline: 'none'}}
                 />
+                {formik.errors.desc && formik.touched.desc && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.desc}</RegisterpageInputErrorPromptStyled>
+                )}
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Gợi ý vui chơi ăn uống tại địa phương (không bắt buộc)</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Có điểm tham quan du lịch, nhà hàng hay hoạt động vui chơi giải trí nào ở gần đây không?</ProviderDescTopSubHeaderStyled>
@@ -194,8 +225,8 @@ const ProviderDesc = () => {
                 <ProviderDescTopTextAreaStyled 
                   rows={5} 
                   name="recommend"
-                  value={values.recommend}
-                  onChange={handleChange} 
+                  value={formik.values.recommend}
+                  onChange={formik.handleChange} 
                   placeholder='Ví dụ:&#10;• 5 phút đi bộ đến điểm tham quan phổ biến&#10;• Cách quán ăn nổi tiếng 10 phút đi bộ&#10;• Chỉ 5 phút đi bộ đến quán bar nhộn nhịp'
                 />
               </ProviderDescTopWrapperStyled>
@@ -205,8 +236,8 @@ const ProviderDesc = () => {
                 <ProviderDescTopTextAreaStyled 
                   rows={5} 
                   name="policy"
-                  value={values.policy}
-                  onChange={handleChange} 
+                  value={formik.values.policy}
+                  onChange={formik.handleChange} 
                   placeholder='Ví dụ:&#10;• Không tụ tập hay tổ chức tiệc tùng&#10;• Giữ yên lặng sau 11:00 PM&#10;• Không xả rác xuống đường ống'
                 />
               </ProviderDescTopWrapperStyled>
@@ -216,24 +247,27 @@ const ProviderDesc = () => {
                 <ProviderDescTopTextAreaStyled 
                   rows={5} 
                   name="howToGetThere"
-                  value={values.howToGetThere}
-                  onChange={handleChange} 
+                  value={formik.values.howToGetThere}
+                  onChange={formik.handleChange} 
                   placeholder='Ví dụ:&#10;• Đi tàu tuyến sân bay đến... (từ sân bay ra thành phố)&#10;• Chuyển tuyến tàu lửa hướng đi đến ga... (đi lại trong thành phố)&#10;• Vui lòng gửi tin nhắn cho tôi sau khi chuyển tàu (hướng dẫn cá nhân)'
+                  ChangeBorder={formik.errors.howToGetThere && formik.touched.howToGetThere  ? true : false}
                 />
+                {formik.errors.howToGetThere && formik.touched.howToGetThere && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.howToGetThere}</RegisterpageInputErrorPromptStyled>
+                )}
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Xếp hạng sao</ProviderDescTopHeaderStyled>
               <ProviderDescTopSubHeaderStyled>Đánh giá để giúp khách hàng hình dung cụ thể hơn về nơi ở.</ProviderDescTopSubHeaderStyled>
               <ProviderDescTopWrapperStyled>
-                <Rating {...ratingOptions} name="rating" value={values.rating} onChange={(e, rating) => { setValues({...values, rating})}}/>
+                <Rating {...ratingOptions} name="rating" value={formik.values.rating} onChange={(e, rating) => { formik.setFieldValue("rating", rating)}}/>
               </ProviderDescTopWrapperStyled>
+              {formik.errors.rating && formik.touched.rating && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.rating}</RegisterpageInputErrorPromptStyled>
+                )}
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
-                <Link to="/provider/location">
-                  <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
-                </Link>
-                <Link to="/provider/service">
-                  <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
-                </Link>
+                  <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                  <EnterpriseInfoRightBottomNextButtonStyled type='submit'>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
               </EnterpriseInfoRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>
         </ProviderContentWrapperStyled>

@@ -29,7 +29,7 @@ const Maps = (props) => {
   const locationSelection = [selectPosition?.latitude, selectPosition?.longitude];
   const position = [10.762622, 106.660172];
   return (
-    <MapContainer center={position} zoom={9} scrollWheelZoom={true} style={{height: '100%', width: '100%'}}>
+    <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{height: '100%', width: '100%'}}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=tDBAuVPvRWiOESRVUIGX"

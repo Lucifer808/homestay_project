@@ -4,7 +4,7 @@ import provider_ec_basics from '../../../assets/provider-ec-basics.png';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import StepperProvider from '../../child/StepperProvider';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   addBedConfig,
   selectedBedConfigurations,
@@ -177,7 +177,6 @@ const ProviderDescRightBottomWrapperStyled = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* width: 100%; */
   margin: 4rem 0;
 `
 const ProviderDescRightBottomNextButtonStyled = styled.button`
@@ -197,6 +196,11 @@ const ProviderDescRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+const RegisterpageInputErrorPromptStyled = styled.p`
+    font-size: .9rem;
+    color: rgb(225, 45, 45);
+    margin: .4rem;
+`
 const initialValuesF = {
   typeOfAccommodation: "",
   sizeSqm: "",
@@ -207,6 +211,7 @@ const initialValuesF = {
 const ProviderInfo = () => {
   const [values, setValues] = useState(initialValuesF);
   const [addOptions, setAddOptions] = useState(1);
+  const [errors, setErrors] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -263,8 +268,12 @@ const ProviderInfo = () => {
   }
   const handleSubmitInfo = (e) => {
     e.preventDefault();
-    dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData, propertyRegistrationId }));
-    navigate("/provider/location");
+    if(values.typeOfAccommodation === "" || values.sizeSqm === ""){
+      setErrors(true);
+    }else{
+      dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData, propertyRegistrationId }));
+      navigate(`/provider/location?p=${propertyRegistrationId}`);
+    }
   }
   console.log(values)
   return (
@@ -368,9 +377,10 @@ const ProviderInfo = () => {
               </ProviderInfoBottomBonusWrapperStyled>
             </ProviderDescRightTopWrapperStyled>
             <ProviderDescRightBottomWrapperStyled>
-              <Link to="/provider/location">
+                {errors && (
+                    <RegisterpageInputErrorPromptStyled>Vui lòng điền đủ thông tin</RegisterpageInputErrorPromptStyled>
+                )}
                 <ProviderDescRightBottomNextButtonStyled type='submit' onClick={handleSubmitInfo}>TIẾP THEO</ProviderDescRightBottomNextButtonStyled>
-              </Link>
             </ProviderDescRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>
         </ProviderContentWrapperStyled>

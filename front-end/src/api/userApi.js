@@ -40,6 +40,21 @@ const userApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.post(url, params, config);
   },
+  createRegistrationLocation: (params) => {
+    const url = "/create-registration-location";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
+  createRegistrationDesc: (params) => {
+    const url = "/create-registration-desc";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
+  allServices: () => {
+    const url = "/user-get-all-service";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
 };
 
 export default userApi;

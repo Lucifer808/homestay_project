@@ -70,7 +70,7 @@ function App() {
           <Route path="/provider" index element={<ProviderInfo />} />
           <Route path="/provider/desc" element={<ProviderDesc />} />
           <Route path="/provider/location" element={<ProviderLocation />} />
-          <Route path="/provider/service" element={<ProviderService />} />
+          <Route path="/provider/services" element={<ProviderService />} />
           <Route path="/provider/price" element={<ProviderPriceSetUp />} />
           <Route path="/provider/image" element={<ProviderImage />} />
           <Route path="/provider/file" element={<ProviderFile />} />

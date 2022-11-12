@@ -5,6 +5,7 @@ const initialState = {
   bedTypeList: [],
   bedConfigurations: [],
   userTypeOfAccommodations: [],
+  serviceList: [],
   userData: {},
   success: false,
   isLoading: false,
@@ -101,6 +102,42 @@ export const createRegistraionInfo = createAsyncThunk(
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
       const response = await userApi.createRegistrationInfo(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createRegistraionLocation = createAsyncThunk(
+  "user/create_registration_location",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationLocation(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createRegistraionDesc = createAsyncThunk(
+  "user/create_registration_desc",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationDesc(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userGetAllService = createAsyncThunk(
+  "user/all_service",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.allServices();
       return fulfillWithValue(response.data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -259,6 +296,43 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = action.payload;
     },
+    [createRegistraionLocation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionLocation.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [createRegistraionLocation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [createRegistraionDesc.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionDesc.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [createRegistraionDesc.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [userGetAllService.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetAllService.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.serviceList = action.payload;
+      state.errorMessage = {};
+    },
+    [userGetAllService.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -272,6 +346,7 @@ export const {
 export const selectUser = (state) => state.user.userData;
 export const selectLoading = (state) => state.user.isLoading;
 export const selectBedTypeList = (state) => state.user.bedTypeList;
+export const selectServiceList = (state) => state.user.serviceList;
 export const selectedBedConfigurations = (state) =>
   state.user.bedConfigurations;
 export const selectUserTypeOfAccommodations = (state) =>

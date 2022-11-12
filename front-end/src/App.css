@@ -15,5 +15,5 @@ html{
 }
 input.input-error,
 select.input-error{
-  border-color: rgb(225, 45, 45);
+  border-color: rgb(225, 45, 45) !important;
 }

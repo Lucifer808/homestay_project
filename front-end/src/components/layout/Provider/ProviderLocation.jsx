@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import provider_ec_location from '../../../assets/provider-ec-location.png';
 import StepperProvider from '../../child/StepperProvider';
-import Loader from '../../child/Loader';
 import Maps from '../../child/Maps';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import { Country, State, City }  from 'country-state-city';
-import Divider from "@material-ui/core/Divider";
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import FormHelperText from '@mui/material/FormHelperText';
+import { useDispatch } from 'react-redux';
+import { createRegistraionLocation } from '../../../features/userSlice';
 const ProviderLocationContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -66,7 +64,7 @@ const ProviderLocationBottomTitleStyled = styled.p`
 `
 const ProviderLocationBottomInputStyled = styled.input`
   width: 60%;
-  padding: .7rem 1rem;
+  padding: .9rem 1rem;
   border: 1px solid #ccc;
   &:focus{
     border-color: #66afe9;
@@ -83,24 +81,11 @@ const ProviderLocationBottomInputHalfContainerStyled = styled.div`
   justify-content: space-between;
 `
 const ProviderLocationBottomInputHalfWrapperStyled = styled.div``
-const ProviderLocationBottomSelectHalfStyled = styled.select`
-  width: 15rem;
-  padding: .7rem 1rem;
-  border: 1px solid #ccc;
-  color: #999;
-
-  &:focus{
-    border-color: #66afe9;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
-  }
-`
-const ProviderLocationBottomOptionHalfStyled = styled.option``
 const ProviderLocationBottomZipInputHalfStyled = styled.input`
   width: 15rem;
-  padding: 1.2rem 1rem;
+  padding: 1rem 1rem;
   border: 1px solid #ccc;
-  border-radius: .2rem;
+  border-radius: .1rem;
   &:focus{
     border-color: #66afe9;
     outline: 0;
@@ -116,7 +101,7 @@ const ProviderDescRightWrapperStyled = styled.div`
   border-left: 1px solid #ccc;
   padding: 4rem;
 `
-const ProviderDescRightTopWrapperStyled = styled.div`
+const ProviderDescRightTopWrapperStyled = styled.form`
     height: 90%;
     width: 100%;
 `
@@ -163,7 +148,6 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
   }
 `
 const ProviderLocationBottomMapWrapperStyled = styled.div`
-  display: none;
   padding: 1rem;
   border: 1px solid #ccc;
   height: 30rem;
@@ -171,22 +155,52 @@ const ProviderLocationBottomMapWrapperStyled = styled.div`
   background-color: #fff;
   margin-top: 1rem;
 `
+const RegisterpageInputErrorPromptStyled = styled.p`
+  font-size: .8rem;
+  color: rgb(225, 45, 45);
+  margin: .4rem 0;
+`
 const ProviderLocation = () => {
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const [selectPosition, setSelectPosition] = useState(null);
-  const [selectCountryPosition, setSelectCountryPosition] = useState(null);
-  console.log(selectCountryPosition)
+  const [selectCountry, setSelectCountry] = useState(null);
+  const [selectState, setSelectState] = useState(null);
+  const propertyRegistrationId = searchParams.get('p');
+  const formik = useFormik({
+    initialValues: {
+      country: "",
+      state: "",
+      city: "",
+      address: "",
+      building: "",
+      zipcode: ""
+    },
+    validationSchema: yup.object({
+      country: yup.string().required("Xin vui lòng chọn một quốc gia"),
+      state: yup.string().required("Xin vui lòng chọn một tiểu bang/tỉnh"),
+      city: yup.string().required("Xin vui lòng chọn một thành phố"),
+      address: yup.string().required("Xin vui lòng nhập địa chỉ cụ thể"),
+    }),
+    onSubmit: (values) => {
+      const {city, address, ...rest} = values; 
+      dispatch(createRegistraionLocation({selectCountry, selectState, city, address, propertyRegistrationId}));
+      navigate(`/provider/desc?p=${propertyRegistrationId}`)
+    }
+  })
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
+  const handleBack = () => {
+    navigate(`/provider?p=${propertyRegistrationId}`)
+  }
   return (
     <ProviderLocationContainerStyled>
       <ProviderDescWrapperStyled>
         <ProviderContentWrapperStyled>
           <StepperProvider activeStep={1} />
-          <ProviderDescRightWrapperStyled>
+          <ProviderDescRightWrapperStyled onSubmit={formik.handleSubmit}>
             <ProviderDescRightTopWrapperStyled>
               <ProviderLocationHeaderContainerStyled>
                 <ProviderLocationHeaderWrapperStyled>
@@ -201,80 +215,113 @@ const ProviderLocation = () => {
               </ProviderLocationHeaderContainerStyled>
               <ProviderLocationBottomWrapperStyled>
                 <ProviderLocationBottomTitleStyled>Địa chỉ</ProviderLocationBottomTitleStyled>
-                <ProviderLocationBottomInputStyled placeholder='Điền địa chỉ ở đây'/>
+                <ProviderLocationBottomInputStyled 
+                  name='address'
+                  placeholder='Điền địa chỉ ở đây'
+                  onChange={formik.handleChange}
+                  className={formik.errors.address && formik.touched.address  ? 'input-error' : ''}
+                />
+                {formik.errors.address && formik.touched.address && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.address}</RegisterpageInputErrorPromptStyled>
+                )}
                 <ProviderLocationBottomTitleStyled>Tên tòa nhà, tầng và căn hộ (không bắt buộc)</ProviderLocationBottomTitleStyled>
-                <ProviderLocationBottomInputStyled placeholder='Điền ở đây'/>
+                <ProviderLocationBottomInputStyled 
+                  name='building'
+                  placeholder='Điền vị trí tòa nhà ở đây'
+                  onChange={formik.handleChange}
+                />
                 <ProviderLocationBottomInputHalfLocationContainerStyled>
                   <ProviderLocationBottomInputHalfContainerStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Quốc gia</ProviderLocationBottomTitleStyled>
-                      <FormControl sx={{ width: '15rem' }}>
+                      <FormControl sx={{ width: '15rem', height: '4rem'}}>
                         <Select
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
+                          name='country'
+                          value={formik.values.country}
+                          // onChange={(e) => setCountry(e.target.value)}
+                          onChange={formik.handleChange}
                           defaultValue=""
                           displayEmpty
+                          error={formik.errors.country && formik.touched.country ? true : false}
+                          sx={{borderRadius: '1px', height: '3rem'}}
                         >
                           {Country && Country.getAllCountries().map((item) => (
-                            <MenuItem key={item.isoCode} value={item.isoCode} onClick={() => setSelectCountryPosition(item)}>
+                            <MenuItem key={item.isoCode} value={item.isoCode} onClick={() => setSelectCountry(item.name)}>
                               {item.name}
                             </MenuItem>
                           ))}
                         </Select>
+                        {formik.errors.country && formik.touched.country && (
+                          <FormHelperText sx={{color: 'red', margin: '0', position: 'absolute', bottom: '-.4rem'}}>{formik.errors.country}</FormHelperText>
+                         )}
                       </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Tiểu bang / Tỉnh</ProviderLocationBottomTitleStyled>
-                      <FormControl sx={{ width: '15rem' }}>
+                      <FormControl sx={{ width: '15rem', height: '4rem' }}>
                         <Select
-                          value={state}
-                          onChange={(e) => setState(e.target.value)}
+                          name='state'
+                          value={formik.values.state}
+                          // onChange={(e) => setState(e.target.value)}
+                          onChange={formik.handleChange}
                           defaultValue=""
                           displayEmpty
+                          error={formik.errors.state && formik.touched.state ? true : false}
+                          sx={{borderRadius: '1px', height: '3rem'}}
                         >
-                          {State && State.getStatesOfCountry(country).map((item) => (
-                            <MenuItem key={item.isoCode} value={item.isoCode}>
+                          {State && State.getStatesOfCountry(formik.values.country).map((item) => (
+                            <MenuItem key={item.isoCode} value={item.isoCode} onClick={() => setSelectState(item.name)}>
                               {item.name}
                             </MenuItem>
                           ))}
                         </Select>
+                        {formik.errors.state && formik.touched.state && (
+                          <FormHelperText sx={{color: 'red', margin: '0', position: 'absolute', bottom: '-.4rem'}}>{formik.errors.state}</FormHelperText>
+                         )}
                       </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
                   </ProviderLocationBottomInputHalfContainerStyled>
                   <ProviderLocationBottomInputHalfContainerStyled>
                     <ProviderLocationBottomInputHalfWrapperStyled>
                       <ProviderLocationBottomTitleStyled>Thành phố</ProviderLocationBottomTitleStyled>
-                       <FormControl sx={{ width: '15rem' }}>
+                       <FormControl sx={{ width: '15rem', height: '4rem' }}>
                         <Select
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
+                          name='city'
+                          value={formik.values.city}
+                          // onChange={(e) => setCity(e.target.value)}
+                          onChange={formik.handleChange}
+                          defaultValue=""
                           displayEmpty
+                          error={formik.errors.city && formik.touched.city ? true : false}
+                          sx={{borderRadius: '1px', height: '3rem'}}
                         >
-                          {City && City.getCitiesOfState(country, state).map((item, i) => (
-                            <MenuItem key={i} value={item} onClick={() => setSelectPosition(item)}>
+                          {City && City.getCitiesOfState(formik.values.country, formik.values.state).map((item, i) => (
+                            <MenuItem key={i} value={item.name} onClick={() => setSelectPosition(item)}>
                               {item.name}
                             </MenuItem>
                           ))}
                         </Select>
+                          {formik.errors.city && formik.touched.city && (
+                          <FormHelperText sx={{color: 'red', margin: '0', position: 'absolute', bottom: '-.4rem'}}>{formik.errors.city}</FormHelperText>
+                         )}
                       </FormControl>
                     </ProviderLocationBottomInputHalfWrapperStyled>
-                    <ProviderLocationBottomInputHalfWrapperStyled>
+                    <ProviderLocationBottomInputHalfWrapperStyled style={{marginBottom: '1rem'}}>
                       <ProviderLocationBottomTitleStyled>Mã bưu điện (không bắt buộc)</ProviderLocationBottomTitleStyled>
-                      <ProviderLocationBottomZipInputHalfStyled />
+                      <ProviderLocationBottomZipInputHalfStyled 
+                        name='zipcode'
+                        onChange={formik.handleChange}
+                      />
                     </ProviderLocationBottomInputHalfWrapperStyled>
                   </ProviderLocationBottomInputHalfContainerStyled>
                 </ProviderLocationBottomInputHalfLocationContainerStyled>
                 <ProviderLocationBottomMapWrapperStyled>
-                  <Maps selectPosition={selectPosition} selectCountryPosition={selectCountryPosition}/>
+                  <Maps selectPosition={selectPosition} />
                 </ProviderLocationBottomMapWrapperStyled>
               </ProviderLocationBottomWrapperStyled>
               <EnterpriseInfoRightBottomWrapperStyled>
-                <Link to="/provider">
-                  <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
-                </Link>
-                <Link to="/provider/desc">
-                  <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
-                </Link>
+                  <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                  <EnterpriseInfoRightBottomNextButtonStyled type='submit'>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
               </EnterpriseInfoRightBottomWrapperStyled>
             </ProviderDescRightTopWrapperStyled>
           </ProviderDescRightWrapperStyled>
