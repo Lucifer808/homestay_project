@@ -22,4 +22,13 @@ router
 router
   .route("/user-get-all-service")
   .get(isAuthenticatedUser, usersController.userGetAllService);
+router
+  .route("/create-registration-services/:p")
+  .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionServices);
+router
+  .route("/create-registration-price-setup")
+  .post(
+    isAuthenticatedUser,
+    usersController.createOrUpdateRegistraionPriceSetup
+  );
 module.exports = router;

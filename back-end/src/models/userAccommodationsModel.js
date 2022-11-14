@@ -99,6 +99,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: "ac_propertyRegistrationId",
       },
+      ac_dc: {
+        type: DataTypes.INTEGER,
+        field: "ac_dc",
+      },
     },
     {
       sequelize,
@@ -112,3 +116,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Accommodations;
 };
+// Chưa liên kết đến discount

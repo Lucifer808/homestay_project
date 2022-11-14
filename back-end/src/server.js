@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/connectDB");
 const cors = require("cors");
 dotenv.config();
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 connectDB();
 

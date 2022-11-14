@@ -324,3 +324,93 @@ exports.userGetAllService = catchAsyncError(async (req, res, next) => {
   }
   res.status(200).json(allService);
 });
+
+exports.createOrUpdateRegistraionServices = catchAsyncError(
+  async (req, res, next) => {
+    const [...services] = req.body;
+    const propertyRegistrationIdInside = req.params.p;
+    const foundServiceOfAccommodations =
+      db.DetailServicesOfAccoomadations.findOne({
+        where: { dsa_propertyRegistrationId: propertyRegistrationIdInside },
+      });
+    if (!foundServiceOfAccommodations) {
+      const createNewAccommodationsServices =
+        await db.DetailServicesOfAccoomadations.bulkCreate(services);
+      if (!createNewAccommodationsServices) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thêm mới thông tin chi tiết !", 401)
+        );
+      }
+    } else {
+      await db.DetailServicesOfAccoomadations.destroy({
+        where: { dsa_propertyRegistrationId: propertyRegistrationIdInside },
+      });
+      const createNewAccommodationsServices =
+        await db.DetailServicesOfAccoomadations.bulkCreate(services);
+      if (!createNewAccommodationsServices) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thêm mới thông tin chi tiết !", 401)
+        );
+      }
+    }
+    res.status(200).json("Thêm thành công");
+  }
+);
+
+exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
+  async (req, res, next) => {
+    const { priceFrom, fristDiscount, paymentMethod, propertyRegistrationId } =
+      req.body;
+    const discountCheck = fristDiscount === true ? 1 : 0;
+    const foundRoomPrices = db.RoomPrices.findOne({
+      where: { rp_propertyRegistrationId: propertyRegistrationId },
+    });
+    if (!foundRoomPrices) {
+      const createNewRoomPrices = await db.RoomPrices.create({
+        price: priceFrom,
+        active: 1,
+        rp_propertyRegistrationId: propertyRegistrationId,
+      });
+      if (!createNewRoomPrices) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thêm mới thông tin giá !", 401)
+        );
+      }
+    } else {
+      await db.RoomPrices.update(
+        { active: 0 },
+        {
+          where: { rp_propertyRegistrationId: propertyRegistrationId },
+        }
+      );
+      const createNewRoomPrices = await db.RoomPrices.create({
+        price: priceFrom,
+        active: 1,
+        rp_propertyRegistrationId: propertyRegistrationId,
+      });
+      if (!createNewRoomPrices) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thêm mới thông tin giá!", 401)
+        );
+      }
+    }
+    const updateAccommodationPriceSetup = await db.Accommodations.update(
+      {
+        paymentMethod: paymentMethod,
+        ac_dc: discountCheck,
+      },
+      {
+        where: { ac_propertyRegistrationId: propertyRegistrationId },
+      }
+    );
+    if (!updateAccommodationPriceSetup) {
+      return next(
+        new ErrorHandler(
+          "Xảy ra lỗi khi thêm mới thông tin khuyến mãi chỗ nghỉ!",
+          401
+        )
+      );
+    }
+    res.status(200).json("Thêm thành công");
+  }
+);

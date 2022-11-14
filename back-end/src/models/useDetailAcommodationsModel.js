@@ -39,3 +39,4 @@ module.exports = (sequelize, DataTypes) => {
   DetailAccommodations.removeAttribute("id");
   return DetailAccommodations;
 };
+// Đã bỏ trong CDM
