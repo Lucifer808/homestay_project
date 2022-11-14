@@ -133,6 +133,30 @@ export const createRegistraionDesc = createAsyncThunk(
   }
 );
 
+export const createRegistraionServices = createAsyncThunk(
+  "user/create_registration_services",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationServices(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createRegistraionPriceSetup = createAsyncThunk(
+  "user/create_registration_price_setup",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationPriceSetup(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userGetAllService = createAsyncThunk(
   "user/all_service",
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
@@ -317,6 +341,30 @@ export const userSlice = createSlice({
       state.errorMessage = {};
     },
     [createRegistraionDesc.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [createRegistraionServices.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionServices.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [createRegistraionServices.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [createRegistraionPriceSetup.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionPriceSetup.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [createRegistraionPriceSetup.rejected]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload;
     },

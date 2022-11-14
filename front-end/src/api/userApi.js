@@ -35,6 +35,11 @@ const userApi = {
     const config = {};
     return axiosClient.get(url, config);
   },
+  allServices: () => {
+    const url = "/user-get-all-service";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
   createRegistrationInfo: (params) => {
     const url = "/create-registration-info";
     const config = { "Content-Type": "application/json" };
@@ -50,10 +55,16 @@ const userApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.post(url, params, config);
   },
-  allServices: () => {
-    const url = "/user-get-all-service";
-    const config = {};
-    return axiosClient.get(url, config);
+  createRegistrationServices: (params) => {
+    const id = params[0].dsa_propertyRegistrationId;
+    const url = `/create-registration-services/${id}`;
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
+  createRegistrationPriceSetup: (params) => {
+    const url = "/create-registration-price-setup";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
   },
 };
 

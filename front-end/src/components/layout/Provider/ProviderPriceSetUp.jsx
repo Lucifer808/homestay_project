@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import location_ec_pricing from '../../../assets/provider-ec-pricing.png';
 import StepperProvider from '../../child/StepperProvider';
-import { Link } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { createRegistraionPriceSetup } from '../../../features/userSlice';
 const ProviderPriceSetUpContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -95,6 +99,7 @@ const ProviderPriceBottomInputTitleStyled = styled.span`
 const ProviderPriceBottomRadioStyled = styled.input`
   margin-bottom: auto;
   margin-top: .2rem;
+  cursor: pointer;
 `
 const ProviderPriceTopRadioWrapperStyled = styled.div`
   display: flex;
@@ -114,7 +119,7 @@ const ProviderPriceBottomRadioSubContentStyled = styled.span`
   font-size: .9rem;
   font-weight: 300;
 `
-const ProviderDescRightWrapperStyled = styled.div`
+const ProviderDescRightWrapperStyled = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -169,16 +174,43 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+const RegisterpageInputErrorPromptStyled = styled.p`
+  font-size: .8rem;
+  color: rgb(225, 45, 45);
+  margin: .4rem 0;
+`
 const ProviderPriceSetUp = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const propertyRegistrationId = searchParams.get('p');
+  const formik = useFormik({
+    initialValues: {
+      priceFrom: 0,
+      fristDiscount: true,
+      paymentMethod: "Tiền gửi trực tiếp vào ngân hàng"
+    },
+    validationSchema: yup.object({
+      priceFrom: yup.number().min(40000, "Giá phòng phải lớn hơn 40000"),
+    }),
+    onSubmit: (values) => {
+      const { priceFrom, fristDiscount, paymentMethod } = values;
+      dispatch(createRegistraionPriceSetup({priceFrom, fristDiscount, paymentMethod, propertyRegistrationId}));
+      navigate(`/provider/image?p=${propertyRegistrationId}`);
+    }
+  })
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
+  const handleBack = () => {
+    navigate(`/provider/services?p=${propertyRegistrationId}`);
+  }
   return (
     <ProviderPriceSetUpContainerStyled>
       <ProviderPriceSetUpWrapperStyled>
         <ProviderContentWrapperStyled>
           <StepperProvider activeStep={4} />
-          <ProviderDescRightWrapperStyled>
+          <ProviderDescRightWrapperStyled onSubmit={formik.handleSubmit}>
             <ProviderDescRightTopWrapperStyled>
               <ProviderPriceHeaderWrapperStyled>
                 <ProviderPriceHeaderLeftWrapperStyled>
@@ -193,21 +225,40 @@ const ProviderPriceSetUp = () => {
                 <ProviderPriceBottomTitleStyled>Giá gốc cho Phòng Tiêu Chuẩn</ProviderPriceBottomTitleStyled>
                 <ProviderPriceBottomTitleStyled>Giá tối thiểu mỗi đêm là bao nhiêu?</ProviderPriceBottomTitleStyled>
                 <ProviderPriceBottomInputWrapperStyled>
-                  <ProviderPriceBottomInputStyled type="number" min={0} placeholder="0"/>
+                  <ProviderPriceBottomInputStyled 
+                    type="number" 
+                    min={0} 
+                    placeholder="0"
+                    name='priceFrom'
+                    onChange={formik.handleChange}
+                    className={formik.errors.priceFrom && formik.touched.priceFrom  ? 'input-error' : ''}
+                  />
                   <ProviderPriceBottomInputPriceTitleWrapperStyled>
                     <ProviderPriceBottomInputPriceTitleStyled>VND</ProviderPriceBottomInputPriceTitleStyled>
                   </ProviderPriceBottomInputPriceTitleWrapperStyled>
                 </ProviderPriceBottomInputWrapperStyled>
+                {formik.errors.priceFrom && formik.touched.priceFrom && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.priceFrom}</RegisterpageInputErrorPromptStyled>
+                )}
               </ProviderPriceTopWrapperStyled>
               <ProviderPriceTopWrapperStyled>
                 <ProviderPriceTopSubContentStyled>Dành cho khách một sự ưu đãi để có các đơn đặt phòng và bài đánh giá nhanh hơn.</ProviderPriceTopSubContentStyled>
-                <ProviderPriceBottomCheckboxStyled type="checkbox"/>
+                <ProviderPriceBottomCheckboxStyled 
+                  type="checkbox" 
+                  defaultChecked={true} 
+                  name="fristDiscount"
+                  onChange={formik.handleChange}
+                />
                 <ProviderPriceBottomInputTitleStyled>Giảm giá 33% cho 3 đơn đặt phòng đầu tiên của quý đối tác.</ProviderPriceBottomInputTitleStyled>
               </ProviderPriceTopWrapperStyled>
               <ProviderPriceTopHeaderStyled>Hình thức thanh toán</ProviderPriceTopHeaderStyled>
               <ProviderPriceTopSubHeaderStyled>Vui lòng chọn hình thức thanh toán. Các thông tin bổ sung sẽ được yêu cầu thêm sau khi đăng lên hệ thống. [Lưu ý quan trọng] Vì lý do an ninh, khoản thanh toán đầu tiên cho bạn sẽ là 30 ngày kể từ ngày trả phòng của đặt phòng đầu tiên. Đối với các đặt phòng kế tiếp, thanh toán sẽ được thực hiện 24 giờ sau ngày khách rời đi.</ProviderPriceTopSubHeaderStyled>
               <ProviderPriceTopRadioWrapperStyled>
-                <ProviderPriceBottomRadioStyled type="radio"/>
+                <ProviderPriceBottomRadioStyled 
+                  type="radio" 
+                  defaultChecked={true}
+                  name="paymentMethod"
+                />
                 <ProviderPriceBottomRadioContentWrapperStyled>
                   <ProviderPriceBottomRadioContentStyled>Tiền gửi trực tiếp vào ngân hàng</ProviderPriceBottomRadioContentStyled>
                   <ProviderPriceBottomRadioSubContentStyled>Qua hệ thống thanh toán được bảo mật của chúng tôi, chúng tôi sẽ chuyển khoản trực tiếp vào tài khoản ngân hàng của bạn sau khi khách hàng đã trả phòng.</ProviderPriceBottomRadioSubContentStyled>
@@ -215,12 +266,8 @@ const ProviderPriceSetUp = () => {
               </ProviderPriceTopRadioWrapperStyled>
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
-              <Link to="/provider/service">
-                <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
-              </Link>
-              <Link to="/provider/image">
-                <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
-              </Link>
+                <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                <EnterpriseInfoRightBottomNextButtonStyled type='submit'>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
             </EnterpriseInfoRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>
         </ProviderContentWrapperStyled>

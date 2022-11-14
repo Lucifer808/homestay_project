@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import location_ec_amenities from '../../../assets/location-ec-amenities.png'
 import StepperProvider from '../../child/StepperProvider';
-import { Link } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userGetAllService, selectServiceList } from '../../../features/userSlice';
+import { userGetAllService, selectServiceList, createRegistraionServices } from '../../../features/userSlice';
 import * as yup from 'yup';
 import { useFormik } from 'formik'
 const ProviderServiceContainerStyled = styled.div`
@@ -149,6 +149,9 @@ const RegisterpageInputErrorPromptStyled = styled.p`
 const ProviderService = () => {
   const [openService, setOpenService] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const propertyRegistrationId = searchParams.get('p');
   const selectServiceListData = useSelector(selectServiceList);
   const serviceRecommend = selectServiceListData.filter(item => item.sv_ts === 37);
   const serviceBase = selectServiceListData.filter(item => item.sv_ts === 27);
@@ -163,13 +166,22 @@ const ProviderService = () => {
       servicesChecked: yup.array().min(3, "Vui lòng chọn ít nhất 3 dịch vụ !")
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const { servicesChecked } = values;
+      const temp = [];
+      servicesChecked.map( (item) => {
+        return temp.push({dsa_sv: item, dsa_propertyRegistrationId: propertyRegistrationId})
+      });
+      dispatch(createRegistraionServices(temp));
+      navigate(`/provider/price?p=${propertyRegistrationId}`);
     }
   })
   useEffect(() => {
     dispatch(userGetAllService());
     window.scrollTo(0, 0);
   }, [dispatch])
+  const handleBack = () => {
+    navigate(`/provider/desc?p=${propertyRegistrationId}`)
+  }
   return (
     <ProviderServiceContainerStyled>
       <ProviderServiceWrapperStyled>
@@ -191,9 +203,9 @@ const ProviderService = () => {
                   {serviceRecommend && serviceRecommend.map(item => (
                     <ProviderServiceTopChoiceWrapperStyled key={item.id}>
                       <ProviderServiceTopChoiceStyled 
-                        type="checkbox" 
-                        name='servicesChecked' 
-                        value={item.id} 
+                        type="checkbox"
+                        name='servicesChecked'
+                        value={item.id}
                         onChange={formik.handleChange}/>
                       <ProviderServiceTopChoiceTitleStyled>{item.name}</ProviderServiceTopChoiceTitleStyled>
                     </ProviderServiceTopChoiceWrapperStyled>
@@ -201,7 +213,7 @@ const ProviderService = () => {
                 </ProviderServiceTopChoiceContainerStyled>
               </ProviderServiceTopWrapperStyled>
               <ProviderServiceTopHeaderStyled>Có nhiều tiện nghi hơn nữa ư?</ProviderServiceTopHeaderStyled>
-              <ProviderServiceTopMoreChoiceButtonStyled onClick={() => setOpenService(!openService)}>{ openService ? "Ẩn các tiện nghi" : "Xem danh sách tất cả các tiện nghi" }</ProviderServiceTopMoreChoiceButtonStyled>
+              <ProviderServiceTopMoreChoiceButtonStyled type='button' onClick={() => setOpenService(!openService)}>{ openService ? "Ẩn các tiện nghi" : "Xem danh sách tất cả các tiện nghi" }</ProviderServiceTopMoreChoiceButtonStyled>
               { openService && (
                 <>
                   <ProviderServiceTopHeaderStyled>Tiêu chuẩn</ProviderServiceTopHeaderStyled>
@@ -273,7 +285,7 @@ const ProviderService = () => {
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
               <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
-                <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
               </EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
               <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
                 {formik.errors.servicesChecked && formik.touched.servicesChecked && (

@@ -275,7 +275,6 @@ const ProviderInfo = () => {
       navigate(`/provider/location?p=${propertyRegistrationId}`);
     }
   }
-  console.log(values)
   return (
     <ProviderInfoContainerStyled>
       <ProviderInfoWrapperStyled>
