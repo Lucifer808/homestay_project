@@ -157,6 +157,18 @@ export const createRegistraionPriceSetup = createAsyncThunk(
   }
 );
 
+export const createRegistraionImages = createAsyncThunk(
+  "user/create_registration_images",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRegistrationImages(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userGetAllService = createAsyncThunk(
   "user/all_service",
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
@@ -365,6 +377,18 @@ export const userSlice = createSlice({
       state.errorMessage = {};
     },
     [createRegistraionPriceSetup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload;
+    },
+    [createRegistraionImages.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createRegistraionImages.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [createRegistraionImages.rejected]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload;
     },

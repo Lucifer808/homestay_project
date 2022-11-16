@@ -35,6 +35,108 @@ export const optionsData = [
     numOfPeople: [1, 2],
   },
 ];
+export const optionsImageDescData = [
+  {
+    id: 0,
+    title: "Chọn chú thích",
+  },
+  {
+    id: 1,
+    title: "Bãi biển",
+  },
+  {
+    id: 2,
+    title: "Bãi biển riêng",
+  },
+  {
+    id: 3,
+    title: "Ban công/sân hiên",
+  },
+  {
+    id: 4,
+    title: "Bể bơi",
+  },
+  {
+    id: 5,
+    title: "Bể bơi [ngoài trời]",
+  },
+  {
+    id: 6,
+    title: "Bếp",
+  },
+  {
+    id: 7,
+    title: "Bồn tắm",
+  },
+  {
+    id: 8,
+    title: "Cảnh quan",
+  },
+  {
+    id: 9,
+    title: "Hành lang",
+  },
+  {
+    id: 10,
+    title: "Khu vực công cộng",
+  },
+  {
+    id: 11,
+    title: "Khu vực xung quanh",
+  },
+  {
+    id: 12,
+    title: "Lối vào",
+  },
+  {
+    id: 13,
+    title: "Máy sấy quần áo",
+  },
+  {
+    id: 14,
+    title: "Ngoại cảnh khách sạn",
+  },
+  {
+    id: 15,
+    title: "Nơi tham quan gần đây",
+  },
+  {
+    id: 16,
+    title: "Nội thất khách sạn",
+  },
+  {
+    id: 17,
+    title: "Phòng gia đình",
+  },
+  {
+    id: 18,
+    title: "Phòng kế hoạch",
+  },
+  {
+    id: 19,
+    title: "Phòng ngủ",
+  },
+  {
+    id: 20,
+    title: "Phòng tập",
+  },
+  {
+    id: 21,
+    title: "Phòng tắm",
+  },
+  {
+    id: 22,
+    title: "Quầy bar/Pub",
+  },
+  {
+    id: 23,
+    title: "Sơ đồ",
+  },
+  {
+    id: 24,
+    title: "Tiện nghi",
+  },
+];
 export const links = [
   {
     title: "Trang chủ",

@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import provider_ec_photos from '../../../assets/provider-ec-photos.png';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-import img_detail from '../../../assets/img_detail.jpeg';
+import { optionsImageDescData } from '../../../dummyData'
 import StepperProvider from '../../child/StepperProvider';
-import { Link } from 'react-router-dom';
+import { createRegistraionImages } from '../../../features/userSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 const ProviderImageContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -38,6 +41,7 @@ const ProviderImageTopWrapperStyled = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
+  padding: 0 .2rem;
 `
 const ProviderImageTopLeftWrapperStyled = styled.div`
   position: relative;
@@ -69,7 +73,21 @@ const ProviderImageTopRightTitleStyled = styled.p`
   font-size: .9rem;
   margin: 1rem 0;
 `
-const ProviderImageTopRightButtonStyled = styled.button`
+const ProviderImageTopRightButtonWrapperStyled = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
+const ProviderImageTopRightButtonInputStyled = styled.input`
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+`
+const ProviderImageTopRightButtonStyled = styled.label`
   color: #fff;
   background-color: #1174a6;
   border: none;
@@ -85,22 +103,23 @@ const ProviderImageTopRightButtonStyled = styled.button`
 `
 const ProviderImageBottomWrapperStyled = styled.div`
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 `
 const ProviderImageBottomElementWrapperStyled = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 16rem;
+  height: 20rem;
   width: 18rem;
   background-color: #fff;
-  margin: 1rem 0;
+  margin: 1rem .2rem;
   box-shadow: 0 2px 10px 0 rgb(0 0 0 / 12%);
 `
 const ProviderImageBottomElementImageStyled = styled.img`
   width: 18rem;
   margin-bottom: .8rem;
+  height: 16rem;
+  object-fit: cover;
 `
 const ProviderImageBottomElementSelectStyled = styled.select`
   width: 95%;
@@ -109,7 +128,7 @@ const ProviderImageBottomElementSelectStyled = styled.select`
   border: 1px solid #ccc;
 `
 const ProviderImageBottomElementOptionStyled = styled.option``
-const ProviderDescRightWrapperStyled = styled.div`
+const ProviderDescRightWrapperStyled = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -164,16 +183,89 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+const EnterpriseInfoRightBottomBackNextWrapperButtonStyled = styled.div``
+const RegisterpageInputErrorPromptStyled = styled.p`
+  font-size: .8rem;
+  color: rgb(225, 45, 45);
+  margin: .4rem 0;
+`
+const initialDescValueF = {
+  title: "Ảnh chính",
+  id: 0
+}
 const ProviderImage = () => {
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const propertyRegistrationId = searchParams.get('p');
+  const [images, setImages] = useState("");
+  const [error, setError] = useState("");
+  const [imagesPreview, setImagesPreview] = useState([]);
+  const [descs, setDescs] = useState([initialDescValueF]);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [])
+  }, []);
+  const handleImagesChange = (e) => {
+    setImages(e.target.files)
+    const filesPre = Array.from(e.target.files);
+    
+    setImagesPreview([]);
+    
+    filesPre.forEach((file) => {
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old) => [...old, reader.result]);
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    });
+  };
+  const createImagesSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const RemoveDuplicates = (array, key) => {
+      return array.reduce((arr, item) => {
+        const removed = arr.filter(i => i[key] !== item[key]);
+        return [...removed, item];
+      }, []);
+    };
+    const resultArrs = RemoveDuplicates(descs, 'id');
+
+    const formData = new FormData();
+
+    formData.append("propertyRegistrationId", propertyRegistrationId);
+
+    for (let i = 0; i < resultArrs.length; i++) {
+      formData.append("descs", JSON.stringify(resultArrs[i]));
+    }
+
+    for (let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);        
+    }
+    if(descs.length < images.length){
+      setError("Vui lòng chọn chú thích cho ảnh !");
+    }else{
+      dispatch(createRegistraionImages(formData));
+    //   for (var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+    }
+  };
+  const handleChangeImage = (obj) => {
+    setDescs([...descs, obj])
+  }
+  console.log(descs)
+  // http://localhost:3000/provider/image?p=1060594471664 
+  // const publicPath = process.env.REACT_APP_BACK_END_PUBLIC_URL;`${publicPath}public/uploads/2022-11-16T18-41-41.632Zroom_detail_3.jpeg`
+  // console.log(publicPath)
   return (
     <ProviderImageContainerStyled>
       <ProviderImageWrapperStyled>
         <ProviderContentWrapperStyled>
           <StepperProvider activeStep={5} />
-          <ProviderDescRightWrapperStyled>
+          <ProviderDescRightWrapperStyled encType='multipart/form-data' onSubmit={createImagesSubmitHandler}>
             <ProviderDescRightTopWrapperStyled>
               <ProviderImageHeaderWrapperStyled>
                 <ProviderImageHeaderLeftWrapperStyled>
@@ -185,7 +277,7 @@ const ProviderImage = () => {
               <ProviderImageTopContainerStyled>
                 <ProviderImageTopWrapperStyled>
                   <ProviderImageTopLeftWrapperStyled>
-                    <ProviderImageTopLeftImgStyled src={img_detail}/>
+                    <ProviderImageTopLeftImgStyled src={imagesPreview[0]}/>
                     <ProviderImageTopLeftImgTagWrapperStyled>
                       <ProviderImageTopLeftImgTagStyled>Ảnh chính</ProviderImageTopLeftImgTagStyled>
                     </ProviderImageTopLeftImgTagWrapperStyled>
@@ -193,38 +285,43 @@ const ProviderImage = () => {
                   <ProviderImageTopRightWrapperStyled>
                     <CloudUploadOutlinedIcon style={{fontSize: '4rem', color: '#1174a6'}}/>
                     <ProviderImageTopRightTitleStyled>Kéo và thả ảnh của bạn vào đây</ProviderImageTopRightTitleStyled>
-                    <ProviderImageTopRightButtonStyled>CHỌN ẢNH</ProviderImageTopRightButtonStyled>
+                    <ProviderImageTopRightButtonWrapperStyled>
+                      <ProviderImageTopRightButtonInputStyled
+                        onChange={(e) => handleImagesChange(e)} 
+                        id='images' 
+                        name='images' 
+                        type="file" 
+                        accept='image/*' 
+                        multiple
+                      />
+                      <ProviderImageTopRightButtonStyled htmlFor='images'>CHỌN ẢNH</ProviderImageTopRightButtonStyled>
+                    </ProviderImageTopRightButtonWrapperStyled>
                   </ProviderImageTopRightWrapperStyled>
                 </ProviderImageTopWrapperStyled>
                 <ProviderImageBottomWrapperStyled>
-                  <ProviderImageBottomElementWrapperStyled>
-                    <ProviderImageBottomElementImageStyled src={img_detail}/>
-                    <ProviderImageBottomElementSelectStyled>
-                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-                    </ProviderImageBottomElementSelectStyled>
-                  </ProviderImageBottomElementWrapperStyled>
-                  <ProviderImageBottomElementWrapperStyled>
-                    <ProviderImageBottomElementImageStyled src={img_detail}/>
-                    <ProviderImageBottomElementSelectStyled>
-                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-                    </ProviderImageBottomElementSelectStyled>
-                  </ProviderImageBottomElementWrapperStyled>
-                  <ProviderImageBottomElementWrapperStyled>
-                    <ProviderImageBottomElementImageStyled src={img_detail}/>
-                    <ProviderImageBottomElementSelectStyled>
-                      <ProviderImageBottomElementOptionStyled>Chọn chú thích</ProviderImageBottomElementOptionStyled>
-                    </ProviderImageBottomElementSelectStyled>
-                  </ProviderImageBottomElementWrapperStyled>
+                  {imagesPreview.slice(1).map((item, index) => (
+                    <ProviderImageBottomElementWrapperStyled key={index}>
+                      <ProviderImageBottomElementImageStyled src={item}/>
+                      <ProviderImageBottomElementSelectStyled onChange={(e) => handleChangeImage({title: e.target.value, id: index + 1})}>
+                        {optionsImageDescData.map(item => (
+                          <ProviderImageBottomElementOptionStyled key={item.id} value={item.title}>{item.title}</ProviderImageBottomElementOptionStyled>
+                        ))}
+                      </ProviderImageBottomElementSelectStyled>
+                    </ProviderImageBottomElementWrapperStyled>
+                  ))}
                 </ProviderImageBottomWrapperStyled>
               </ProviderImageTopContainerStyled>
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
-              <Link to="/provider/price">
-                <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
-              </Link>
-              <Link to="/provider/file">
-                <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
-              </Link>
+                <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
+                  <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                </EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
+                <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
+                  {error && (
+                    <RegisterpageInputErrorPromptStyled>{error}</RegisterpageInputErrorPromptStyled>
+                  )}
+                  <EnterpriseInfoRightBottomNextButtonStyled type='submit'>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
+                </EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
             </EnterpriseInfoRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>
         </ProviderContentWrapperStyled>

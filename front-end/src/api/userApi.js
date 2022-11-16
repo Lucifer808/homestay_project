@@ -66,6 +66,14 @@ const userApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.post(url, params, config);
   },
+  createRegistrationImages: (params) => {
+    for (var pair of params.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+    const url = "/create-registration-images";
+    const config = { "Content-Type": "multipart/form-data" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default userApi;
