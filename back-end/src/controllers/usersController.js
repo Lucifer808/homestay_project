@@ -2,6 +2,7 @@ const db = require("../models/index");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
+const fs = require("fs");
 // async function updateOrCreate(model, where, newItem, userId) {
 //   console.log(newItem);
 //   // First try to find the record
@@ -412,5 +413,38 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
       );
     }
     res.status(200).json("Thêm thành công");
+  }
+);
+
+exports.createOrUpdateRegistraionImages = catchAsyncError(
+  async (req, res, next) => {
+    const result = req.body.descs.map((item) => JSON.parse(item));
+    console.log(req.body.propertyRegistrationId);
+    // if (req.body.images.length <= 0) {
+    //   return res.send(`You must select at least 1 image.`);
+    // }
+
+    // const images = req.body.images.map((image) => "" + image + "").join("");
+
+    // return res.send(`Images were uploaded:${images}`);
+    // const tempPath = req.file.path;
+    // const targetPath = path.join(__dirname, "./uploads/image.png");
+
+    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    //   fs.rename(tempPath, targetPath, (err) => {
+    //     if (err) return handleError(err, res);
+
+    res.status(200).contentType("text/plain").end("File uploaded!");
+    //   });
+    // } else {
+    //   fs.unlink(tempPath, (err) => {
+    //     if (err) return handleError(err, res);
+
+    //     res
+    //       .status(403)
+    //       .contentType("text/plain")
+    //       .end("Only .png files are allowed!");
+    //   });
+    // }
   }
 );

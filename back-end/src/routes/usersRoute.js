@@ -2,6 +2,7 @@ const usersController = require("../controllers/usersController");
 const express = require("express");
 const router = express.Router();
 const { isAuthenticatedUser, authrizeRoles } = require("../middleware/auth");
+const { upload } = require("../middleware/uploadFile");
 router.route("/register").post(usersController.createNewUser);
 router.route("/login").post(usersController.loginUser);
 router.route("/logout").get(usersController.logout);
@@ -30,5 +31,12 @@ router
   .post(
     isAuthenticatedUser,
     usersController.createOrUpdateRegistraionPriceSetup
+  );
+router
+  .route("/create-registration-images")
+  .post(
+    isAuthenticatedUser,
+    upload.any(),
+    usersController.createOrUpdateRegistraionImages
   );
 module.exports = router;
