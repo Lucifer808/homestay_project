@@ -184,9 +184,9 @@ const ProviderLocation = () => {
       address: yup.string().required("Xin vui lòng nhập địa chỉ cụ thể"),
     }),
     onSubmit: (values) => {
-      const {city, address, ...rest} = values; 
+      const {city, address, ...rest} = values;
       dispatch(createRegistraionLocation({selectCountry, selectState, city, address, propertyRegistrationId}));
-      navigate(`/provider/desc?p=${propertyRegistrationId}`)
+      navigate(`/provider/desc?p=${propertyRegistrationId}`);
     }
   })
   useEffect(() => {
@@ -238,7 +238,6 @@ const ProviderLocation = () => {
                         <Select
                           name='country'
                           value={formik.values.country}
-                          // onChange={(e) => setCountry(e.target.value)}
                           onChange={formik.handleChange}
                           defaultValue=""
                           displayEmpty

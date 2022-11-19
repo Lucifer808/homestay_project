@@ -8,6 +8,8 @@ const initialState = {
   typeOfServices: [],
   typeOfAccommodations: [],
   typeOfAccommodationsHeader: [],
+  accommodations: [],
+  imagesById: [],
   typeOfService: {},
   typeOfAccommodation: {},
   activeMenu: true,
@@ -153,6 +155,30 @@ export const getAllTypeOfAccommodationHeader = createAsyncThunk(
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
       const respone = await adminApi.allTypeOfAccommodationHeader();
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
+export const getAllAccommodation = createAsyncThunk(
+  "admin/all-accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.allAccommodation();
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
+export const getAllImageById = createAsyncThunk(
+  "admin/all-image-by-id",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.getAllImageById(params);
       return fulfillWithValue(respone.data);
     } catch (error) {
       return rejectWithValue(error.respone.data);
@@ -337,6 +363,30 @@ export const adminSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [getAllAccommodation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllAccommodation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.accommodations = action.payload;
+    },
+    [getAllAccommodation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [getAllImageById.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllImageById.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.imagesById = action.payload;
+    },
+    [getAllImageById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -354,4 +404,6 @@ export const selectTypeOfAccommodations = (state) =>
   state.admin.typeOfAccommodations;
 export const selectTypeOfAccommodationsHeader = (state) =>
   state.admin.typeOfAccommodationsHeader;
+export const selectAccommodations = (state) => state.admin.accommodations;
+export const selectImagesById = (state) => state.admin.imagesById;
 export default adminSlice.reducer;

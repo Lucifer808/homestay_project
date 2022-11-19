@@ -23,6 +23,7 @@ import ProviderService from "./components/layout/Provider/ProviderService";
 import ProviderPriceSetUp from "./components/layout/Provider/ProviderPriceSetUp";
 import ProviderImage from "./components/layout/Provider/ProviderImage";
 import ProviderFile from "./components/layout/Provider/ProviderFile";
+import ProviderSuccessSetUp from "./components/layout/Provider/ProviderSuccessSetUp";
 import EnterpriseInfo from "./components/layout/Enterprise/EnterpriseInfo";
 import EnterpriseLocation from "./components/layout/Enterprise/EnterpriseLocation";
 import EnterpriseService from "./components/layout/Enterprise/EnterpriseService";
@@ -36,6 +37,7 @@ import AdminEcommercepage from "./components/admin/pages/AdminEcommercepage";
 import AdminServicespage from "./components/admin/pages/AdminServicespage";
 import AdminTypeOfServicespage from "./components/admin/pages/AdminTypeOfServicespage";
 import AdminTypeOfAccommodationpage from "./components/admin/pages/AdminTypeOfAccommodationpage";
+import AdminAccommodationspage from "./components/admin/pages/AdminAccommodationpage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -74,6 +76,7 @@ function App() {
           <Route path="/provider/price" element={<ProviderPriceSetUp />} />
           <Route path="/provider/image" element={<ProviderImage />} />
           <Route path="/provider/file" element={<ProviderFile />} />
+          <Route path="/provider/sucess" element={<ProviderSuccessSetUp />} />
         </Route>
         <Route path="/enterprise" element={<EnterpriseLayout />}>
           <Route path="/enterprise" index element={<EnterpriseInfo />} />
@@ -100,6 +103,10 @@ function App() {
           <Route
             path="/admin/type-of-accommodation"
             element={<AdminTypeOfAccommodationpage />}
+          />
+          <Route
+            path="/admin/accommodation"
+            element={<AdminAccommodationspage />}
           />
         </Route>
       </Routes>

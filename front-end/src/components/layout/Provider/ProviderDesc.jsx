@@ -146,7 +146,7 @@ const ProviderDesc = () => {
   const propertyRegistrationId = searchParams.get('p');
   const formik = useFormik({
     initialValues: {
-      nameOfAcommodation: "" ,
+      nameOfAccommodation: "" ,
       desc: "",
       recommend: "",
       policy: "",
@@ -154,14 +154,14 @@ const ProviderDesc = () => {
       rating: 0
     },
     validationSchema: yup.object({
-      nameOfAcommodation: yup.string().required("Xin vui lòng đặt tên cho chỗ nghỉ !"),
+      nameOfAccommodation: yup.string().required("Xin vui lòng đặt tên cho chỗ nghỉ !"),
       desc: yup.string().required("Vui lòng nhập mô tả nơi ở !"),
       howToGetThere: yup.string().required("Vui lòng nhập cách khách có thể đến chỗ nghỉ !"),
       rating: yup.number().min(1, "Vui lòng nhập số sao chỗ nghỉ")
     }),
     onSubmit: (values) => {
-      const {nameOfAcommodation, desc, recommend, policy, howToGetThere, rating} = values;
-      dispatch(createRegistraionDesc({nameOfAcommodation, desc, recommend, policy, howToGetThere, rating, propertyRegistrationId}))
+      const {nameOfAccommodation, desc, recommend, policy, howToGetThere, rating} = values;
+      dispatch(createRegistraionDesc({nameOfAccommodation, desc, recommend, policy, howToGetThere, rating, propertyRegistrationId}))
       navigate(`/provider/services?p=${propertyRegistrationId}`)
     }
   })
@@ -194,13 +194,13 @@ const ProviderDesc = () => {
               <ProviderDescTopWrapperStyled>
                 <ProviderDescTopInputStyled 
                   placeholder='Ví dụ: Romantic beach getaway, perfect for honeymooners'
-                  name="nameOfAcommodation"
+                  name="nameOfAccommodation"
                   value={formik.values.name}
                   onChange={formik.handleChange}
-                  className={formik.errors.nameOfAcommodation && formik.touched.nameOfAcommodation  ? 'input-error' : ''}
+                  className={formik.errors.nameOfAccommodation && formik.touched.nameOfAccommodation  ? 'input-error' : ''}
                 />
-                {formik.errors.nameOfAcommodation && formik.touched.nameOfAcommodation && (
-                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.nameOfAcommodation}</RegisterpageInputErrorPromptStyled>
+                {formik.errors.nameOfAccommodation && formik.touched.nameOfAccommodation && (
+                  <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.nameOfAccommodation}</RegisterpageInputErrorPromptStyled>
                 )}
               </ProviderDescTopWrapperStyled>
               <ProviderDescTopHeaderStyled>Mô tả nhà của bạn</ProviderDescTopHeaderStyled>

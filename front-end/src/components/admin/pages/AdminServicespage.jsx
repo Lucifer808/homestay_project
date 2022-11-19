@@ -17,7 +17,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Toolbar } from '@material-ui/core';
 import Popup from '../components/Popup';
 import { Link } from 'react-router-dom';
-import AdminServicesForm from '../child/AdminServicesForm';
+import AdminServiceForm from '../child/AdminServiceForm';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 const AdminServicespageContainerStyled = styled.div`
@@ -235,7 +235,7 @@ const AdminServicespage = () => {
             onClose={() => setOpenPopup(false)} 
             maxWidth="md"
         >
-                <AdminServicesForm
+                <AdminServiceForm
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit} 
                 />

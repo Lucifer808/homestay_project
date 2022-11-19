@@ -299,3 +299,608 @@ export const lineChartData = {
     },
   ],
 };
+export const monthData = [
+  {
+    id: 0,
+    title: "Tháng",
+  },
+  {
+    id: 1,
+    title: "Tháng 1",
+  },
+  {
+    id: 2,
+    title: "Tháng 2",
+  },
+  {
+    id: 3,
+    title: "Tháng 3",
+  },
+  {
+    id: 4,
+    title: "Tháng 4",
+  },
+  {
+    id: 5,
+    title: "Tháng 5",
+  },
+  {
+    id: 6,
+    title: "Tháng 6",
+  },
+  {
+    id: 7,
+    title: "Tháng 7",
+  },
+  {
+    id: 8,
+    title: "Tháng 8",
+  },
+  {
+    id: 9,
+    title: "Tháng 9",
+  },
+  {
+    id: 10,
+    title: "Tháng 10",
+  },
+  {
+    id: 11,
+    title: "Tháng 11",
+  },
+  {
+    id: 12,
+    title: "Tháng 12",
+  },
+];
+
+export const dayData = [
+  {
+    id: 0,
+    title: "Ngày",
+  },
+  {
+    id: 1,
+    title: 1,
+  },
+  {
+    id: 2,
+    title: 2,
+  },
+  {
+    id: 3,
+    title: 3,
+  },
+  {
+    id: 4,
+    title: 4,
+  },
+  {
+    id: 5,
+    title: 5,
+  },
+  {
+    id: 6,
+    title: 6,
+  },
+  {
+    id: 7,
+    title: 7,
+  },
+  {
+    id: 8,
+    title: 8,
+  },
+  {
+    id: 9,
+    title: 9,
+  },
+  {
+    id: 10,
+    title: 10,
+  },
+  {
+    id: 11,
+    title: 11,
+  },
+  {
+    id: 12,
+    title: 12,
+  },
+  {
+    id: 13,
+    title: 13,
+  },
+  {
+    id: 14,
+    title: 14,
+  },
+  {
+    id: 15,
+    title: 15,
+  },
+  {
+    id: 16,
+    title: 16,
+  },
+  {
+    id: 17,
+    title: 17,
+  },
+  {
+    id: 18,
+    title: 18,
+  },
+  {
+    id: 19,
+    title: 19,
+  },
+  {
+    id: 20,
+    title: 20,
+  },
+  {
+    id: 21,
+    title: 21,
+  },
+  {
+    id: 22,
+    title: 22,
+  },
+  {
+    id: 23,
+    title: 23,
+  },
+  {
+    id: 24,
+    title: 24,
+  },
+  {
+    id: 25,
+    title: 25,
+  },
+  {
+    id: 26,
+    title: 26,
+  },
+  {
+    id: 27,
+    title: 27,
+  },
+  {
+    id: 28,
+    title: 28,
+  },
+  {
+    id: 29,
+    title: 29,
+  },
+  {
+    id: 30,
+    title: 30,
+  },
+  {
+    id: 31,
+    title: 31,
+  },
+];
+
+export const yearData = [
+  {
+    id: 0,
+    title: "Năm",
+  },
+  {
+    id: 1,
+    title: 1922,
+  },
+  {
+    id: 2,
+    title: 1923,
+  },
+  {
+    id: 3,
+    title: 1924,
+  },
+  {
+    id: 4,
+    title: 1925,
+  },
+  {
+    id: 5,
+    title: 1926,
+  },
+  {
+    id: 6,
+    title: 1927,
+  },
+  {
+    id: 7,
+    title: 1928,
+  },
+  {
+    id: 8,
+    title: 1929,
+  },
+  {
+    id: 9,
+    title: 1930,
+  },
+  {
+    id: 10,
+    title: 1931,
+  },
+  {
+    id: 11,
+    title: 1932,
+  },
+  {
+    id: 12,
+    title: 1933,
+  },
+  {
+    id: 13,
+    title: 1934,
+  },
+  {
+    id: 14,
+    title: 1935,
+  },
+  {
+    id: 15,
+    title: 1936,
+  },
+  {
+    id: 16,
+    title: 1937,
+  },
+  {
+    id: 17,
+    title: 1938,
+  },
+  {
+    id: 18,
+    title: 1939,
+  },
+  {
+    id: 19,
+    title: 1940,
+  },
+  {
+    id: 20,
+    title: 1941,
+  },
+  {
+    id: 21,
+    title: 1942,
+  },
+  {
+    id: 22,
+    title: 1943,
+  },
+  {
+    id: 23,
+    title: 1944,
+  },
+  {
+    id: 24,
+    title: 1945,
+  },
+  {
+    id: 25,
+    title: 1946,
+  },
+  {
+    id: 26,
+    title: 1947,
+  },
+  {
+    id: 27,
+    title: 1948,
+  },
+  {
+    id: 28,
+    title: 1949,
+  },
+  {
+    id: 29,
+    title: 1950,
+  },
+  {
+    id: 30,
+    title: 1951,
+  },
+  {
+    id: 31,
+    title: 1952,
+  },
+  {
+    id: 32,
+    title: 1953,
+  },
+  {
+    id: 33,
+    title: 1954,
+  },
+  {
+    id: 34,
+    title: 1955,
+  },
+  {
+    id: 35,
+    title: 1956,
+  },
+  {
+    id: 36,
+    title: 1957,
+  },
+  {
+    id: 37,
+    title: 1958,
+  },
+  {
+    id: 38,
+    title: 1959,
+  },
+  {
+    id: 39,
+    title: 1960,
+  },
+  {
+    id: 40,
+    title: 1961,
+  },
+  {
+    id: 41,
+    title: 1962,
+  },
+  {
+    id: 42,
+    title: 1963,
+  },
+  {
+    id: 43,
+    title: 1964,
+  },
+  {
+    id: 44,
+    title: 1965,
+  },
+  {
+    id: 45,
+    title: 1966,
+  },
+  {
+    id: 46,
+    title: 1967,
+  },
+  {
+    id: 47,
+    title: 1968,
+  },
+  {
+    id: 48,
+    title: 1969,
+  },
+  {
+    id: 49,
+    title: 1970,
+  },
+  {
+    id: 50,
+    title: 1972,
+  },
+  {
+    id: 51,
+    title: 1973,
+  },
+  {
+    id: 52,
+    title: 1974,
+  },
+  {
+    id: 53,
+    title: 1975,
+  },
+  {
+    id: 54,
+    title: 1976,
+  },
+  {
+    id: 55,
+    title: 1977,
+  },
+  {
+    id: 56,
+    title: 1978,
+  },
+  {
+    id: 57,
+    title: 1979,
+  },
+  {
+    id: 58,
+    title: 1980,
+  },
+  {
+    id: 59,
+    title: 1981,
+  },
+  {
+    id: 60,
+    title: 1982,
+  },
+  {
+    id: 61,
+    title: 1983,
+  },
+  {
+    id: 62,
+    title: 1984,
+  },
+  {
+    id: 63,
+    title: 1985,
+  },
+  {
+    id: 64,
+    title: 1986,
+  },
+  {
+    id: 65,
+    title: 1987,
+  },
+  {
+    id: 66,
+    title: 1988,
+  },
+  {
+    id: 67,
+    title: 1989,
+  },
+  {
+    id: 68,
+    title: 1990,
+  },
+  {
+    id: 69,
+    title: 1991,
+  },
+  {
+    id: 70,
+    title: 1992,
+  },
+  {
+    id: 71,
+    title: 1993,
+  },
+  {
+    id: 72,
+    title: 1994,
+  },
+  {
+    id: 73,
+    title: 1995,
+  },
+  {
+    id: 74,
+    title: 1996,
+  },
+  {
+    id: 75,
+    title: 1997,
+  },
+  {
+    id: 76,
+    title: 1998,
+  },
+  {
+    id: 77,
+    title: 1999,
+  },
+  {
+    id: 78,
+    title: 2000,
+  },
+  {
+    id: 79,
+    title: 2001,
+  },
+  {
+    id: 80,
+    title: 2002,
+  },
+  {
+    id: 81,
+    title: 2003,
+  },
+  {
+    id: 82,
+    title: 2004,
+  },
+  {
+    id: 83,
+    title: 2005,
+  },
+  {
+    id: 84,
+    title: 2006,
+  },
+  {
+    id: 85,
+    title: 2007,
+  },
+  {
+    id: 86,
+    title: 2008,
+  },
+  {
+    id: 87,
+    title: 2009,
+  },
+  {
+    id: 88,
+    title: 2010,
+  },
+  {
+    id: 89,
+    title: 2011,
+  },
+  {
+    id: 90,
+    title: 2012,
+  },
+  {
+    id: 91,
+    title: 2013,
+  },
+  {
+    id: 92,
+    title: 2014,
+  },
+  {
+    id: 93,
+    title: 2015,
+  },
+  {
+    id: 94,
+    title: 2016,
+  },
+  {
+    id: 95,
+    title: 2017,
+  },
+  {
+    id: 96,
+    title: 2018,
+  },
+  {
+    id: 97,
+    title: 2019,
+  },
+  {
+    id: 98,
+    title: 2020,
+  },
+  {
+    id: 99,
+    title: 2021,
+  },
+  {
+    id: 100,
+    title: 2022,
+  },
+];
+
+export const rentalRegistrationsData = [
+  {
+    id: 1,
+    value: "Đang hoạt động",
+    title: "Duyệt đơn đăng ký",
+  },
+  {
+    id: 2,
+    value: "Không hợp lệ",
+    title: "Từ chối đơn đăng ký",
+  },
+];

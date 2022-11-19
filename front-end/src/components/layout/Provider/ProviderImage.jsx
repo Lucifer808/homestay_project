@@ -195,6 +195,7 @@ const initialDescValueF = {
 }
 const ProviderImage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const propertyRegistrationId = searchParams.get('p');
   const [images, setImages] = useState("");
@@ -248,18 +249,15 @@ const ProviderImage = () => {
       setError("Vui lòng chọn chú thích cho ảnh !");
     }else{
       dispatch(createRegistraionImages(formData));
-    //   for (var pair of formData.entries()) {
-    //     console.log(pair[0]+ ', ' + pair[1]); 
-    // }
+      navigate(`/provider/file?p=${propertyRegistrationId}`)
     }
   };
   const handleChangeImage = (obj) => {
     setDescs([...descs, obj])
   }
-  console.log(descs)
-  // http://localhost:3000/provider/image?p=1060594471664 
-  // const publicPath = process.env.REACT_APP_BACK_END_PUBLIC_URL;`${publicPath}public/uploads/2022-11-16T18-41-41.632Zroom_detail_3.jpeg`
-  // console.log(publicPath)
+  const handleBack = () => {
+    navigate(`/provider/price?p=${propertyRegistrationId}`);
+  }
   return (
     <ProviderImageContainerStyled>
       <ProviderImageWrapperStyled>
@@ -314,7 +312,7 @@ const ProviderImage = () => {
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
                 <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
-                  <EnterpriseInfoRightBottomBackButtonStyled>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
+                  <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
                 </EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
                 <EnterpriseInfoRightBottomBackNextWrapperButtonStyled>
                   {error && (

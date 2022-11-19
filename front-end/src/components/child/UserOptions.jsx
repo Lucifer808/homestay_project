@@ -31,7 +31,7 @@ const LoginIconStyled = styled.img`
 `
 const LoginNameStyled = styled.span`
     display: inline-block;
-    width: 6rem;
+    width: 4rem;
     font-size: .9rem;
     color: rgb(135, 179, 251);
 `
@@ -55,7 +55,7 @@ const LoginCateWrapperStyled = styled.div`
     display: none;
     width: 240px;
     list-style-type: none;
-    margin-top: ${props => props.role === 'admin' ? '280px' : '350px'};
+    margin-top: ${props => props.role === 'admin' ? '290px' : '370px'};
     border: 1px solid lightgray;
     z-index: 4;
     animation: ${fadeIn} ease-in .2s;
@@ -146,39 +146,39 @@ const UserOptions = ({user}) => {
         <LoginIconStyled src={profileImg} />
         }
         <LoginedWrapStyled>
-        <LoginNameStyled>Xin chào {user.user.lastName}!</LoginNameStyled>
+        <LoginNameStyled>{user.user.lastName}</LoginNameStyled>
         <KeyboardArrowDownOutlinedIcon />
             </LoginedWrapStyled>
         <LoginCateWrapperStyled className='loginCate' role={user.role}>
           <LoginCateListStyled>
               <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
-                  <AccountBoxOutlinedIcon style={{fontSize: '1.1rem', color: '#000'}}/>
+                  <AccountBoxOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Hồ sơ của tôi</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
               <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
-                  <InsertDriveFileOutlinedIcon style={{fontSize: '1.1rem', color: '#000'}}/>
+                  <InsertDriveFileOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Đơn đặt chổ của tôi</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
               <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
-                  <FeaturedPlayListOutlinedIcon style={{fontSize: '1.1rem', color: '#000'}}/>
+                  <FeaturedPlayListOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Danh sách yêu thích</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
               <LoginedTagContainerStyled>
                 <CountNotificationWrapStyled>
-                  <NotificationsOutlinedIcon style={{fontSize: '1.1rem', color: '#000'}}/>
+                  <NotificationsOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Thông báo</LoginCateListItemOptionStyled>
                 </CountNotificationWrapStyled>
                   <CountNotificationStyled>2</CountNotificationStyled>
               </LoginedTagContainerStyled>
               <LoginedTagContainerStyled>
                 <CountNotificationWrapStyled>
-                  <EmailOutlinedIcon style={{fontSize: '1.1rem', color: '#000'}}/>
+                  <EmailOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Tin nhắn</LoginCateListItemOptionStyled>
                 </CountNotificationWrapStyled>
                 <CountNotificationStyled>2</CountNotificationStyled>

@@ -7,7 +7,9 @@ import { getAllService,
          createServiceReset, 
          createService, 
          selectSuccess, 
-         updateService } from '../../../features/adminSlice';
+         updateService, 
+         getAllAccommodation,
+         selectAccommodations} from '../../../features/adminSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -17,9 +19,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { Toolbar } from '@material-ui/core';
 import Popup from '../components/Popup';
 import { Link } from 'react-router-dom';
-import AdminServicesForm from '../child/AdminServicesForm';
+import AdminServiceForm from '../child/AdminServiceForm';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-
+import Button from '@mui/material/Button';
+import AdminAccommodationForm from '../child/AdminAccommodationForm';
 const AdminServicespageContainerStyled = styled.div`
   padding: 1rem;
 `
@@ -69,6 +72,19 @@ const AdminServicespageAddBtnTitleStyled = styled.p`
 const AdminServicespageHeaderWrapperStyled = styled.div`
   margin: 1rem 0;
 `
+const AdminStatusWrapperStyled = styled.div`
+  padding: .2rem .4rem;
+  border-radius: .1rem;
+  width: 8rem;
+  text-align: center;
+  color: ${props => props.status === "Đang chờ duyệt" ? "#000" : "#fff"};
+  background-color: ${props => (props.status === "Đang chờ duyệt" && "rgb(236, 195, 58)") 
+                   || (props.status === "Đang hoạt động" && "rgb(77, 155, 31)")
+                   || (props.status === "Không hợp lệ" && "rgb(178, 35, 35)")
+                   || (props.status === "Ngừng hoạt động" && "rgb(117, 113, 113)")};
+`
+const AdminAreaWrapperStyled = styled.span``
+const AdminAreaRatingStyled = styled.span``
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: #0055ff;
@@ -76,16 +92,17 @@ const StyledLink = styled(Link)`
         text-decoration: underline;
     }
 `;
-const AdminServicespage = () => {
+const AdminAccommodationspage = () => {
   const dispatch = useDispatch();
   const selectServicesData = useSelector(selectServices);
+  const selectAccomodationsData = useSelector(selectAccommodations);
   const selectSuccessData = useSelector(selectSuccess);
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [openPopup, setOpenPopup] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   useEffect(() =>{
-    dispatch(getAllService());
+    dispatch(getAllAccommodation());
     if(selectSuccessData){
       dispatch(createServiceReset());
       setOpenPopup(false);
@@ -110,42 +127,71 @@ const AdminServicespage = () => {
     setRecordForEdit(item);
     setOpenPopup(true);
   }
+  console.log('first', selectAccomodationsData)
   const columns = useMemo(
     () => [
-        { field: 'id', headerName: 'Mã', minWidth: 40, flex: 1 },
-        { field: 'name', headerName: 'Tên', minWidth: 200, flex: 1 },
-        { field: 'desc', headerName: 'Mô tả', minWidth: 180, flex: 1 },
-        {
-        field: 'active',
-        headerName: 'Hiện hành',
-        minWidth: 120,
-        editable: true,
-        flex: 1,
-        type: "boolean"
+        { 
+          field: 'nameOfAccommodation',
+          headerName: 'Cơ sở kinh doanh', 
+          minWidth: 140, 
+          flex: 1,
+           
         },
-        {
-          field: 'svts_id',
-          headerName: 'Loại dịch vụ',
-          minWidth: 120,
-          editable: true,
+        { 
+          field: 'acrr_id', 
+          headerName: 'Trạng thái', 
+          minWidth: 200, 
           flex: 1,
           valueGetter: (params) => {
-            let result = [];
-            if (params.value) {
-              return params.value.name;
-            } else {
-              result = ["Unknown"];
+            if(params.value){
+              return params.value.status;
+            }else{
+              return "";
             }
-            return result
-          }
+          },
+          renderCell: (params) => <AdminStatusWrapperStyled status={params.value}>{params.value}</AdminStatusWrapperStyled>
+        },
+        { field: 'ac_propertyRegistrationId', headerName: 'Mã', minWidth: 120, flex: 1 },
+        {
+        field: 'area',
+        headerName: 'Diện tích',
+        minWidth: 120,
+        flex: 1,
+        renderCell: (params) => <AdminAreaWrapperStyled>{params.value} mét vuông</AdminAreaWrapperStyled>
         },
         {
-        field: 'createdAt',
-        headerName: 'Ngày thêm',
-        minWidth: 180,
+          field: 'address',
+          headerName: 'Địa chỉ',
+          minWidth: 200,
+          flex: 1,
+        },
+        {
+        field: 'rating',
+        headerName: 'Xếp hạng sao',
+        minWidth: 120,
         flex: 1,
         renderCell: (params) =>
-            moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS'),
+            <AdminAreaRatingStyled>{params.value} sao</AdminAreaRatingStyled>
+        },
+        {
+          field: 'howToGetThere',
+          headerName: 'Cách đến chỗ ở',
+          minWidth: 160,
+          flex: 1,
+        },
+        {
+          field: 'priceBase',
+          headerName: 'Giá mỗi đêm từ',
+          minWidth: 160,
+          flex: 1,
+          renderCell: (params) =>
+              <AdminAreaRatingStyled>{params.value?.toLocaleString()} VND</AdminAreaRatingStyled>
+        },
+        {
+          field: 'paymentMethod',
+          headerName: 'Phương thức thanh toán',
+          minWidth: 180,
+          flex: 1,
         },
         {
         field: 'actions',
@@ -176,21 +222,11 @@ const AdminServicespage = () => {
               <StyledLink to="/admin">
                 Trang chủ
               </StyledLink>
-              <Typography color="text.disabled">Danh sách dịch vụ</Typography>
+              <Typography color="text.disabled">Danh sách chỗ nghỉ</Typography>
             </Breadcrumbs>
           </div>
         </AdminServicespageHeaderWrapperStyled>
         <AdminServicespageWrapperStyled>
-        <Toolbar>
-            <AdminServicespageAddBtnWrapperStyled>
-              <AdminServicespageAddBtnStyled  onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}>
-                <AdminServicespageAddBtnTitleStyled>
-                  Thêm mới
-                </AdminServicespageAddBtnTitleStyled>
-                <AddIcon />
-              </AdminServicespageAddBtnStyled>
-            </AdminServicespageAddBtnWrapperStyled>
-        </Toolbar>
             <Box
                 sx={{
                 height: 600,
@@ -199,7 +235,7 @@ const AdminServicespage = () => {
             >
                 <DataGrid
                 columns={columns}
-                rows={selectServicesData}
+                rows={selectAccomodationsData}
                 getRowId={(row) => row.id}
                 rowsPerPageOptions={[5, 10, 20]}
                 pageSize={pageSize}
@@ -214,7 +250,7 @@ const AdminServicespage = () => {
                     [`& .${gridClasses.row}`]: {
                     bgcolor: (theme) =>
                         theme.palette.mode === 'light' ? grey[200] : grey[900],
-                    }
+                    },
                 }}
                 components={{
                   Toolbar: GridToolbar,
@@ -233,9 +269,9 @@ const AdminServicespage = () => {
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
             onClose={() => setOpenPopup(false)} 
-            maxWidth="md"
+            maxWidth="lg"
         >
-                <AdminServicesForm
+                <AdminAccommodationForm
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit} 
                 />
@@ -244,4 +280,4 @@ const AdminServicespage = () => {
   )
 }
 
-export default AdminServicespage
+export default AdminAccommodationspage

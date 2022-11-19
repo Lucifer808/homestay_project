@@ -55,7 +55,7 @@ const initialFValues = {
     active: true,
 }
 
-export default function AdminServiesForm(props) {
+export default function AdminServieForm(props) {
     const dispatch = useDispatch();
     const selectTypeOfServicesData = useSelector(selectTypeOfServices);
     const [openChildPopup, setOpenChildPopup] = useState(false);
@@ -107,7 +107,6 @@ export default function AdminServiesForm(props) {
                             value={values.sv_ts}
                             onChange={handleInputChange}
                             options={selectTypeOfServicesData}
-                            
                         />
                         <AdminServicespageAddBtnWrapperStyled  onClick={() => { setOpenChildPopup(true)}}>
                             <AdminServicespageAddBtnStyled>

@@ -217,7 +217,7 @@ const ProviderInfo = () => {
   const [searchParams] = useSearchParams();
   const selectTypeOfAccommodationsData = useSelector(selectUserTypeOfAccommodations);
   const selectedBedConfigurationsData = useSelector(selectedBedConfigurations);
-  const typeOfAcommodations = selectTypeOfAccommodationsData.filter(item => item.ta_th === 1);
+  const typeOfAccommodations = selectTypeOfAccommodationsData.filter(item => item.ta_th === 1);
   const propertyRegistrationId = searchParams.get('p');
   const initialBedConfig = {
     ro_tb: "1",
@@ -294,7 +294,7 @@ const ProviderInfo = () => {
                 <ProviderInfoTopContentTitleStyled>Loại hình</ProviderInfoTopContentTitleStyled>
                 <ProviderInfoTopContentSubTitleStyled>Chọn một loại chổ nghỉ</ProviderInfoTopContentSubTitleStyled>
                 <ProviderInfoTopContentChoiceContainerStyled>
-                  {typeOfAcommodations && typeOfAcommodations.map(item =>
+                  {typeOfAccommodations && typeOfAccommodations.map(item =>
                     <ProviderInfoTopContentChoiceWrapperStyled
                       name="typeOfAccommodation"
                       key={item.id}

@@ -74,6 +74,11 @@ const userApi = {
     const config = { "Content-Type": "multipart/form-data" };
     return axiosClient.post(url, params, config);
   },
+  createRegistrationFile: (params) => {
+    const url = "/create-registration-file";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default userApi;

@@ -60,6 +60,16 @@ const adminApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.put(url, params, config);
   },
+  allAccommodation: () => {
+    const url = "/all-accommodation";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
+  getAllImageById: (params) => {
+    const url = "/all-image-by-id";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default adminApi;
