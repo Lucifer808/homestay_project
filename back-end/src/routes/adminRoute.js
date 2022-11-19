@@ -65,4 +65,18 @@ router
 router
   .route("/all-type-of-accommodation-header")
   .get(isAuthenticatedUser, adminController.getAllTypeOfAccommodationHeader);
+router
+  .route("/all-accommodation")
+  .get(
+    isAuthenticatedUser,
+    authrizeRoles(1),
+    adminController.getAllAccommodation
+  );
+router
+  .route("/all-image-by-id")
+  .post(
+    isAuthenticatedUser,
+    authrizeRoles(1),
+    adminController.getAllImagesById
+  );
 module.exports = router;

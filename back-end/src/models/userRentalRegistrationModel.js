@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "rr_userId",
       });
+      RetalRegistration.hasOne(modles.Accommodations, {
+        foreignKey: "rr_propertyRegistrationId",
+        as: "acrr_id",
+      });
     }
   }
 

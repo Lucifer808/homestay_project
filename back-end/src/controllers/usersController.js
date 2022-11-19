@@ -145,11 +145,11 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
       }
     }
 
-    const foundAcommodation = await db.Accommodations.findOne({
+    const foundAccommodation = await db.Accommodations.findOne({
       where: { ac_propertyRegistrationId: propertyRegistrationId },
     });
-    if (!foundAcommodation) {
-      const createNewAcommodationInfo = await db.Accommodations.create({
+    if (!foundAccommodation) {
+      const createNewAccommodationInfo = await db.Accommodations.create({
         area: sizeSqm,
         accommodates,
         noOfBedrooms,
@@ -158,11 +158,11 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
         ac_propertyRegistrationId: propertyRegistrationId,
         createdById: req.user.id,
       });
-      if (!createNewAcommodationInfo) {
+      if (!createNewAccommodationInfo) {
         return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
       }
     } else {
-      const updateAcommodationInfo = await db.Accommodations.update(
+      const updateAccommodationInfo = await db.Accommodations.update(
         {
           area: sizeSqm,
           accommodates,
@@ -174,7 +174,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
         },
         { where: { ac_propertyRegistrationId: propertyRegistrationId } }
       );
-      if (!updateAcommodationInfo) {
+      if (!updateAccommodationInfo) {
         return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
       }
     }
@@ -397,6 +397,7 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
     }
     const updateAccommodationPriceSetup = await db.Accommodations.update(
       {
+        priceBase: priceFrom,
         paymentMethod: paymentMethod,
         ac_dc: discountCheck,
       },
@@ -418,33 +419,169 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
 
 exports.createOrUpdateRegistraionImages = catchAsyncError(
   async (req, res, next) => {
-    const result = req.body.descs.map((item) => JSON.parse(item));
-    console.log(req.body.propertyRegistrationId);
-    // if (req.body.images.length <= 0) {
-    //   return res.send(`You must select at least 1 image.`);
-    // }
+    const descsArr = req.body.descs.map((item) => JSON.parse(item));
+    const imagesArr = req.files;
+    const result = [];
+    for (let i = 0; i < imagesArr.length; i++) {
+      result.push({
+        type: imagesArr[i].mimetype,
+        name: imagesArr[i].originalname,
+        path: imagesArr[i].path,
+        desc: descsArr[i].title,
+        im_propertyRegistrationId: req.body.propertyRegistrationId,
+      });
+    }
+    const createNewImages = await db.Images.bulkCreate(result);
+    if (!createNewImages) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm hình ảnh !", 401));
+    }
+    res.status(200).json("Thêm hình ảnh thành công");
+  }
+);
 
-    // const images = req.body.images.map((image) => "" + image + "").join("");
+exports.createOrUpdateRegistraionFile = catchAsyncError(
+  async (req, res, next) => {
+    const {
+      firstName,
+      lastName,
+      nickName,
+      dayOfBirth,
+      monthOfBirth,
+      yearOfBirth,
+      national,
+      phoneNumber,
+      email,
+      selectCountry,
+      selectState,
+      selectCity,
+      address,
+      zipCode,
+      desc,
+      propertyRegistrationId,
+    } = req.body;
+    const dateOfBirth = dayOfBirth
+      .concat("/", monthOfBirth.split(" ")[1])
+      .concat("/", yearOfBirth);
+    const updateUserFile = await db.Users.update(
+      {
+        userName: nickName,
+        firstName,
+        lastName,
+        address,
+        phoneNumber,
+        dateOfBirth,
+        national,
+      },
+      {
+        where: { us_id: req.user.id },
+      }
+    );
+    if (!updateUserFile) {
+      return next(new ErrorHandler("Xảy ra lỗi khi cập nhật thông tin !"));
+    }
 
-    // return res.send(`Images were uploaded:${images}`);
-    // const tempPath = req.file.path;
-    // const targetPath = path.join(__dirname, "./uploads/image.png");
+    const createUpdateAccommodation = await db.Accommodations.update(
+      {
+        welcome: desc,
+      },
+      {
+        where: { ac_propertyRegistrationId: propertyRegistrationId },
+      }
+    );
 
-    // if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-    //   fs.rename(tempPath, targetPath, (err) => {
-    //     if (err) return handleError(err, res);
+    if (!createUpdateAccommodation) {
+      return next(
+        new ErrorHandler("Xảy ra lỗi khi cập nhật mô tả thông tin !")
+      );
+    }
+    // Country
+    const foundUserCountry = await db.UserCountries.findOne({
+      where: { urc_us: req.user.id },
+    });
+    if (!foundUserCountry) {
+      const createUserCountries = db.UserCountries.create({
+        name: selectCountry,
+      });
+      if (!createUserCountries) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm quốc gia !"));
+      }
+    } else {
+      const updateUserCountries = db.UserCountries.update(
+        {
+          name: selectCountry,
+        },
+        {
+          where: { urc_us: req.user.id },
+        }
+      );
+      if (!updateUserCountries) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm quốc gia !"));
+      }
+    }
 
-    res.status(200).contentType("text/plain").end("File uploaded!");
-    //   });
-    // } else {
-    //   fs.unlink(tempPath, (err) => {
-    //     if (err) return handleError(err, res);
+    // State
+    const foundUserState = await db.UserStates.findOne({
+      where: { urs_us: req.user.id },
+    });
+    if (!foundUserState) {
+      const createUserStates = db.UserStates.create({
+        name: selectState,
+      });
+      if (!createUserStates) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm tỉnh/thành !"));
+      }
+    } else {
+      const updateUserStates = db.UserStates.update(
+        {
+          name: selectState,
+        },
+        {
+          where: { urs_us: req.user.id },
+        }
+      );
+      if (!updateUserStates) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm tỉnh/thành !"));
+      }
+    }
 
-    //     res
-    //       .status(403)
-    //       .contentType("text/plain")
-    //       .end("Only .png files are allowed!");
-    //   });
-    // }
+    // City
+    const foundUserCity = await db.UserCities.findOne({
+      where: { urci_us: req.user.id },
+    });
+    if (!foundUserCity) {
+      const createUserCities = db.UserCities.create({
+        name: selectCity,
+      });
+      if (!createUserCities) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm tỉnh/thành !"));
+      }
+    } else {
+      const updateUserCities = db.UserCities.update(
+        {
+          name: selectCity,
+        },
+        {
+          where: { urci_us: req.user.id },
+        }
+      );
+      if (!updateUserCities) {
+        return next(new ErrorHandler("Xảy ra lỗi thêm tỉnh/thành !"));
+      }
+    }
+
+    const updateStatus = await db.RetalRegistration.update(
+      {
+        status: "Đang chờ duyệt",
+      },
+      {
+        where: { rr_propertyRegistrationId: propertyRegistrationId },
+      }
+    );
+    if (!updateStatus) {
+      return next(
+        new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái !", 401)
+      );
+    }
+    res.status(200).json("Thêm hồ sơ thành công !");
   }
 );

@@ -39,4 +39,7 @@ router
     upload.any(),
     usersController.createOrUpdateRegistraionImages
   );
+router
+  .route("/create-registration-file")
+  .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionFile);
 module.exports = router;

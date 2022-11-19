@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "acta_id",
       });
+      Accommodations.belongsTo(modles.RetalRegistration, {
+        foreignKey: "ac_propertyRegistrationId",
+        targetKey: "rr_propertyRegistrationId",
+        as: "acrr_id",
+      });
     }
   }
 
@@ -21,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: "ac_id",
       },
-      nameOfAcommodation: {
+      nameOfAccommodation: {
         type: DataTypes.STRING,
         field: "ac_name",
       },
@@ -72,6 +77,14 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         type: DataTypes.STRING,
         field: "ac_address",
+      },
+      welcome: {
+        type: DataTypes.STRING,
+        field: "ac_welcome",
+      },
+      returnPolicy: {
+        type: DataTypes.STRING,
+        field: "ac_returnPolicy",
       },
       createdAt: {
         type: DataTypes.DATE(3),

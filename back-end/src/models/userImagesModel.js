@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "im_name",
       },
       path: {
-        type: DataTypes.BLOB,
+        type: DataTypes.STRING,
         field: "im_path",
       },
       desc: {

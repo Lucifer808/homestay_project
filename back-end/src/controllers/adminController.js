@@ -2,6 +2,7 @@ const db = require("../models");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const { sequelize } = require("../models");
+const { Op } = require("sequelize");
 exports.getAllRetalRegistration = catchAsyncError(async (req, res, next) => {
   let allRetalRegistration = await db.RetalRegistration.findAll({
     include: [
@@ -228,29 +229,70 @@ exports.updateTypeOfAccommodation = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllAccommodation = catchAsyncError(async (req, res, next) => {
-  let allAccommodation = await db.Accommodations.findAll({
+  const getAllAccommodation = await db.Accommodations.findAll({
     include: [
       {
-        model: db.TypeOfAccommodations,
-        as: "acta_id",
+        model: db.RetalRegistration,
+        as: "acrr_id",
       },
     ],
     attributes: [
       "id",
-      "name",
-      "address",
+      "nameOfAccommodation",
+      "desc",
       "rating",
+      "area",
+      "policy",
+      "recommend",
+      "howToGetThere",
+      "paymentMethod",
+      "priceBase",
+      "accommodates",
+      "noOfBedrooms",
+      "noOfBathrooms",
+      "address",
+      "welcome",
+      "returnPolicy",
       "createdAt",
       "updatedAt",
       "createdById",
       "updatedById",
-      "ac_ta",
+      "ac_propertyRegistrationId",
     ],
     nest: true,
     raw: false,
   });
-  if (!allAccommodation) {
-    return next(new ErrorHandler("Không có chỗ nghỉ nào", 401));
+  if (!getAllAccommodation) {
+    return next(new ErrorHandler("Xảy ra lỗi khi lấy danh sách nơi ở"));
   }
-  res.status(200).json(allAccommodation);
+  res.status(200).json(getAllAccommodation);
+});
+
+exports.getAllImagesById = catchAsyncError(async (req, res, next) => {
+  const ac_propertyRegistrationId = req.body.ac_propertyRegistrationId;
+  const getAllImagesById = await db.Images.findAll(
+    {
+      where: {
+        im_propertyRegistrationId: {
+          [Op.eq]: ac_propertyRegistrationId,
+        },
+      },
+    },
+    {
+      attributes: [
+        "id",
+        "type",
+        "name",
+        "path",
+        "desc",
+        "im_propertyRegistrationId",
+      ],
+      nest: false,
+      raw: false,
+    }
+  );
+  if (!getAllImagesById) {
+    return next(new ErrorHandler("Xảy ra lỗi khi lấy danh sách nơi ở"));
+  }
+  res.status(200).json(getAllImagesById);
 });
