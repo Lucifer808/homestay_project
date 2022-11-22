@@ -1,13 +1,13 @@
 .container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 .load-title{
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .dot-falling {
     position: relative;

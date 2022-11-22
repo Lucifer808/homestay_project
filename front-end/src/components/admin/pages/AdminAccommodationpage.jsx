@@ -1,27 +1,19 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { getAllService,
-         selectServices, 
-         createServiceReset, 
-         createService, 
+import { createServiceReset, 
          selectSuccess, 
-         updateService, 
          getAllAccommodation,
-         selectAccommodations} from '../../../features/adminSlice';
+         selectAccommodations,
+         updateRentalRegistrationStatus} from '../../../features/adminSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import AdminServiceActions from '../AdminServiceActions';
 import { AiOutlineEdit } from 'react-icons/ai';
-import AddIcon from '@mui/icons-material/Add';
-import { Toolbar } from '@material-ui/core';
 import Popup from '../components/Popup';
 import { Link } from 'react-router-dom';
-import AdminServiceForm from '../child/AdminServiceForm';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Button from '@mui/material/Button';
 import AdminAccommodationForm from '../child/AdminAccommodationForm';
 const AdminServicespageContainerStyled = styled.div`
   padding: 1rem;
@@ -46,28 +38,6 @@ const AdminServicesBorderButtonEditStyled = styled.div`
 const AdminServicespageWrapperStyled = styled.div`
   padding: 1rem;
   background-color: #fff;
-`
-const AdminServicespageAddBtnWrapperStyled = styled.div`
-  position: absolute;
-  right: 0rem;
-`
-const AdminServicespageAddBtnStyled = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: .4rem 1.4rem;
-  background-color: #fff;
-  border: 1px solid #00b3ff;
-  color: #00b3ff;
-  border-radius: .2rem;
-  cursor: pointer;
-  &:hover{
-    color: #fff;
-    background-color: #00b3ff;
-  }
-`
-const AdminServicespageAddBtnTitleStyled = styled.p`
-  margin-right: .4rem;
 `
 const AdminServicespageHeaderWrapperStyled = styled.div`
   margin: 1rem 0;
@@ -94,7 +64,6 @@ const StyledLink = styled(Link)`
 `;
 const AdminAccommodationspage = () => {
   const dispatch = useDispatch();
-  const selectServicesData = useSelector(selectServices);
   const selectAccomodationsData = useSelector(selectAccommodations);
   const selectSuccessData = useSelector(selectSuccess);
   const [recordForEdit, setRecordForEdit] = useState(null);
@@ -109,25 +78,13 @@ const AdminAccommodationspage = () => {
     }
   },[dispatch, selectSuccessData]);
   const addOrEdit = (item, resetForm, openChildPopup) => {
-    if (item.id && openChildPopup === false){
-      dispatch(updateService(item));
-      resetForm();
-      setRecordForEdit(null);
-      setOpenPopup(false);
-    }
-    else if(item.name && item.desc && item.active && openChildPopup === false){
-      dispatch(createService(item));
-      resetForm();
-      setRecordForEdit(null);
-      setOpenPopup(false);
-    }
+    dispatch(updateRentalRegistrationStatus({status: item.status, propertyRegistrationId: item.ac_propertyRegistrationId}));
   }
 
   const openInPopup = (item) => {
     setRecordForEdit(item);
     setOpenPopup(true);
   }
-  console.log('first', selectAccomodationsData)
   const columns = useMemo(
     () => [
         { 
@@ -216,7 +173,7 @@ const AdminAccommodationspage = () => {
   return (
     <AdminServicespageContainerStyled>
       <AdminServicespageHeaderWrapperStyled>
-          <Typography variant='h5'>Danh sách loại sản phẩm</Typography>
+          <Typography variant='h5'>Danh sách chỗ nghỉ</Typography>
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <StyledLink to="/admin">
@@ -265,7 +222,7 @@ const AdminAccommodationspage = () => {
             </Box>
         </AdminServicespageWrapperStyled>
         <Popup
-            title="Thêm dịch vụ"
+            title="Duyệt đơn đăng ký cho thuê chỗ nghỉ"
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
             onClose={() => setOpenPopup(false)} 

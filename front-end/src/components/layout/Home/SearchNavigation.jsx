@@ -105,7 +105,7 @@ const SearchNavigation = () => {
   const [valueIndex, setValueIndex] = useState("1");
   const handleChangePage = (e, newValue) =>{
     setValueIndex(newValue);
-  }
+  };
   return (
     <SearchNavigationStyled>
       <SearchNavigationVideoWrapperStyled>
@@ -130,16 +130,16 @@ const SearchNavigation = () => {
                   </Box>
                 </SearchNavigationBarStyled>
                 <TabPanel value='1' sx={{padding: '0 3rem 3rem 3rem'}}>
-                  <SearchNavigationInput optionsData={optionsData}/>
+                  <SearchNavigationInput/>
                 </TabPanel>
                 <TabPanel value='2' sx={{padding: '0 3rem 3rem 3rem'}}>
                   <SearchNavigationInputAdvance />
                 </TabPanel>
                 <TabPanel value='3' sx={{padding: '0 3rem 3rem 3rem'}}>
-                  <SearchNavigationInput optionsData={optionsData}/>
+                  <SearchNavigationInput/>
                 </TabPanel>
                 <TabPanel value='4' sx={{padding: '0 3rem 3rem 3rem'}}>
-                  <SearchNavigationInput optionsData={optionsData}/> 
+                  <SearchNavigationInput/> 
                 </TabPanel>
                 <TabPanel value='5' sx={{padding: '0 3rem 3rem 3rem'}}>
                   <SearchNavigationActivitiesContainerStyled>

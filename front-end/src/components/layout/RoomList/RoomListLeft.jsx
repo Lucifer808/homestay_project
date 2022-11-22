@@ -4,6 +4,17 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Slider from '@mui/material/Slider';
 import Rating from '@mui/material/Rating';
 import RoomFilterList from '../../child/RoomFilterList';
+import { useSelector } from 'react-redux';
+import { selectPosition } from '../../../features/customerSlice';
+import RoomListMap from './RoomListMap';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import bkgmap from '../../../assets/bkg-map-entry.svg';
+import mappin from '../../../assets/img-map-pin-red.svg';
 const RoomListLeftContainerStyled = styled.div`
     flex: 1;
     width: 100%;
@@ -13,6 +24,7 @@ const RoomListLeftWrapperStyled = styled.div`
     padding-right: 1rem;
 `
 const RoomListLeftTopWrapperStyled = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +36,29 @@ const RoomListLeftTopWrapperStyled = styled.div`
         color: #ccc;
     }
 `
-const RoomListLeftTopMapTitleStyled = styled.span``
+const RoomListLeftTopMapTitleStyled = styled.p``
+const RoomListLeftTopMapTitleWrapperStyled = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+`
+const RoomListLeftTopMapTitleImageStyled = styled.img`
+    width: 3rem;
+    height: 3rem;
+`
+const RoomListLeftTopMapWrapperStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+`
+const RoomListLeftTopMapImageStyled = styled.img`
+    height: 100%;
+    width: 100%;
+`
 const RoomListLeftTopSearchWrapperStyled = styled.div`
     display: flex;
     align-items: center;
@@ -123,14 +157,53 @@ const RoomListLeftTopFilterMaiddleStyled = styled.div`
 `
 const RoomListLeft = () => {
   const [price, setPrice] = useState([100000, 100000000]);
+  const selectPositionData = useSelector(selectPosition);
+  const [open, setOpen] = useState(false);
   const priceHandle = (e, newPrice) =>{
-    setPrice(newPrice);
-  }
+      setPrice(newPrice);
+    }
+  const handleClickOpen = (e) => {
+      e.stopPropagation()
+      setOpen(true);
+  };
+
+  const handleClose = (e) => {
+      e.stopPropagation()
+      setOpen(false);
+  };
   return (
     <RoomListLeftContainerStyled>
         <RoomListLeftWrapperStyled>
-            <RoomListLeftTopWrapperStyled>
-                <RoomListLeftTopMapTitleStyled>XEM VỊ TRÍ</RoomListLeftTopMapTitleStyled>
+            <RoomListLeftTopWrapperStyled onClick={handleClickOpen}>
+                <RoomListLeftTopMapWrapperStyled>
+                    <RoomListLeftTopMapTitleWrapperStyled>
+                        <RoomListLeftTopMapTitleImageStyled src={mappin}/>
+                        <RoomListLeftTopMapTitleStyled>XEM VỊ TRÍ</RoomListLeftTopMapTitleStyled>
+                    </RoomListLeftTopMapTitleWrapperStyled>
+                    <RoomListLeftTopMapImageStyled src={bkgmap}/>
+                </RoomListLeftTopMapWrapperStyled>
+                <Dialog
+                    fullScreen
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <AppBar sx={{ position: 'relative' }}>
+                    <Toolbar>
+                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            Bản đồ
+                        </Typography>
+                        <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                        >
+                        <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                    </AppBar>
+                    <RoomListMap selectPosition={selectPositionData}/>  
+                </Dialog>
             </RoomListLeftTopWrapperStyled>
             <RoomListLeftTopSearchWrapperStyled>
                 <SearchOutlinedIcon />

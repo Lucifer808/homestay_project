@@ -186,6 +186,18 @@ export const getAllImageById = createAsyncThunk(
   }
 );
 
+export const updateRentalRegistrationStatus = createAsyncThunk(
+  "admin/update_rental_status",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const respone = await adminApi.updateRentalRegistrationStatus(params);
+      return fulfillWithValue(respone.data);
+    } catch (error) {
+      return rejectWithValue(error.respone.data);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -383,6 +395,19 @@ export const adminSlice = createSlice({
       state.imagesById = action.payload;
     },
     [getAllImageById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [updateRentalRegistrationStatus.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateRentalRegistrationStatus.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.success = true;
+      toast.success("Thay đổi thành công!");
+    },
+    [updateRentalRegistrationStatus.rejected]: (state, action) => {
       state.isLoading = false;
       state.success = false;
       state.errorMessage = action.payload;

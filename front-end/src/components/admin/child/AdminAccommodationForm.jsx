@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Controls from "../components/Controls";
 import { useForm, Form } from './useForm';
 import styled from 'styled-components';
-import AddIcon from '@mui/icons-material/Add';
-import ChildPopup from '../components/ChildPopup';
 import { getAllImageById, selectImagesById } from '../../../features/adminSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import AdminChildCreateTypeOfService from './AdminChildCreateTypeOfService';
 import TextField from '@mui/material/TextField';
 import { rentalRegistrationsData } from '../../../dummyData';
 import { Typography } from '@mui/material';
@@ -15,7 +12,6 @@ import {
     InputLabel,
     Select as MuiSelect,
     MenuItem,
-    FormHelperText,
   } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -38,35 +34,8 @@ const PopupRightContainerStyled = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `
-const PopupRightWrapperStyled = styled.div`
-    display: flex;
-`
 const ButtonWWrapperStyled = styled.div`
     text-align: right;
-`
-const AdminServicespageAddBtnWrapperStyled = styled.div`
-  position: absolute;
-  right: 0;
-`
-const AdminServicespageAddBtnStyled = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: .6rem;
-  margin-top: .5rem;
-  margin-right: 1.2rem;
-  background-color: #fff;
-  border: 1px solid #00b3ff;
-  color: #00b3ff;
-  border-radius: .2rem;
-  cursor: pointer;
-  &:hover{
-    color: #fff;
-    background-color: #00b3ff;
-  }
-`
-const AdminServicespageAddBtnTitleStyled = styled.p`
-  margin-right: .4rem;
 `
 const AdminAccommodationsFormImagesWrapperStyled = styled.div`
     max-width: 100%;
@@ -77,7 +46,7 @@ const AdminAccommodationsFormImagesStyled = styled.img`
   margin: .4rem;
 `
 const initialFValues = {
-    status: ""
+    status: " "
 }
 
 export default function AdminAccommodationForm(props) {
@@ -105,7 +74,6 @@ export default function AdminAccommodationForm(props) {
                 ...recordForEdit
             })
     }, [recordForEdit, dispatch, recordForEdit.ac_propertyRegistrationId]);
-    console.log(selectImagesAccommodationData)
     return (
         <Form onSubmit={handleSubmit}>
             <PopupContainerStyled>
@@ -217,11 +185,12 @@ export default function AdminAccommodationForm(props) {
                         <MuiSelect
                             label="Duyệt đơn đăng ký chỗ nghỉ"
                             name="status"
-                            value={rentalRegistrationsData.value}
+                            value={values.status}
+                            displayEmpty
                             onChange={handleInputChange}
                             MenuProps={{ classes: { paper: classes.menuPaper } }}
                         >
-                            <MenuItem value="">...Chọn...</MenuItem>
+                            <MenuItem value="0">...Chọn...</MenuItem>
                             {rentalRegistrationsData.map((item) => (
                             <MenuItem key={item.id} value={item.value}>
                                 {item.title}
@@ -232,7 +201,7 @@ export default function AdminAccommodationForm(props) {
                     <ButtonWWrapperStyled>
                         <Controls.Button
                             type="submit"
-                            text="Thêm" />
+                            text="Lưu" />
                         <Controls.Button
                             text="Làm mới"
                             color="default"

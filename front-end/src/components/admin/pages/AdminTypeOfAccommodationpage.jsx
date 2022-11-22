@@ -169,13 +169,13 @@ const AdminTypeOfAccommodationpage = () => {
   return (
     <AdminServicespageContainerStyled>
       <AdminServicespageHeaderWrapperStyled>
-          <Typography variant='h5'>Danh sách loại sản phẩm</Typography>
+          <Typography variant='h5'>Danh sách loại chỗ nghỉ</Typography>
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <StyledLink to="/admin">
                 Trang chủ
               </StyledLink>
-              <Typography color="text.disabled">Danh sách dịch vụ</Typography>
+              <Typography color="text.disabled">Danh sách chỗ nghỉ</Typography>
             </Breadcrumbs>
           </div>
         </AdminServicespageHeaderWrapperStyled>

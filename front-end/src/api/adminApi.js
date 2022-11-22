@@ -70,6 +70,11 @@ const adminApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.post(url, params, config);
   },
+  updateRentalRegistrationStatus: (params) => {
+    const url = "/update-rental-status";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default adminApi;

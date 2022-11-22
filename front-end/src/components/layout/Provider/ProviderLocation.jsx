@@ -195,6 +195,7 @@ const ProviderLocation = () => {
   const handleBack = () => {
     navigate(`/provider?p=${propertyRegistrationId}`)
   }
+  console.log(formik.values.state);
   return (
     <ProviderLocationContainerStyled>
       <ProviderDescWrapperStyled>

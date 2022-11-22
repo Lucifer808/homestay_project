@@ -5,6 +5,7 @@ import RecommendList from '../components/layout/Home/RecommendList'
 import SearchNavigation from '../components/layout/Home/SearchNavigation'
 import TrendingList from '../components/layout/Home/TrendingList'
 const Homepage = () => {
+  
   return (
     <>
         <SearchNavigation />
