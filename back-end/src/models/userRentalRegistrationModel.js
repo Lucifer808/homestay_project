@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: "rr_status",
       },
+      nativedAt: {
+        type: DataTypes.DATE(3),
+        field: "rr_nativedAt",
+      },
+      disabledAt: {
+        type: DataTypes.DATE(3),
+        field: "rr_disabledAt",
+      },
       createdAt: {
         type: DataTypes.DATE(3),
         field: "rr_createdAt",

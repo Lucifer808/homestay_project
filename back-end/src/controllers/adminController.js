@@ -296,3 +296,44 @@ exports.getAllImagesById = catchAsyncError(async (req, res, next) => {
   }
   res.status(200).json(getAllImagesById);
 });
+
+exports.updateRentalRegistrationStatus = catchAsyncError(
+  async (req, res, next) => {
+    const { status, propertyRegistrationId } = req.body;
+    if (status === "Đang hoạt động") {
+      const updateRentalRegistration = await db.RetalRegistration.update(
+        {
+          status,
+          nativedAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
+        },
+        {
+          where: { rr_propertyRegistrationId: propertyRegistrationId },
+        }
+      );
+      if (!updateRentalRegistration) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái !", 401)
+        );
+      }
+    } else if (status === "Không hợp lệ") {
+      const updateRentalRegistrationReject = await db.RetalRegistration.update(
+        {
+          status,
+        },
+        {
+          where: { rr_propertyRegistrationId: propertyRegistrationId },
+        }
+      );
+      if (!updateRentalRegistrationReject) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái !", 401)
+        );
+      }
+    }
+    res.status(200).json("Thay đổi trạng thái thành công !");
+  }
+);
+
+exports.getAllAccommodationActive = catchAsyncError(
+  async (req, res, next) => {}
+);

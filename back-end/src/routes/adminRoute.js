@@ -79,4 +79,11 @@ router
     authrizeRoles(1),
     adminController.getAllImagesById
   );
+router
+  .route("/update-rental-status")
+  .post(
+    isAuthenticatedUser,
+    authrizeRoles(1),
+    adminController.updateRentalRegistrationStatus
+  );
 module.exports = router;
