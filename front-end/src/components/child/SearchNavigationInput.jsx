@@ -400,24 +400,6 @@ const SearchNavigationInput = () => {
                       </div>
                     );
                   })}
-                  {/* {listPlace.features.map((item) => {
-                    return (
-                      <div key={item.properties?.place_id}>
-                        <ListItem
-                          button
-                          onClick={() => {
-                            setSelectPosition(item);
-                            setSearchText(item.properties.address.city);
-                            setOpenSearchResult(false);
-                          }}
-                        >
-                          <LocationOnIcon sx={{marginRight: '10px'}}/>
-                          <ListItemText primary={item.properties.display_name} />
-                        </ListItem>
-                        <Divider />
-                      </div>
-                    );
-                  })} */}
                 </List>
               ) : <Loader />}
             </SearchNavigationInputSearchResultFullWrapperStyled>

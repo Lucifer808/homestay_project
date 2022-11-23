@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import RoomListLeft from '../components/layout/RoomList/RoomListLeft';
 import RoomListRight from '../components/layout/RoomList/RoomListRight';
+import { useSelector, useDispatch } from 'react-redux';
+import { customerSearch } from '../features/customerSlice';
+import { useLocation } from 'react-router-dom';
 const RoomListpageContainerStyled = styled.div`
     display: flex;
     justify-content: center;
@@ -11,6 +14,12 @@ const RoomListpageContainerStyled = styled.div`
     height: 100%;
 `
 const RoomListpage = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  console.log(location);
+  useEffect(() => {
+    dispatch(customerSearch(location.search));
+  },)
   return (
     <RoomListpageContainerStyled>
         <RoomListLeft />

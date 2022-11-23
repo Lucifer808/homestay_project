@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {MapContainer, Marker, Popup, TileLayer, useMap, Polygon, useMapEvents} from 'react-leaflet';
+import {MapContainer, Marker, Popup, TileLayer, useMap, Polygon, useMapEvents, Tooltip} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 const icon = L.icon({
@@ -29,7 +29,8 @@ const Markers = () => {
   const map = useMapEvents({
       click(e) {                                
         markers.push(e.latlng);
-        setMarkers((prevValue) => [...prevValue, e.latlng]);        
+        setMarkers((prevValue) => [...prevValue, e.latlng]);
+        console.log(e.latlng)    
       },            
   })
 
@@ -40,7 +41,11 @@ const Markers = () => {
           <Popup>
             <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
           </Popup>
-        </Marker>)}
+          <Tooltip direction="bottom" offset={[0, 20]} opacity={1} permanent>
+            permanent Tooltip for Rectangle
+          </Tooltip>
+        </Marker>
+      )}
     </React.Fragment>
   );
   
@@ -64,6 +69,7 @@ const RoomListMap = (props) => {
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=tDBAuVPvRWiOESRVUIGX"
+      accessToken='pk.eyJ1IjoidHA4NTA1NTgzIiwiYSI6ImNrZzJ5dDNmNjA1bmYyc28zajRiZXpwb2kifQ.IdnR8H3QvoxD0I6dQi2oDA'
     />
     <Markers />
     <Polygon pathOptions={{
