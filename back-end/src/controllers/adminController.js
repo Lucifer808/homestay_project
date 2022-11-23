@@ -301,6 +301,7 @@ exports.updateRentalRegistrationStatus = catchAsyncError(
   async (req, res, next) => {
     const { status, propertyRegistrationId } = req.body;
     if (status === "Đang hoạt động") {
+      console.log("asd");
       const updateRentalRegistration = await db.RetalRegistration.update(
         {
           status,
@@ -313,6 +314,20 @@ exports.updateRentalRegistrationStatus = catchAsyncError(
       if (!updateRentalRegistration) {
         return next(
           new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái !", 401)
+        );
+      }
+      const updateAccommodationActive = await db.Accommodations.update(
+        {
+          activeAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
+          isActive: true,
+        },
+        {
+          where: { ac_propertyRegistrationId: propertyRegistrationId },
+        }
+      );
+      if (!updateAccommodationActive) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái chỗ nghỉ !", 401)
         );
       }
     } else if (status === "Không hợp lệ") {
@@ -329,11 +344,21 @@ exports.updateRentalRegistrationStatus = catchAsyncError(
           new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái !", 401)
         );
       }
+      const updateAccommodationsReject = await db.Accommodations.update(
+        {
+          disabledAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
+          isActive: false,
+        },
+        {
+          where: { ac_propertyRegistrationId: propertyRegistrationId },
+        }
+      );
+      if (!updateAccommodationsReject) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi thay đổi trạng thái chỗ nghỉ!", 401)
+        );
+      }
     }
     res.status(200).json("Thay đổi trạng thái thành công !");
   }
-);
-
-exports.getAllAccommodationActive = catchAsyncError(
-  async (req, res, next) => {}
 );

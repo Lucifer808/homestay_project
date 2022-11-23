@@ -2,7 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Images extends Model {
-    static associate(modles) {}
+    static associate(modles) {
+      Images.belongsTo(modles.Accommodations, {
+        foreignKey: "im_propertyRegistrationId",
+        targetKey: "ac_propertyRegistrationId",
+        as: "acim_id",
+      });
+    }
   }
 
   Images.init(

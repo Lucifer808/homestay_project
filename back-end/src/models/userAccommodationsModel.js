@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "rr_propertyRegistrationId",
         as: "acrr_id",
       });
+      Accommodations.hasMany(modles.Images, {
+        foreignKey: "im_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "acim_id",
+      });
     }
   }
 
@@ -86,6 +91,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: "ac_returnPolicy",
       },
+      activeAt: {
+        type: DataTypes.DATE,
+        field: "ac_activeAt",
+      },
+      disabledAt: {
+        type: DataTypes.DATE,
+        field: "ac_disabledAt",
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        field: "ac_isActive",
+      },
       createdAt: {
         type: DataTypes.DATE(3),
         field: "ac_createdAt",
@@ -127,6 +144,7 @@ module.exports = (sequelize, DataTypes) => {
       collate: "utf8_unicode_ci",
     }
   );
+  // Accommodations.removeAttribute("id")
   return Accommodations;
 };
 // Chưa liên kết đến discount

@@ -22,6 +22,9 @@ app.use("/api/v1", user);
 // Route Admin
 const admin = require("./routes/adminRoute");
 app.use("/api/v1", admin);
+// Route Customer
+const customer = require("./routes/customersRoute");
+app.use("/api/v1", customer);
 // Middleware handler error
 app.use(errorMiddleware);
 module.exports = app;
