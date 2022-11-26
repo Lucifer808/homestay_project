@@ -42,4 +42,7 @@ router
 router
   .route("/create-registration-file")
   .post(isAuthenticatedUser, usersController.createOrUpdateRegistraionFile);
+router
+  .route("/get-all-accommodation")
+  .get(isAuthenticatedUser, usersController.userGetAllAccommodation);
 module.exports = router;

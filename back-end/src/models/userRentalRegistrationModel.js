@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "rr_userId",
       });
-      RetalRegistration.hasOne(modles.Accommodations, {
-        foreignKey: "rr_propertyRegistrationId",
+      RetalRegistration.hasMany(modles.Accommodations, {
+        foreignKey: "ac_propertyRegistrationId",
+        sourceKey: "rr_propertyRegistrationId",
         as: "acrr_id",
       });
     }
@@ -61,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       rr_propertyRegistrationId: {
         type: DataTypes.STRING,
-        field: "rr_propertyRegistratonId",
+        field: "rr_propertyRegistrationId",
       },
     },
     {

@@ -2,7 +2,18 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class DetailServicesOfAccoomadations extends Model {
-    static associate(modles) {}
+    static associate(modles) {
+      DetailServicesOfAccoomadations.belongsTo(modles.Accommodations, {
+        foreignKey: "dsa_propertyRegistrationId",
+        targetKey: "ac_propertyRegistrationId",
+        as: "acdas_id",
+      });
+      DetailServicesOfAccoomadations.hasMany(modles.Services, {
+        foreignKey: "id",
+        sourceKey: "dsa_sv",
+        as: "dsasv_id",
+      });
+    }
   }
 
   DetailServicesOfAccoomadations.init(

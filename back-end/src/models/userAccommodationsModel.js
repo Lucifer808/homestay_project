@@ -18,6 +18,26 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "ac_propertyRegistrationId",
         as: "acim_id",
       });
+      Accommodations.hasMany(modles.DetailServicesOfAccoomadations, {
+        foreignKey: "dsa_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "acdas_id",
+      });
+      Accommodations.hasOne(modles.Cities, {
+        foreignKey: "ci_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "acci_id",
+      });
+      Accommodations.hasOne(modles.States, {
+        foreignKey: "st_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "acst_id",
+      });
+      Accommodations.hasOne(modles.Countries, {
+        foreignKey: "ct_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "acct_id",
+      });
     }
   }
 
@@ -36,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "ac_name",
       },
       desc: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("medium"),
         field: "ac_desc",
       },
       rating: {
@@ -84,7 +104,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "ac_address",
       },
       welcome: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("medium"),
         field: "ac_welcome",
       },
       returnPolicy: {

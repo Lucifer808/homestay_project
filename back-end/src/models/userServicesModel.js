@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "svts_id",
       });
+      Services.belongsTo(modles.DetailServicesOfAccoomadations, {
+        foreignKey: "id",
+        targetKey: "dsa_sv",
+        as: "dsasv_id",
+      });
     }
   }
 

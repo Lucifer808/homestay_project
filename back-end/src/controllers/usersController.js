@@ -585,3 +585,47 @@ exports.createOrUpdateRegistraionFile = catchAsyncError(
     res.status(200).json("Thêm hồ sơ thành công !");
   }
 );
+
+exports.userGetAllAccommodation = catchAsyncError(async (req, res, next) => {
+  const userGetAllAccommodation = await db.Accommodations.findAll({
+    where: {
+      createdById: req.user.id,
+      isActive: true,
+    },
+    include: [
+      {
+        model: db.RetalRegistration,
+        as: "acrr_id",
+      },
+    ],
+    attributes: [
+      "id",
+      "nameOfAccommodation",
+      "desc",
+      "rating",
+      "area",
+      "policy",
+      "recommend",
+      "howToGetThere",
+      "paymentMethod",
+      "priceBase",
+      "accommodates",
+      "noOfBedrooms",
+      "noOfBathrooms",
+      "address",
+      "welcome",
+      "returnPolicy",
+      "createdAt",
+      "updatedAt",
+      "createdById",
+      "updatedById",
+      "ac_propertyRegistrationId",
+    ],
+    nest: true,
+    raw: false,
+  });
+  if (!userGetAllAccommodation) {
+    return next(new ErrorHandler("Xảy ra lỗi khi tìm kiếm theo mã !", 401));
+  }
+  res.status(200).json(userGetAllAccommodation);
+});

@@ -301,7 +301,6 @@ exports.updateRentalRegistrationStatus = catchAsyncError(
   async (req, res, next) => {
     const { status, propertyRegistrationId } = req.body;
     if (status === "Đang hoạt động") {
-      console.log("asd");
       const updateRentalRegistration = await db.RetalRegistration.update(
         {
           status,

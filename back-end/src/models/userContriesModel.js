@@ -2,7 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Countries extends Model {
-    static associate(modles) {}
+    static associate(modles) {
+      Countries.belongsTo(modles.Accommodations, {
+        foreignKey: "ct_propertyRegistrationId",
+        targetKey: "ac_propertyRegistrationId",
+        as: "acct_id",
+      });
+    }
   }
 
   Countries.init(
