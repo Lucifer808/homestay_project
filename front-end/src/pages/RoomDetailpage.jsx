@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link as ScrollTo } from 'react-scroll';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -6,6 +6,10 @@ import RoomDetailTopImage from '../components/layout/RoomDetail/RoomDetailTopIma
 import RoomDetailOverview from '../components/layout/RoomDetail/RoomDetailOverview';
 import RoomDetailChoice from '../components/layout/RoomDetail/RoomDetailChoice';
 import RoomDetailComment from '../components/layout/RoomDetail/RoomDetailComment';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectRoomDetail, customerRoomDetail, selectIsLoading } from '../features/customerSlice';
+import { useParams } from "react-router-dom";
+import Loader from '../components/child/Loader';
 const RoomDetailContainerStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -113,60 +117,71 @@ const RoomDetailOverviewWrapperStyled = styled.div``
 const RoomDetailChoiceWrapperStyled = styled.div``
 const RoomDetailCommentWrapperStyled = styled.div``
 const RoomDetailpage = () => {
+  const dispatch = useDispatch();
+  const selectRoomDetailData = useSelector(selectRoomDetail);
+  const selectIsLoadingData = useSelector(selectIsLoading);
+  const params = useParams();
+  useEffect(() => {
+    dispatch(customerRoomDetail(params.id));
+  },[dispatch, params.id]);
   return (
-    <RoomDetailContainerStyled>
-      <RoomDetailNavigationAddressWrapperStyled>
-        <RoomDetailNavigationAddressLeftWrapperStyled>
-          <RoomDetailNavigationAddressStyled>Trang chủ</RoomDetailNavigationAddressStyled>
-          <ChevronRightOutlinedIcon />
-          <RoomDetailNavigationAddressStyled>Khách sạn Thái Lan(71.179)</RoomDetailNavigationAddressStyled>
-          <ChevronRightOutlinedIcon />
-          <RoomDetailNavigationAddressStyled>Khách sạn Phuket(10.821)</RoomDetailNavigationAddressStyled>
-          <ChevronRightOutlinedIcon />
-          <RoomDetailNavigationAddressNowStyled>Đặt phòng Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomDetailNavigationAddressNowStyled>
-        </RoomDetailNavigationAddressLeftWrapperStyled>
-        <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại Phuket</RoomDetailNavigationAddressRoomStyled>
-      </RoomDetailNavigationAddressWrapperStyled>
-      <RoomDetailTopImage />
-      <RoomDetailNavigationBarWrapperStyled>
-        <RoomDetailNavigationBarLeftWrapperStyled>
-          <ScrollTo to="overview" spy={true} smooth={true} duration={0} offset={-50}>
+    <>
+    {selectIsLoadingData ? <Loader /> : 
+      <RoomDetailContainerStyled>
+        <RoomDetailNavigationAddressWrapperStyled>
+          <RoomDetailNavigationAddressLeftWrapperStyled>
+            <RoomDetailNavigationAddressStyled>Trang chủ</RoomDetailNavigationAddressStyled>
+            <ChevronRightOutlinedIcon />
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData[0].acct_id?.name}(71.179)</RoomDetailNavigationAddressStyled>
+            <ChevronRightOutlinedIcon />
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData[0].acst_id?.name}(10.821)</RoomDetailNavigationAddressStyled>
+            <ChevronRightOutlinedIcon />
+            <RoomDetailNavigationAddressNowStyled>Đặt phòng {selectRoomDetailData[0]?.nameOfAccommodation}</RoomDetailNavigationAddressNowStyled>
+          </RoomDetailNavigationAddressLeftWrapperStyled>
+          <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại {selectRoomDetailData[0].acst_id?.name}</RoomDetailNavigationAddressRoomStyled>
+        </RoomDetailNavigationAddressWrapperStyled>
+          <RoomDetailTopImage selectRoomDetailData={selectRoomDetailData}/>
+        <RoomDetailNavigationBarWrapperStyled>
+          <RoomDetailNavigationBarLeftWrapperStyled>
+            <ScrollTo to="overview" spy={true} smooth={true} duration={0} offset={-50}>
+              <RoomDetailNavigationBarLeftTitleWrapperStyled>
+                <RoomDetailNavigationBarLeftTitleStyled>Tổng quan</RoomDetailNavigationBarLeftTitleStyled>
+              </RoomDetailNavigationBarLeftTitleWrapperStyled>
+            </ScrollTo>
+            <ScrollTo to="choice" spy={true} smooth={true} duration={0} offset={-50}>
+              <RoomDetailNavigationBarLeftTitleWrapperStyled>
+                <RoomDetailNavigationBarLeftTitleStyled>Phòng nghỉ</RoomDetailNavigationBarLeftTitleStyled>
+              </RoomDetailNavigationBarLeftTitleWrapperStyled>
+            </ScrollTo>
             <RoomDetailNavigationBarLeftTitleWrapperStyled>
-              <RoomDetailNavigationBarLeftTitleStyled>Tổng quan</RoomDetailNavigationBarLeftTitleStyled>
+              <RoomDetailNavigationBarLeftTitleStyled>Tiện nghi</RoomDetailNavigationBarLeftTitleStyled>
             </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          </ScrollTo>
-          <ScrollTo to="choice" spy={true} smooth={true} duration={0} offset={-50}>
-            <RoomDetailNavigationBarLeftTitleWrapperStyled>
-              <RoomDetailNavigationBarLeftTitleStyled>Phòng nghỉ</RoomDetailNavigationBarLeftTitleStyled>
-            </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          </ScrollTo>
-          <RoomDetailNavigationBarLeftTitleWrapperStyled>
-            <RoomDetailNavigationBarLeftTitleStyled>Tiện nghi</RoomDetailNavigationBarLeftTitleStyled>
-          </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          <ScrollTo to="comment" spy={true} smooth={true} duration={0} offset={-50}>
-            <RoomDetailNavigationBarLeftTitleWrapperStyled>
-              <RoomDetailNavigationBarLeftTitleStyled>Đánh giá</RoomDetailNavigationBarLeftTitleStyled>
-            </RoomDetailNavigationBarLeftTitleWrapperStyled>
-          </ScrollTo>
-        </RoomDetailNavigationBarLeftWrapperStyled>
-        <RoomDetailNavigationBarRightWrapperStyled>
-          <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
-          <RoomDetailNavigationBarRightPriceStyled>660.000 ₫</RoomDetailNavigationBarRightPriceStyled>
-          <RoomCardRightBottomButtonWrapperStyled>
-            <RoomCardRightBottomButtonTitleStyled>Xem giá</RoomCardRightBottomButtonTitleStyled>
-          </RoomCardRightBottomButtonWrapperStyled>
-        </RoomDetailNavigationBarRightWrapperStyled>
-      </RoomDetailNavigationBarWrapperStyled>
-      <RoomDetailOverviewWrapperStyled id='overview'>
-        <RoomDetailOverview/>
-      </RoomDetailOverviewWrapperStyled>
-      <RoomDetailChoiceWrapperStyled id='choice'>
-        <RoomDetailChoice />
-      </RoomDetailChoiceWrapperStyled>
-      <RoomDetailCommentWrapperStyled id='comment'>
-        <RoomDetailComment />
-      </RoomDetailCommentWrapperStyled>
-    </RoomDetailContainerStyled>
+            <ScrollTo to="comment" spy={true} smooth={true} duration={0} offset={-50}>
+              <RoomDetailNavigationBarLeftTitleWrapperStyled>
+                <RoomDetailNavigationBarLeftTitleStyled>Đánh giá</RoomDetailNavigationBarLeftTitleStyled>
+              </RoomDetailNavigationBarLeftTitleWrapperStyled>
+            </ScrollTo>
+          </RoomDetailNavigationBarLeftWrapperStyled>
+          <RoomDetailNavigationBarRightWrapperStyled>
+            <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
+            <RoomDetailNavigationBarRightPriceStyled>660.000 ₫</RoomDetailNavigationBarRightPriceStyled>
+            <RoomCardRightBottomButtonWrapperStyled>
+              <RoomCardRightBottomButtonTitleStyled>Xem giá</RoomCardRightBottomButtonTitleStyled>
+            </RoomCardRightBottomButtonWrapperStyled>
+          </RoomDetailNavigationBarRightWrapperStyled>
+        </RoomDetailNavigationBarWrapperStyled>
+        <RoomDetailOverviewWrapperStyled id='overview'>
+          <RoomDetailOverview selectRoomDetailData={selectRoomDetailData}/>
+        </RoomDetailOverviewWrapperStyled>
+        <RoomDetailChoiceWrapperStyled id='choice'>
+          <RoomDetailChoice />
+        </RoomDetailChoiceWrapperStyled>
+        <RoomDetailCommentWrapperStyled id='comment'>
+          <RoomDetailComment />
+        </RoomDetailCommentWrapperStyled>
+      </RoomDetailContainerStyled>
+    }
+    </>
   )
 }
 

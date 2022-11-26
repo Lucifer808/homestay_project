@@ -5,6 +5,7 @@ const initialState = {
   bedTypeList: [],
   bedConfigurations: [],
   userTypeOfAccommodations: [],
+  userAllAccommodation: [],
   serviceList: [],
   userData: {},
   success: false,
@@ -186,6 +187,18 @@ export const userGetAllService = createAsyncThunk(
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
       const response = await userApi.allServices();
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userGetAllAccommodation = createAsyncThunk(
+  "user/all_accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.getAllAccommodation();
       return fulfillWithValue(response.data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -429,6 +442,19 @@ export const userSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [userGetAllAccommodation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetAllAccommodation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.userAllAccommodation = action.payload;
+      state.errorMessage = {};
+    },
+    [userGetAllAccommodation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -448,5 +474,6 @@ export const selectedBedConfigurations = (state) =>
 export const selectUserTypeOfAccommodations = (state) =>
   state.user.userTypeOfAccommodations;
 export const selectIsAutheticated = (state) => state.user.isAutheticated;
-
+export const selectUserAllAccommodation = (state) =>
+  state.user.userAllAccommodation;
 export default userSlice.reducer;

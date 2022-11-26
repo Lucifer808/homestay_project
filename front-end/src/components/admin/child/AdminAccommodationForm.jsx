@@ -172,7 +172,7 @@ export default function AdminAccommodationForm(props) {
                     <FormControl disabled variant="standard">
                         <TextField
                             id="standard-read-only-input"
-                            label="Giá từ"
+                            label="Chính sách hoàn trả"
                             value={recordForEdit.returnPolicy || ''}
                             InputProps={{
                                 readOnly: true,

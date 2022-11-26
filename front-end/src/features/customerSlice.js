@@ -1,22 +1,39 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import customerApi from "../api/customerApi";
 const initialState = {
+  citiSearch: [],
   selectPosition: localStorage.getItem("selectPosition")
     ? JSON.parse(localStorage.getItem("selectPosition"))
     : null,
+  isLoading: false,
+  success: false,
+  roomDetail: {},
 };
 
 export const customerSearch = createAsyncThunk(
   "customers/search",
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
-      const respone = await customerApi.customerSearch(params);
-      return fulfillWithValue(respone.data);
+      const response = await customerApi.customerSearch(params);
+      return fulfillWithValue(response.data);
     } catch (error) {
-      return rejectWithValue(error.respone.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
+
+export const customerRoomDetail = createAsyncThunk(
+  "customers/room_detail",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await customerApi.customerRoomDetail(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const customerSlice = createSlice({
   name: "customer",
   initialState,
@@ -26,11 +43,39 @@ export const customerSlice = createSlice({
       state.selectPosition = action.payload;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [customerSearch.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [customerSearch.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.citiSearch = action.payload;
+    },
+    [customerSearch.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action;
+    },
+    [customerRoomDetail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [customerRoomDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.roomDetail = action.payload;
+    },
+    [customerRoomDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action;
+    },
+  },
 });
 
 export const { addSelectPosition } = customerSlice.actions;
 
 export const selectPosition = (state) => state.customer.selectPosition;
+export const selectCitiSearch = (state) => state.customer.citiSearch;
+export const selectRoomDetail = (state) => state.customer.roomDetail;
+export const selectIsLoading = (state) => state.customer.isLoading;
 
 export default customerSlice.reducer;

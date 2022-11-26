@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import RoomCard from '../../child/RoomCard';
+import { useSelector } from 'react-redux';
+import { selectCitiSearch } from '../../../features/customerSlice';
 const RoomListRightContainerStyled = styled.div`
     flex: 3;
     width: 100%;
@@ -42,6 +44,7 @@ const RoomListRightTopFilterContentWrapperStyled = styled.div`
 `
 const RoomListRightBottomFilterWrapperStyled = styled.div``
 const RoomListRight = () => {
+  const citiSearchData = useSelector(selectCitiSearch);
   return (
     <RoomListRightContainerStyled>
         <RoomListRightWrapperStyled>
@@ -67,7 +70,7 @@ const RoomListRight = () => {
             </RoomListRightTopFilterContentWrapperStyled>
           </RoomListRightTopFilterWrapperStyled>
           <RoomListRightBottomFilterWrapperStyled>
-            <RoomCard />
+            <RoomCard cardInfo={citiSearchData}/>
           </RoomListRightBottomFilterWrapperStyled>
         </RoomListRightWrapperStyled>
     </RoomListRightContainerStyled>

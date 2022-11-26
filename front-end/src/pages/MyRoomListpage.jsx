@@ -1,22 +1,17 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import styled from 'styled-components';
-import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { createServiceReset, 
-         selectSuccess, 
-         getAllAccommodation,
-         selectAccommodations,
-         updateRentalRegistrationStatus} from '../../../features/adminSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import AdminServiceActions from '../AdminServiceActions';
-import { AiOutlineEdit } from 'react-icons/ai';
-import Popup from '../components/Popup';
+import React, { useEffect, useState, useMemo  } from 'react'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { userGetAllAccommodation,selectUserAllAccommodation } from '../features/userSlice'
 import { Link } from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import AdminAccommodationForm from '../child/AdminAccommodationForm';
-const AdminServicespageContainerStyled = styled.div`
-  padding: 1rem;
+import { AiOutlineEdit } from 'react-icons/ai';
+import { Box, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
+
+const MyRoomListpageContainerStyled = styled.div``
+const MyRoomListpageWrapperStyled = styled.div`
+    padding: 1rem;
 `
 const AdminServicesBorderButtonEditStyled = styled.div`
   display: flex;
@@ -40,7 +35,7 @@ const AdminServicespageWrapperStyled = styled.div`
   background-color: #fff;
 `
 const AdminServicespageHeaderWrapperStyled = styled.div`
-  margin: 1rem 0;
+  margin: 1rem;
 `
 const AdminStatusWrapperStyled = styled.div`
   padding: .2rem .4rem;
@@ -62,29 +57,14 @@ const StyledLink = styled(Link)`
         text-decoration: underline;
     }
 `;
-const AdminAccommodationspage = () => {
+const MyRoomListpage = () => {
   const dispatch = useDispatch();
-  const selectAccomodationsData = useSelector(selectAccommodations);
-  const selectSuccessData = useSelector(selectSuccess);
-  const [recordForEdit, setRecordForEdit] = useState(null);
-  const [openPopup, setOpenPopup] = useState(false);
+  const selectUserGetAllAccommodation = useSelector(selectUserAllAccommodation);
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
-  useEffect(() =>{
-    dispatch(getAllAccommodation());
-    if(selectSuccessData){
-      dispatch(createServiceReset());
-      setOpenPopup(false);
-    }
-  },[dispatch, selectSuccessData]);
-  const addOrEdit = (item, resetForm, openChildPopup) => {
-    dispatch(updateRentalRegistrationStatus({status: item.status, propertyRegistrationId: item.ac_propertyRegistrationId}));
-  }
-
-  const openInPopup = (item) => {
-    setRecordForEdit(item);
-    setOpenPopup(true);
-  }
+  useEffect(() => {
+    dispatch(userGetAllAccommodation())
+  },[dispatch]);
   const columns = useMemo(
     () => [
         { 
@@ -159,8 +139,9 @@ const AdminAccommodationspage = () => {
         renderCell: (params) => {
             return(
                 <>
-                <AdminServiceActions {...{ params, rowId, setRowId }}/>
-                <AdminServicesBorderButtonEditStyled onClick={() => openInPopup(params.row)}>
+                {/* <AdminServiceActions {...{ params, rowId, setRowId }}/> */}
+                {/* onClick={() => openInPopup(params.row)} */}
+                <AdminServicesBorderButtonEditStyled >
                   <AiOutlineEdit />
                 </AdminServicesBorderButtonEditStyled>
               </>
@@ -168,10 +149,10 @@ const AdminAccommodationspage = () => {
         }
         },
     ],
-    [rowId]
     );
   return (
-    <AdminServicespageContainerStyled>
+    <MyRoomListpageContainerStyled>
+        <MyRoomListpageWrapperStyled>
         <AdminServicespageHeaderWrapperStyled>
           <Typography variant='h5'>Danh sách chỗ nghỉ</Typography>
           <div role="presentation">
@@ -192,7 +173,7 @@ const AdminAccommodationspage = () => {
             >
                 <DataGrid
                 columns={columns}
-                rows={selectAccomodationsData}
+                rows={selectUserGetAllAccommodation}
                 getRowId={(row) => row.id}
                 rowsPerPageOptions={[5, 10, 20]}
                 pageSize={pageSize}
@@ -221,20 +202,9 @@ const AdminAccommodationspage = () => {
                 />
             </Box>
         </AdminServicespageWrapperStyled>
-        <Popup
-            title="Duyệt đơn đăng ký cho thuê chỗ nghỉ"
-            openPopup={openPopup}
-            setOpenPopup={setOpenPopup}
-            onClose={() => setOpenPopup(false)} 
-            maxWidth="lg"
-        >
-                <AdminAccommodationForm
-                    recordForEdit={recordForEdit}
-                    addOrEdit={addOrEdit} 
-                />
-        </Popup>
-    </AdminServicespageContainerStyled>
+        </MyRoomListpageWrapperStyled>
+    </MyRoomListpageContainerStyled>
   )
 }
 
-export default AdminAccommodationspage
+export default MyRoomListpage

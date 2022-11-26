@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Rating from '@mui/material/Rating';
 import wheel from '../../../assets/ferrisWheel.svg';
 import door from '../../../assets/door.svg';
-import croissant from '../../../assets/croissant.svg';
+import location from '../../../assets/location.svg';
 import transfer from '../../../assets/transfer.svg';
 import hotel from '../../../assets/hotel.svg';
 import sha_logo from '../../../assets/sha_plus_logo.png';
@@ -325,7 +325,8 @@ const RoomDetailOverviewLeftTopSellingGoodTopTitleStyled = styled.p`
 const RoomDetailOverviewLeftTopSellingGoodBottomTitleStyled = styled.p`
     margin-top: .4rem;
 `
-const RoomDetailOverview = () => {
+const RoomDetailOverview = (props) => {
+  const {selectRoomDetailData} = props;
   return (
     <RoomDetailOverviewContainerStyled>
         <RoomDetailOverviewWrapperStyled>
@@ -335,17 +336,17 @@ const RoomDetailOverview = () => {
                         <RoomDetailOverviewLeftTopDescTagContentStyled>Mới sửa sang</RoomDetailOverviewLeftTopDescTagContentStyled>
                     </RoomDetailOverviewLeftTopDescTagWrapperStyled>
                     <RoomDetailOverviewLeftTopDescTitleWrapperStyled>
-                        <RoomDetailOverviewLeftTopDescTitleStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomDetailOverviewLeftTopDescTitleStyled>
-                        <Rating name="size-small" value={5} size="medium" readOnly/>
+                        <RoomDetailOverviewLeftTopDescTitleStyled>{selectRoomDetailData[0].nameOfAccommodation}</RoomDetailOverviewLeftTopDescTitleStyled>
+                        <Rating name="size-small" value={selectRoomDetailData[0].rating} size="medium" readOnly/>
                     </RoomDetailOverviewLeftTopDescTitleWrapperStyled>
                     <RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
                         <RoomDetailOverviewLeftTopDescSubTitleStyled>
-                            311 Patak Road, Karon Beach, Amphur Muang, Karon, Phuket, Thái Lan, 83100 - TRÊN BẢN ĐỒ
+                            {selectRoomDetailData[0]?.address}, thành phố {selectRoomDetailData[0]?.acci_id?.name}, {selectRoomDetailData[0]?.acst_id?.name},  {selectRoomDetailData[0]?.acct_id?.name} - TRÊN BẢN ĐỒ
                         </RoomDetailOverviewLeftTopDescSubTitleStyled>
                     </RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
                     <RoomDetailOverviewLeftBottomDescContentWrapperStyled>
                         <RoomDetailOverviewLeftBottomDescContentStyled>
-                            Ngoài tiêu chuẩn SHA Plus, tất cả khách đều được truy cập Wi-Fi miễn phí trong tất cả các phòng và đỗ xe miễn phí nếu đến bằng ô tô. Nằm ở vị trí trung tâm tại Karon của Phuket, chỗ nghỉ này đặt quý khách ở gần các điểm thu hút và tùy chọn ăn uống thú vị. Đừng rời đi trước khi ghé thăm Đường Bangla nổi tiếng. Được xếp hạng 5 sao, chỗ nghỉ chất lượng cao này cho phép khách nghỉ sử dụng bể bơi ngoài trời, phòng tập và nhà hàng ngay trong khuôn viên.
+                            {selectRoomDetailData[0].welcome}
                         </RoomDetailOverviewLeftBottomDescContentStyled>
                     </RoomDetailOverviewLeftBottomDescContentWrapperStyled>
                 </RoomDetailOverviewLeftTopDescWrapperStyled>
@@ -356,19 +357,19 @@ const RoomDetailOverview = () => {
                     <RoomDetailOverviewLeftTopHighlightElementWrapperStyled>
                         <RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                             <RoomDetailOverviewLeftTopHighlightImageStyled src={wheel} />
-                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Cách Bãi biển Karon 60 m</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
+                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Gần biển Nha Trang</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
                         </RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                         <RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                             <RoomDetailOverviewLeftTopHighlightImageStyled src={door} />
                             <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Nhận phòng [24 giờ]</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
                         </RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                         <RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
-                            <RoomDetailOverviewLeftTopHighlightImageStyled src={croissant} />
-                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Đưa đón sân bay </RoomDetailOverviewLeftTopHighlightSubTitleStyled>
+                            <RoomDetailOverviewLeftTopHighlightImageStyled src={location} />
+                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Nằm ở trung tâm thành phố</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
                         </RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                         <RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                             <RoomDetailOverviewLeftTopHighlightImageStyled src={transfer} />
-                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Bữa sáng tuyệt vời</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
+                            <RoomDetailOverviewLeftTopHighlightSubTitleStyled>Đưa đón tại sân bay</RoomDetailOverviewLeftTopHighlightSubTitleStyled>
                         </RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                         <RoomDetailOverviewLeftTopHighlightImageWrapperStyled>
                             <RoomDetailOverviewLeftTopHighlightImageStyled src={hotel} />
@@ -390,46 +391,14 @@ const RoomDetailOverview = () => {
                 <RoomDetailOverviewLeftTopConvenientWrapperStyled>
                     <RoomDetailOverviewLeftTopConvenientTitleStyled>Tiện nghi</RoomDetailOverviewLeftTopConvenientTitleStyled>
                     <RoomDetailOverviewLeftTopConvenientBottomWrapperStyled>
-                        <RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled style={{color: 'rgb(62, 108, 234)'}}>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Bàn tiếp tân [24 giờ]</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Đưa đón sân bay</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                        </RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                        <RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Bãi để xe</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Dịch vụ đưa đón</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                        </RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                        <RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled style={{color: 'rgb(62, 108, 234)'}}>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>CLB trẻ em</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled style={{color: 'rgb(62, 108, 234)'}}>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Phòng tập</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                        </RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                        <RoomDetailOverviewLeftTopConvenientTopSideStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Wi-Fi miễn phí trong tất cả các phòng!</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                            <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                                <DoneOutlinedIcon />
-                                <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>Giữ hành lý</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
-                            </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
-                        </RoomDetailOverviewLeftTopConvenientTopSideStyled>
+                        {selectRoomDetailData[0].acdas_id?.slice(0, 4).map((item, index) => (
+                            <RoomDetailOverviewLeftTopConvenientTopSideStyled key={index}>
+                                <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
+                                    <DoneOutlinedIcon />
+                                    <RoomDetailOverviewLeftTopConvenientTopSideContentStyled>{item.dsasv_id[0]?.name}</RoomDetailOverviewLeftTopConvenientTopSideContentStyled>
+                                </RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
+                            </RoomDetailOverviewLeftTopConvenientTopSideStyled>
+                        ))}
                     </RoomDetailOverviewLeftTopConvenientBottomWrapperStyled>
                 </RoomDetailOverviewLeftTopConvenientWrapperStyled>
                 <RoomDetailOverviewLeftTopSellingGoodWrapperStyled>

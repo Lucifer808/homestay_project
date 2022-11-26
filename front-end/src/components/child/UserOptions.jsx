@@ -55,7 +55,7 @@ const LoginCateWrapperStyled = styled.div`
     display: none;
     width: 240px;
     list-style-type: none;
-    margin-top: ${props => props.role === 'admin' ? '290px' : '370px'};
+    margin-top: ${props => props.role === 'admin' ? '230px' : '310px'};
     border: 1px solid lightgray;
     z-index: 4;
     animation: ${fadeIn} ease-in .2s;
@@ -169,20 +169,14 @@ const UserOptions = ({user}) => {
                   <LoginCateListItemOptionStyled>Danh sách yêu thích</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
+              <Link to='/provider/myroomlist' style={{textDecoration: 'none', color: 'black'}}>
               <LoginedTagContainerStyled>
                 <CountNotificationWrapStyled>
                   <NotificationsOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
-                  <LoginCateListItemOptionStyled>Thông báo</LoginCateListItemOptionStyled>
+                  <LoginCateListItemOptionStyled>Quản lý chỗ nghỉ của tôi</LoginCateListItemOptionStyled>
                 </CountNotificationWrapStyled>
-                  <CountNotificationStyled>2</CountNotificationStyled>
               </LoginedTagContainerStyled>
-              <LoginedTagContainerStyled>
-                <CountNotificationWrapStyled>
-                  <EmailOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
-                  <LoginCateListItemOptionStyled>Tin nhắn</LoginCateListItemOptionStyled>
-                </CountNotificationWrapStyled>
-                <CountNotificationStyled>2</CountNotificationStyled>
-              </LoginedTagContainerStyled>
+              </Link>
               { user.role === "admin" ? (
                 <Link to='/admin/dashboard' style={{textDecoration: 'none', color: 'black'}}>
                   <LoginCateListItemStyled>

@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import room_card from '../../assets/room_card.jpeg';
-import room_card_1 from '../../assets/room_card_1.jpeg';
-import room_card_2 from '../../assets/room_card_2.jpeg';
-import room_card_3 from '../../assets/room_card_3.jpeg';
-import room_card_4 from '../../assets/room_card_4.jpeg';
+import img_detail from '../../assets/img_detail.jpeg';
 import Rating from '@mui/material/Rating';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import BeachAccessOutlinedIcon from '@mui/icons-material/BeachAccessOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import KeyboardDoubleArrowDownOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowDownOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 const RoomCardContainerStyled = styled.div`
     .cross {
     position: relative;
@@ -307,531 +318,417 @@ const RoomCardRightBottomButtonTitleStyled = styled.span`
     font-size: .9rem;
     color: #fff;
 `
-const RoomCard = () => {
+const ReactSlickSyled = styled(Slider)`
+    .slick-list {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden;
+    border: none;
+    }
+    .slick-slide{
+        position: relative;
+    }
+    .slick-arrow.slick-prev,
+    .slick-arrow.slick-next {
+        background-color: hsla(0,0%,100%,.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: .5px solid #ccc;
+    }
+    .slick-prev{
+        left: 20px;
+    }
+    .slick-next{
+        right: 20px;
+    }
+    .slick-prev::before,
+    .slick-next::before{
+        display: none;
+    }
+`
+const RoomDetailImgDetailWrapperStyled = styled.div``
+const RoomDetailDialogContentContainerStyled = styled.div``
+const RoomDetailDialogContentWrapperStyled = styled.div`
+    display: flex;
+`
+const RoomDetailDialogContentImgWrapperStyled = styled.div`
+    width: 58rem;
+    height: 100%;
+`
+const RoomDetailDialogContentDiscWrapperStyled = styled.div`
+    width: 40rem;
+`
+const RoomDetailDialogContentImgDetailWrapperStyled = styled.div`
+    width: 100%;
+    height: 34rem;
+`
+const RoomDetailDialogContentImgDetailStyled = styled.img`
+    width: 58rem;
+    height: 100%;
+    object-fit: cover;
+`
+const RoomDetailDialogContentSubImgDetailWrapperStyled = styled.div`
+    width: 3rem;
+    height: 4rem;
+    padding: 0 .8rem;
+    margin-top: 1rem;
+`
+const RoomDetailDialogContentSubImgDetailStyled = styled.img`
+    width: 8rem;
+    height: 100%;
+    object-fit: cover;
+`
+const RoomDetailDialogContentDescTopWrapperStyled = styled.div`
+    padding: 2rem;
+`
+const RoomDetailDialogContentDescBottomWrapperStyled = styled.div`
+    padding: 1rem 2rem;
+    box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px 0px;
+    .cross {
+    position: relative;
+    display: inline-block;
+    }
+    .cross::before, .cross::after {
+        content: '';
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 50%;
+    }
+    .cross::before {
+        border-bottom: 3px solid red;
+        -webkit-transform: skewY(-10deg);
+        transform: skewY(-10deg);
+    }
+`
+const RoomCardRightCloseButtonWrapperStyled = styled.div`
+    text-align: right;
+    margin: .4rem;
+    cursor: pointer;
+`
+const RoomCard = (props) => {
+  const {cardInfo} = props;
+  const dispatch = useDispatch();
+  const pathName = process.env.REACT_APP_BACK_END_PUBLIC_URL;
+  const [open, setOpen] = useState(false);
+  const [nav1, setNav1] = useState();
+  const [nav2, setNav2] = useState();
+  const [progress, setProgress] = React.useState(84);
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  function NextArrow(props) {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <KeyboardArrowRightOutlinedIcon style={{color: "#000"}}/>
+      </div>
+    );
+  }
+  function PrevArrow(props) {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <KeyboardArrowLeftOutlinedIcon style={{color: "#000"}}/>  
+      </div>
+    );
+  }
+  const settings = {
+    infinite: true,
+    dotsClass: "slick-dots slick-thumb custom-indicator",
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    speed: 500
+  };
   return (
     <RoomCardContainerStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
-        <RoomCardWrapperStyled>
-            <RoomCardLeftWrapperStyled>
-                <RoomCardLeftMainImgWrapperStyled>
-                    <RoomCardLeftMainImgStyled src={room_card}/>
-                </RoomCardLeftMainImgWrapperStyled>
-                <RoomCardLeftSubImgWrapperStyled>
-                    <RoomCardLeftSubImgStyled src={room_card_1} style={{marginLeft: '0px'}}/>
-                    <RoomCardLeftSubImgStyled src={room_card_2} />
-                    <RoomCardLeftSubImgStyled src={room_card_3} />
-                    <RoomCardLeftSubImgOverlayWrapperStyled>
-                        <RoomCardLeftSubImgAllStyled src={room_card_4}/>
-                        <RoomCardLeftSubImgOverlayStyled>
-                            <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
-                        </RoomCardLeftSubImgOverlayStyled>
-                    </RoomCardLeftSubImgOverlayWrapperStyled>
-                </RoomCardLeftSubImgWrapperStyled>
-            </RoomCardLeftWrapperStyled>
-            <RoomCardMiddleWrapperStyled>
-                <RoomCardMiddleTopWrapperStyled>
-                    <RoomCardMiddleTopStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</RoomCardMiddleTopStyled>
-                    <RoomCardMiddleTopRatingWrapperStyled>
-                        <Rating name="size-small" value={5} size="small" readOnly/>
-                        <RoomCardMiddleTopRatingAddressWrapperStyled>
-                            <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopRatingAddressStyled>Karon, Phuket - cách trung tâm 10,7 km</RoomCardMiddleTopRatingAddressStyled>
-                        </RoomCardMiddleTopRatingAddressWrapperStyled>
-                    </RoomCardMiddleTopRatingWrapperStyled>
-                    <RoomCardMiddleTopAdvancedServiceContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bữa sáng</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Phòng tập</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentStyled>Bãi đậu xe</RoomCardMiddleTopAdvancedServiceContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
-                        </RoomCardMiddleTopAdvancedServiceWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                            <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                            <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
-                    <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                        <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                            <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
-                            <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
-                        </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
-                    </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
-                </RoomCardMiddleTopWrapperStyled>
-            </RoomCardMiddleWrapperStyled>
-            <RoomListRightTopFilterMiddleStyled />
-            <RoomCardRightWrapperStyled>
-                <RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                        <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
-                    </RoomCardRightReviewContentWrapperStyled>
-                    <RoomCardRightReviewPointWrapperStyled>
-                        <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                    </RoomCardRightReviewPointWrapperStyled>
-                </RoomCardRightReviewWrapperStyled>
-                <RoomCardRightPriceWrapperStyled>
-                    <RoomCardRightPriceDiscountWrapperStyled>
-                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
-                    </RoomCardRightPriceDiscountWrapperStyled>
-                    <RoomCardRightPriceDiscountContentWrapperStyled>
-                        <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
-                        <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
-                    </RoomCardRightPriceDiscountContentWrapperStyled>
-                    <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                    <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                    <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
-                    <RoomCardRightBottomButtonWrapperStyled>
-                        <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
-                        <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
-                    </RoomCardRightBottomButtonWrapperStyled>
-                </RoomCardRightPriceWrapperStyled>
-            </RoomCardRightWrapperStyled>
-        </RoomCardWrapperStyled>
+        {cardInfo.map(item => (
+            <RoomCardWrapperStyled key={item.id}>
+                <RoomCardLeftWrapperStyled onClick={handleClickOpen}>
+                    <RoomCardLeftMainImgWrapperStyled>
+                        <RoomCardLeftMainImgStyled src={`${pathName+item.acim_id[0]?.path}`}/>
+                    </RoomCardLeftMainImgWrapperStyled>
+                    <RoomCardLeftSubImgWrapperStyled>
+                        {item.acim_id?.slice(1, 4).map(item => (
+                            <RoomCardLeftSubImgStyled key={item.id} src={`${pathName+item.path}`}/>
+                        ))}
+                        <RoomCardLeftSubImgOverlayWrapperStyled>
+                            <RoomCardLeftSubImgAllStyled src={`${pathName+item.acim_id[5]?.path}`}/>
+                            <RoomCardLeftSubImgOverlayStyled>
+                                <RoomCardLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</RoomCardLeftSubImgOverlayTitleStyled>
+                            </RoomCardLeftSubImgOverlayStyled>
+                        </RoomCardLeftSubImgOverlayWrapperStyled>
+                    </RoomCardLeftSubImgWrapperStyled>
+                </RoomCardLeftWrapperStyled>
+                <Link to={`/roomdetail/${item.ac_propertyRegistrationId}`}  style={{color: 'black', textDecoration: 'none'}}>
+                    <RoomCardMiddleWrapperStyled>
+                        <RoomCardMiddleTopWrapperStyled>
+                            <RoomCardMiddleTopStyled>{item.nameOfAccommodation}</RoomCardMiddleTopStyled>
+                            <RoomCardMiddleTopRatingWrapperStyled>
+                                <Rating name="size-small" value={item.rating} size="small" readOnly/>
+                                <RoomCardMiddleTopRatingAddressWrapperStyled>
+                                    <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
+                                    <RoomCardMiddleTopRatingAddressStyled>{item.acci_id?.name}, {item.acst_id?.name}, {item.acct_id?.name}</RoomCardMiddleTopRatingAddressStyled>
+                                </RoomCardMiddleTopRatingAddressWrapperStyled>
+                            </RoomCardMiddleTopRatingWrapperStyled>
+                            <RoomCardMiddleTopAdvancedServiceContainerStyled>
+                                {item.acdas_id.slice(0, 2).map((item, index) => (
+                                    <RoomCardMiddleTopAdvancedServiceWrapperStyled key={index}>
+                                        <RoomCardMiddleTopAdvancedServiceContentStyled>{item.dsasv_id[0]?.name}</RoomCardMiddleTopAdvancedServiceContentStyled>
+                                    </RoomCardMiddleTopAdvancedServiceWrapperStyled>
+                                ))}
+                                <RoomCardMiddleTopAdvancedServiceWrapperStyled>
+                                    <RoomCardMiddleTopAdvancedServiceContentMoreStyled>+{item.acdas_id.length - 2}</RoomCardMiddleTopAdvancedServiceContentMoreStyled>
+                                </RoomCardMiddleTopAdvancedServiceWrapperStyled>
+                            </RoomCardMiddleTopAdvancedServiceContainerStyled>
+                            <RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
+                                <RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
+                                    <RoomCardMiddleTopAdvancedServiceBottomContentStyled>Mới sửa sang</RoomCardMiddleTopAdvancedServiceBottomContentStyled>
+                                </RoomCardMiddleTopAdvancedServiceBottomWrapperStyled>
+                                <RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
+                                    <BeachAccessOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
+                                    <RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>Gần bãi biển</RoomCardMiddleTopAdvancedServiceBottomBeachContentStyled>
+                                </RoomCardMiddleTopAdvancedServiceBottomBeachWrapperStyled>
+                            </RoomCardMiddleTopAdvancedServiceBottomContainerStyled>
+                            <RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
+                                <RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
+                                    <FlagIcon style={{fontSize: '.8rem', color: 'rgb(225, 45, 45)'}}/>
+                                    <RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>Đang bán chạy! Lần đặt gần nhất cách đây 3 giờ</RoomCardMiddleTopAdvancedServiceBottomCouponContentStyled>
+                                </RoomCardMiddleTopAdvancedServiceBottomCouponWrapperStyled>
+                            </RoomCardMiddleTopAdvancedServiceBottomCouponContainerStyled>
+                        </RoomCardMiddleTopWrapperStyled>
+                    </RoomCardMiddleWrapperStyled>
+                </Link>
+                <RoomListRightTopFilterMiddleStyled />
+                <Link to={`/roomdetail/${item.ac_propertyRegistrationId}`}  style={{color: 'black', textDecoration: 'none'}}>
+                    <RoomCardRightWrapperStyled>
+                        <RoomCardRightReviewWrapperStyled>
+                            <RoomCardRightReviewContentWrapperStyled>
+                                <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
+                                <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
+                            </RoomCardRightReviewContentWrapperStyled>
+                            <RoomCardRightReviewPointWrapperStyled>
+                                <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
+                            </RoomCardRightReviewPointWrapperStyled>
+                        </RoomCardRightReviewWrapperStyled>
+                        <RoomCardRightPriceWrapperStyled>
+                            <RoomCardRightPriceDiscountWrapperStyled>
+                                <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
+                            </RoomCardRightPriceDiscountWrapperStyled>
+                            <RoomCardRightPriceDiscountContentWrapperStyled>
+                                <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
+                                <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
+                            </RoomCardRightPriceDiscountContentWrapperStyled>
+                            <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
+                            <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
+                            <RoomCardRightNewPriceStyled>{item.priceBase?.toLocaleString()} ₫</RoomCardRightNewPriceStyled>
+                            <RoomCardRightBottomButtonWrapperStyled>
+                                <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
+                                <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
+                            </RoomCardRightBottomButtonWrapperStyled>
+                        </RoomCardRightPriceWrapperStyled>
+                    </RoomCardRightWrapperStyled>
+                </Link>
+                <RoomDetailImgDetailWrapperStyled>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        maxWidth="lg"
+                        open={open}
+                        onClose={handleClose}
+                        sx={{borderRadius: "50%"}}
+                        PaperProps={{
+                            style: { borderRadius: "14px" }
+                        }}
+                    >
+                        <DialogContent
+                        sx={{padding: '0px !important'}}
+                        >
+                            <RoomDetailDialogContentContainerStyled>
+                                <RoomDetailDialogContentWrapperStyled>
+                                    <RoomDetailDialogContentImgWrapperStyled>
+                                        <ReactSlickSyled asNavFor={nav2} ref={(slider1) => setNav1(slider1)} {...settings}>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
+                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                        </ReactSlickSyled>
+                                        <Slider
+                                            asNavFor={nav1}
+                                            ref={(slider2) => setNav2(slider2)}
+                                            slidesToShow={6}
+                                            swipeToSlide={true}
+                                            focusOnSelect={true}
+                                            arrows={false}
+                                        >
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                        </Slider>
+                                    </RoomDetailDialogContentImgWrapperStyled>
+                                    <RoomDetailDialogContentDiscWrapperStyled>
+                                        <RoomCardRightCloseButtonWrapperStyled onClick={handleClose}>
+                                            <CloseOutlinedIcon sx={{color: '#666'}}/>
+                                        </RoomCardRightCloseButtonWrapperStyled>
+                                        <RoomDetailDialogContentDescTopWrapperStyled>
+                                            <RoomCardRightReviewWrapperStyled>
+                                                <RoomCardRightReviewContentWrapperStyled>
+                                                    <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
+                                                    <RoomCardRightReviewContentBottomStyled>1.509 Nhận xét</RoomCardRightReviewContentBottomStyled>
+                                                </RoomCardRightReviewContentWrapperStyled>
+                                                <RoomCardRightReviewPointWrapperStyled>
+                                                    <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
+                                                </RoomCardRightReviewPointWrapperStyled>
+                                            </RoomCardRightReviewWrapperStyled>
+                                            <Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Độ sạch</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Tiện nghi</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Chất lượng</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Vị trí</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Sự thoải mái</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.6rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Dịch vụ</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ width: '100%', mr: 1, margin: '.4rem 0' }}>
+                                                    <LinearProgress variant="determinate" value={progress} sx={{height: '.4rem', color: 'rgb(62, 108, 234)', borderRadius: '1rem'}}/>
+                                                </Box>
+                                                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem'}}>Đáng giá tiền</Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body2" sx={{fontSize: '1rem', color: 'rgb(62, 108, 234)'}} >{progress}</Typography>
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                        </RoomDetailDialogContentDescTopWrapperStyled>
+                                        <RoomDetailDialogContentDescBottomWrapperStyled>
+                                            <RoomCardRightPriceDiscountWrapperStyled>
+                                                <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
+                                            </RoomCardRightPriceDiscountWrapperStyled>
+                                                <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
+                                                <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
+                                                <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
+                                            <RoomCardRightBottomButtonWrapperStyled>
+                                                <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
+                                                <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
+                                            </RoomCardRightBottomButtonWrapperStyled>
+                                        </RoomDetailDialogContentDescBottomWrapperStyled>
+                                    </RoomDetailDialogContentDiscWrapperStyled>
+                                </RoomDetailDialogContentWrapperStyled>
+                            </RoomDetailDialogContentContainerStyled>
+                        </DialogContent>
+                    </Dialog>
+                </RoomDetailImgDetailWrapperStyled>
+            </RoomCardWrapperStyled>
+        ))}
+        
     </RoomCardContainerStyled>
   )
 }

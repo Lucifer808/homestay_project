@@ -1,26 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import room_detail from '../../../assets/room_detail.jpeg';
-import room_detail1 from '../../../assets/room_detail_1.jpeg';
-import room_detail2 from '../../../assets/room_detail_2.jpeg';
-import room_detail3 from '../../../assets/room_detail_3.jpeg';
-import room_detail4 from '../../../assets/room_detail_4.jpeg';
-import room_detail5 from '../../../assets/room_detail_5.jpeg';
-import room_detail6 from '../../../assets/room_detail_6.jpeg';
-import img_detail from '../../../assets/img_detail.jpeg';
-import img_detail1 from '../../../assets/img_detail_1.jpeg';
-import img_detail2 from '../../../assets/img_detail_2.jpeg';
-import img_detail3 from '../../../assets/img_detail_3.jpeg';
-import img_detail4 from '../../../assets/img_detail_4.jpeg';
-import img_detail5 from '../../../assets/img_detail_5.jpeg';
-import img_detail6 from '../../../assets/img_detail_6.jpeg';
-import img_sub_detail from '../../../assets/img_sub_detail.jpeg';
-import img_sub_detail1 from '../../../assets/img_sub_detail_1.jpeg';
-import img_sub_detail2 from '../../../assets/img_sub_detail_2.jpeg';
-import img_sub_detail3 from '../../../assets/img_sub_detail_3.jpeg';
-import img_sub_detail4 from '../../../assets/img_sub_detail_4.jpeg';
-import img_sub_detail5 from '../../../assets/img_sub_detail_5.jpeg';
-import img_sub_detail6 from '../../../assets/img_sub_detail_6.jpeg';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
@@ -83,8 +62,8 @@ const RoomDetailImgLeftStyled = styled.img`
     object-fit: cover;
     width: 100%;
     height: 19rem;
-    border-top-left-radius: .4rem;
-    border-bottom-left-radius: .4rem;
+    border-top-left-radius: .8rem;
+    border-bottom-left-radius: .8rem;
     cursor: pointer;
     &:hover{
         filter: brightness(80%);
@@ -102,7 +81,7 @@ const RoomDetailImgRightBottomWrapperStyled = styled.div`
     justify-content: space-between;
 `
 const RoomDetailImgMiniStyled = styled.img`
-    margin: 0 0 .2rem .4rem;
+    margin: 0 0 .4rem .4rem;
     object-fit: cover;
     height: 9.3rem;
     width: 14rem;
@@ -267,13 +246,15 @@ const RoomCardRightCloseButtonWrapperStyled = styled.div`
     margin: .4rem;
     cursor: pointer;
 `
-const RoomDetailTopImage = () => {
+const RoomDetailTopImage = (props) => {
+  const { selectRoomDetailData } = props;
   const [open, setOpen] = useState(false);
   const [nav1, setNav1] = useState();
   const [nav2, setNav2] = useState();
   const [progress, setProgress] = React.useState(84);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
+  const pathName = process.env.REACT_APP_BACK_END_PUBLIC_URL;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -308,18 +289,18 @@ const RoomDetailTopImage = () => {
     <RoomDetailImgContainerStyled>
         <RoomDetailImgWrapperStyled>
             <RoomDetailImgLeftWrapperStyled>
-                <RoomDetailImgLeftStyled src={room_detail} onClick={handleClickOpen}/>
+                <RoomDetailImgLeftStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[6]?.path}`} onClick={handleClickOpen}/>
             </RoomDetailImgLeftWrapperStyled>
             <RoomDetailImgRightWrapperStyled>
                 <RoomDetailImgRightTopWrapperStyled>
-                    <RoomDetailImgMiniStyled src={room_detail1} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={room_detail2} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={room_detail3} onClick={handleClickOpen} style={{borderTopRightRadius: '.4rem'}}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[1]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[2]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[3]?.path}`} onClick={handleClickOpen} style={{borderTopRightRadius: '.8rem'}}/>
                 </RoomDetailImgRightTopWrapperStyled>
                 <RoomDetailImgRightBottomWrapperStyled>
-                    <RoomDetailImgMiniStyled src={room_detail5} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={room_detail4} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={room_detail6} onClick={handleClickOpen} style={{borderBottomRightRadius: '.4rem'}}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[4]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[5]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[0]?.path}`} onClick={handleClickOpen} style={{borderBottomRightRadius: '.8rem'}}/>
                 </RoomDetailImgRightBottomWrapperStyled>
                 <RoomDetailImgWishListWrapperStyled>
                     <FavoriteBorderOutlinedIcon />
@@ -332,6 +313,10 @@ const RoomDetailTopImage = () => {
                 maxWidth="lg"
                 open={open}
                 onClose={handleClose}
+                sx={{borderRadius: "50%"}}
+                PaperProps={{
+                    style: { borderRadius: "14px" }
+                }}
             >
                 <DialogContent
                 sx={{padding: '0px !important'}}
@@ -340,27 +325,11 @@ const RoomDetailTopImage = () => {
                         <RoomDetailDialogContentWrapperStyled>
                             <RoomDetailDialogContentImgWrapperStyled>
                                 <ReactSlickSyled asNavFor={nav2} ref={(slider1) => setNav1(slider1)} {...settings}>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail1}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail2}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail3}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail4}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail5}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentImgDetailStyled src={img_detail6}/>
-                                    </RoomDetailDialogContentImgDetailWrapperStyled>
+                                    {selectRoomDetailData[0]?.acim_id?.map(item => (
+                                        <RoomDetailDialogContentImgDetailWrapperStyled key={item.id}>
+                                            <RoomDetailDialogContentImgDetailStyled src={`${pathName+item.path}`}/>
+                                        </RoomDetailDialogContentImgDetailWrapperStyled>
+                                    ))}
                                 </ReactSlickSyled>
                                 <Slider
                                     asNavFor={nav1}
@@ -370,27 +339,11 @@ const RoomDetailTopImage = () => {
                                     focusOnSelect={true}
                                     arrows={false}
                                 >
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail1} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail2} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail3} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail4} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail5} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                    <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                        <RoomDetailDialogContentSubImgDetailStyled src={img_sub_detail6} />
-                                    </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                    {selectRoomDetailData[0]?.acim_id?.map(item => (
+                                        <RoomDetailDialogContentSubImgDetailWrapperStyled key={item.id}>
+                                            <RoomDetailDialogContentSubImgDetailStyled src={`${pathName+item.path}`}/>
+                                        </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                    ))}
                                 </Slider>
                             </RoomDetailDialogContentImgWrapperStyled>
                             <RoomDetailDialogContentDiscWrapperStyled>
@@ -493,7 +446,7 @@ const RoomDetailTopImage = () => {
                                     </RoomCardRightPriceDiscountWrapperStyled>
                                         <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                         <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                        <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled>
+                                        <RoomCardRightNewPriceStyled>{selectRoomDetailData[0].priceBase.toLocaleString()} ₫</RoomCardRightNewPriceStyled>
                                     <RoomCardRightBottomButtonWrapperStyled>
                                         <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
                                         <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
