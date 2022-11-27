@@ -139,11 +139,11 @@ const MyRoomListpage = () => {
         renderCell: (params) => {
             return(
                 <>
-                {/* <AdminServiceActions {...{ params, rowId, setRowId }}/> */}
-                {/* onClick={() => openInPopup(params.row)} */}
-                <AdminServicesBorderButtonEditStyled >
-                  <AiOutlineEdit />
-                </AdminServicesBorderButtonEditStyled>
+                <StyledLink to={`/provider/myroom/${params.id}`}>
+                  <AdminServicesBorderButtonEditStyled >
+                    <AiOutlineEdit />
+                  </AdminServicesBorderButtonEditStyled>
+                </StyledLink>
               </>
             )
         }

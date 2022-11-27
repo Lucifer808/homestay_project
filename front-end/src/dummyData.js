@@ -904,3 +904,111 @@ export const rentalRegistrationsData = [
     title: "Từ chối đơn đăng ký",
   },
 ];
+
+export const typeRoomPicker = [
+  {
+    id: 1,
+    title: "Giường đôi - 2 người",
+  },
+  {
+    id: 2,
+    title: "Giường đôi - Hường vườn",
+  },
+  {
+    id: 3,
+    title: "Giường đôi - Giường Queen",
+  },
+  {
+    id: 4,
+    title: "Giường đôi - Có phòng tắm chung",
+  },
+  {
+    id: 5,
+    title: "Phòng giường đôi và giường đơn",
+  },
+  {
+    id: 6,
+    title: "Giường đôi Basic",
+  },
+  {
+    id: 7,
+    title: "Phòng giường đôi Có máy tính",
+  },
+  {
+    id: 8,
+    title: "Phòng giường đôi Có quạt",
+  },
+  {
+    id: 9,
+    title: "Phòng phổ thông giường đôi",
+  },
+  {
+    id: 10,
+    title: "Phòng con nhộng giường đôi",
+  },
+  {
+    id: 11,
+    title: "Studio có ban công",
+  },
+  {
+    id: 12,
+    title: "Phòng Executive với Ban Công",
+  },
+  {
+    id: 13,
+    title: "Phòng 1 góc hướng biển",
+  },
+  {
+    id: 14,
+    title: "Căn hộ Studio",
+  },
+  {
+    id: 15,
+    title: "Studio hướng biển",
+  },
+  {
+    id: 16,
+    title: "Suite lớn hướng biển có sân hiên",
+  },
+  {
+    id: 17,
+    title: "Phòng Sky",
+  },
+  {
+    id: 18,
+    title: "Phòng gia đình",
+  },
+];
+
+export const numberPicker = [
+  {
+    value: 1,
+  },
+  {
+    value: 2,
+  },
+  {
+    value: 3,
+  },
+  {
+    value: 4,
+  },
+  {
+    value: 5,
+  },
+  {
+    value: 6,
+  },
+  {
+    value: 7,
+  },
+  {
+    value: 8,
+  },
+  {
+    value: 9,
+  },
+  {
+    value: 10,
+  },
+];
