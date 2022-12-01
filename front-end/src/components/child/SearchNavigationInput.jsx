@@ -283,7 +283,7 @@ const SearchNavigationInput = () => {
       })
       .catch((err) => console.log("err: ", err));
     }, 1000)
-    return () => clearTimeout(delayDebounceFn);
+    return () => {clearTimeout(delayDebounceFn)};
   },[searchText])
   const handleIncrease = (name) => {
     if(name === "room"){
@@ -327,29 +327,29 @@ const SearchNavigationInput = () => {
       }
     }
   }
-  function removeAccents(str) {
-    var AccentsMap = [
-      "aàảãáạăằẳẵắặâầẩẫấậ",
-      "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
-      "dđ", "DĐ",
-      "eèẻẽéẹêềểễếệ",
-      "EÈẺẼÉẸÊỀỂỄẾỆ",
-      "iìỉĩíị",
-      "IÌỈĨÍỊ",
-      "oòỏõóọôồổỗốộơờởỡớợ",
-      "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
-      "uùủũúụưừửữứự",
-      "UÙỦŨÚỤƯỪỬỮỨỰ",
-      "yỳỷỹýỵ",
-      "YỲỶỸÝỴ"    
-    ];
-    for (var i=0; i<AccentsMap.length; i++) {
-      var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
-      var char = AccentsMap[i][0];
-      str = str.replace(re, char);
-    }
-    return str;
-  }
+  // function removeAccents(str) {
+  //   var AccentsMap = [
+  //     "aàảãáạăằẳẵắặâầẩẫấậ",
+  //     "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+  //     "dđ", "DĐ",
+  //     "eèẻẽéẹêềểễếệ",
+  //     "EÈẺẼÉẸÊỀỂỄẾỆ",
+  //     "iìỉĩíị",
+  //     "IÌỈĨÍỊ",
+  //     "oòỏõóọôồổỗốộơờởỡớợ",
+  //     "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+  //     "uùủũúụưừửữứự",
+  //     "UÙỦŨÚỤƯỪỬỮỨỰ",
+  //     "yỳỷỹýỵ",
+  //     "YỲỶỸÝỴ"    
+  //   ];
+  //   for (var i=0; i<AccentsMap.length; i++) {
+  //     var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+  //     var char = AccentsMap[i][0];
+  //     str = str.replace(re, char);
+  //   }
+  //   return str;
+  // }
   const handleSearch = () => {
     const searchParams = {
       checkIn: format(date[0].startDate, "yyyy-MM-dd"),

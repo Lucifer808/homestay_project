@@ -289,18 +289,18 @@ const RoomDetailTopImage = (props) => {
     <RoomDetailImgContainerStyled>
         <RoomDetailImgWrapperStyled>
             <RoomDetailImgLeftWrapperStyled>
-                <RoomDetailImgLeftStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[6]?.path}`} onClick={handleClickOpen}/>
+                <RoomDetailImgLeftStyled src={`${pathName+selectRoomDetailData?.acim_id?.[6]?.path}`} onClick={handleClickOpen}/>
             </RoomDetailImgLeftWrapperStyled>
             <RoomDetailImgRightWrapperStyled>
                 <RoomDetailImgRightTopWrapperStyled>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[1]?.path}`} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[2]?.path}`} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[3]?.path}`} onClick={handleClickOpen} style={{borderTopRightRadius: '.8rem'}}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[1]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[2]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[3]?.path}`} onClick={handleClickOpen} style={{borderTopRightRadius: '.8rem'}}/>
                 </RoomDetailImgRightTopWrapperStyled>
                 <RoomDetailImgRightBottomWrapperStyled>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[4]?.path}`} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[5]?.path}`} onClick={handleClickOpen}/>
-                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData[0]?.acim_id[0]?.path}`} onClick={handleClickOpen} style={{borderBottomRightRadius: '.8rem'}}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[4]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[5]?.path}`} onClick={handleClickOpen}/>
+                    <RoomDetailImgMiniStyled src={`${pathName+selectRoomDetailData?.acim_id?.[0]?.path}`} onClick={handleClickOpen} style={{borderBottomRightRadius: '.8rem'}}/>
                 </RoomDetailImgRightBottomWrapperStyled>
                 <RoomDetailImgWishListWrapperStyled>
                     <FavoriteBorderOutlinedIcon />
@@ -325,7 +325,7 @@ const RoomDetailTopImage = (props) => {
                         <RoomDetailDialogContentWrapperStyled>
                             <RoomDetailDialogContentImgWrapperStyled>
                                 <ReactSlickSyled asNavFor={nav2} ref={(slider1) => setNav1(slider1)} {...settings}>
-                                    {selectRoomDetailData[0]?.acim_id?.map(item => (
+                                    {selectRoomDetailData?.acim_id?.map(item => (
                                         <RoomDetailDialogContentImgDetailWrapperStyled key={item.id}>
                                             <RoomDetailDialogContentImgDetailStyled src={`${pathName+item.path}`}/>
                                         </RoomDetailDialogContentImgDetailWrapperStyled>
@@ -339,7 +339,7 @@ const RoomDetailTopImage = (props) => {
                                     focusOnSelect={true}
                                     arrows={false}
                                 >
-                                    {selectRoomDetailData[0]?.acim_id?.map(item => (
+                                    {selectRoomDetailData?.acim_id?.map(item => (
                                         <RoomDetailDialogContentSubImgDetailWrapperStyled key={item.id}>
                                             <RoomDetailDialogContentSubImgDetailStyled src={`${pathName+item.path}`}/>
                                         </RoomDetailDialogContentSubImgDetailWrapperStyled>
@@ -446,7 +446,7 @@ const RoomDetailTopImage = (props) => {
                                     </RoomCardRightPriceDiscountWrapperStyled>
                                         <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                         <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                        <RoomCardRightNewPriceStyled>{selectRoomDetailData[0].priceBase.toLocaleString()} ₫</RoomCardRightNewPriceStyled>
+                                        <RoomCardRightNewPriceStyled>{selectRoomDetailData?.priceBase?.toLocaleString()} ₫</RoomCardRightNewPriceStyled>
                                     <RoomCardRightBottomButtonWrapperStyled>
                                         <RoomCardRightBottomButtonTitleStyled>Chọn phòng</RoomCardRightBottomButtonTitleStyled>
                                         <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>

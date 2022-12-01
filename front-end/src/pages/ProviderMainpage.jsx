@@ -149,8 +149,9 @@ const ProviderMainBottomSubContentRightSubContentStyled = styled.p`
 const ProviderMainpage = () => {
   const navigate = useNavigate();
   const handleNewProviderInfo = () => {
-    const ac_propertyRegistrationId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
-    navigate(`/provider?p=${ac_propertyRegistrationId}`);
+    const ac_propertyRegistrationId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
+    const roomTypeId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
+    navigate(`/provider?p=${ac_propertyRegistrationId}&roomTypeId=${roomTypeId}`);
   }
   return (
     <ProviderMainContainerStyled>

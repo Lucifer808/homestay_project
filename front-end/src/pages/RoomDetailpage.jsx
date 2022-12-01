@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link as ScrollTo } from 'react-scroll';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -118,29 +118,31 @@ const RoomDetailChoiceWrapperStyled = styled.div``
 const RoomDetailCommentWrapperStyled = styled.div``
 const RoomDetailpage = () => {
   const dispatch = useDispatch();
+  const [roomData, setRoomData] = useState(null);
   const selectRoomDetailData = useSelector(selectRoomDetail);
   const selectIsLoadingData = useSelector(selectIsLoading);
   const params = useParams();
   useEffect(() => {
-    dispatch(customerRoomDetail(params.id));
+      dispatch(customerRoomDetail(params.id));
+      window.scrollTo(0, 0);
   },[dispatch, params.id]);
   return (
     <>
-    {selectIsLoadingData ? <Loader /> : 
+    {selectIsLoadingData && selectRoomDetailData == null ? <Loader /> : 
       <RoomDetailContainerStyled>
         <RoomDetailNavigationAddressWrapperStyled>
           <RoomDetailNavigationAddressLeftWrapperStyled>
             <RoomDetailNavigationAddressStyled>Trang chủ</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
-            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData[0].acct_id?.name}(71.179)</RoomDetailNavigationAddressStyled>
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acct_id?.name}(71.179)</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
-            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData[0].acst_id?.name}(10.821)</RoomDetailNavigationAddressStyled>
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acst_id?.name}(10.821)</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
-            <RoomDetailNavigationAddressNowStyled>Đặt phòng {selectRoomDetailData[0]?.nameOfAccommodation}</RoomDetailNavigationAddressNowStyled>
+            <RoomDetailNavigationAddressNowStyled>Đặt phòng {selectRoomDetailData?.[0]?.nameOfAccommodation}</RoomDetailNavigationAddressNowStyled>
           </RoomDetailNavigationAddressLeftWrapperStyled>
-          <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại {selectRoomDetailData[0].acst_id?.name}</RoomDetailNavigationAddressRoomStyled>
+          <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại {selectRoomDetailData?.[0]?.acst_id?.name}</RoomDetailNavigationAddressRoomStyled>
         </RoomDetailNavigationAddressWrapperStyled>
-          <RoomDetailTopImage selectRoomDetailData={selectRoomDetailData}/>
+          <RoomDetailTopImage selectRoomDetailData={selectRoomDetailData?.[0]}/>
         <RoomDetailNavigationBarWrapperStyled>
           <RoomDetailNavigationBarLeftWrapperStyled>
             <ScrollTo to="overview" spy={true} smooth={true} duration={0} offset={-50}>
@@ -164,14 +166,14 @@ const RoomDetailpage = () => {
           </RoomDetailNavigationBarLeftWrapperStyled>
           <RoomDetailNavigationBarRightWrapperStyled>
             <RoomDetailNavigationBarRightContentStyled>Giá từ</RoomDetailNavigationBarRightContentStyled>
-            <RoomDetailNavigationBarRightPriceStyled>660.000 ₫</RoomDetailNavigationBarRightPriceStyled>
+            <RoomDetailNavigationBarRightPriceStyled>{selectRoomDetailData?.[0]?.priceBase?.toLocaleString()} ₫</RoomDetailNavigationBarRightPriceStyled>
             <RoomCardRightBottomButtonWrapperStyled>
               <RoomCardRightBottomButtonTitleStyled>Xem giá</RoomCardRightBottomButtonTitleStyled>
             </RoomCardRightBottomButtonWrapperStyled>
           </RoomDetailNavigationBarRightWrapperStyled>
         </RoomDetailNavigationBarWrapperStyled>
         <RoomDetailOverviewWrapperStyled id='overview'>
-          <RoomDetailOverview selectRoomDetailData={selectRoomDetailData}/>
+          <RoomDetailOverview selectRoomDetailData={selectRoomDetailData?.[0]}/>
         </RoomDetailOverviewWrapperStyled>
         <RoomDetailChoiceWrapperStyled id='choice'>
           <RoomDetailChoice />

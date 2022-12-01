@@ -1012,3 +1012,101 @@ export const numberPicker = [
     value: 10,
   },
 ];
+export const viewPicker = [
+  {
+    id: 1,
+    title: "Không rõ",
+  },
+  {
+    id: 2,
+    title: "Đại dương",
+  },
+  {
+    id: 3,
+    title: "Vườn",
+  },
+  {
+    id: 4,
+    title: "Bể bơi",
+  },
+  {
+    id: 5,
+    title: "Thành phố",
+  },
+  {
+    id: 6,
+    title: "Công viên",
+  },
+  {
+    id: 7,
+    title: "Công viên",
+  },
+  {
+    id: 8,
+    title: "Núi",
+  },
+  {
+    id: 9,
+    title: "Hồ",
+  },
+  {
+    id: 10,
+    title: "Sông",
+  },
+  {
+    id: 11,
+    title: "Bải biển",
+  },
+  {
+    id: 12,
+    title: "Cảng",
+  },
+  {
+    id: 13,
+    title: "Đại dương (một góc)",
+  },
+  {
+    id: 14,
+    title: "Không có cảnh",
+  },
+  {
+    id: 15,
+    title: "Biển",
+  },
+  {
+    id: 16,
+    title: "Biển (một góc)",
+  },
+  {
+    id: 17,
+    title: "Đồng quê",
+  },
+  {
+    id: 18,
+    title: "Thiên nhiên",
+  },
+  {
+    id: 19,
+    title: "Dường phố",
+  },
+  {
+    id: 20,
+    title: "Bến thuyền",
+  },
+  {
+    id: 21,
+    title: "Vịnh",
+  },
+  {
+    id: 22,
+    title: "Thung lũng",
+  },
+  {
+    id: 23,
+    title: "Nông thôn",
+  },
+  {
+    id: 24,
+    title: "Cảnh đêm",
+  },
+];

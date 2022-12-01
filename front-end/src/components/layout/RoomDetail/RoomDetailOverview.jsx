@@ -336,17 +336,17 @@ const RoomDetailOverview = (props) => {
                         <RoomDetailOverviewLeftTopDescTagContentStyled>Mới sửa sang</RoomDetailOverviewLeftTopDescTagContentStyled>
                     </RoomDetailOverviewLeftTopDescTagWrapperStyled>
                     <RoomDetailOverviewLeftTopDescTitleWrapperStyled>
-                        <RoomDetailOverviewLeftTopDescTitleStyled>{selectRoomDetailData[0].nameOfAccommodation}</RoomDetailOverviewLeftTopDescTitleStyled>
-                        <Rating name="size-small" value={selectRoomDetailData[0].rating} size="medium" readOnly/>
+                        <RoomDetailOverviewLeftTopDescTitleStyled>{selectRoomDetailData?.nameOfAccommodation}</RoomDetailOverviewLeftTopDescTitleStyled>
+                        <Rating name="size-small" value={selectRoomDetailData?.rating} size="medium" readOnly/>
                     </RoomDetailOverviewLeftTopDescTitleWrapperStyled>
                     <RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
                         <RoomDetailOverviewLeftTopDescSubTitleStyled>
-                            {selectRoomDetailData[0]?.address}, thành phố {selectRoomDetailData[0]?.acci_id?.name}, {selectRoomDetailData[0]?.acst_id?.name},  {selectRoomDetailData[0]?.acct_id?.name} - TRÊN BẢN ĐỒ
+                            {selectRoomDetailData?.address}, thành phố {selectRoomDetailData?.acci_id?.name}, {selectRoomDetailData?.acst_id?.name},  {selectRoomDetailData?.acct_id?.name} - TRÊN BẢN ĐỒ
                         </RoomDetailOverviewLeftTopDescSubTitleStyled>
                     </RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
                     <RoomDetailOverviewLeftBottomDescContentWrapperStyled>
                         <RoomDetailOverviewLeftBottomDescContentStyled>
-                            {selectRoomDetailData[0].welcome}
+                            {selectRoomDetailData?.welcome}
                         </RoomDetailOverviewLeftBottomDescContentStyled>
                     </RoomDetailOverviewLeftBottomDescContentWrapperStyled>
                 </RoomDetailOverviewLeftTopDescWrapperStyled>
@@ -391,7 +391,7 @@ const RoomDetailOverview = (props) => {
                 <RoomDetailOverviewLeftTopConvenientWrapperStyled>
                     <RoomDetailOverviewLeftTopConvenientTitleStyled>Tiện nghi</RoomDetailOverviewLeftTopConvenientTitleStyled>
                     <RoomDetailOverviewLeftTopConvenientBottomWrapperStyled>
-                        {selectRoomDetailData[0].acdas_id?.slice(0, 4).map((item, index) => (
+                        {selectRoomDetailData?.acdas_id?.slice(0, 4).map((item, index) => (
                             <RoomDetailOverviewLeftTopConvenientTopSideStyled key={index}>
                                 <RoomDetailOverviewLeftTopConvenientTopSideContentWrapperStyled>
                                     <DoneOutlinedIcon />

@@ -73,9 +73,9 @@ const ProviderInfoBedConfig = (props) => {
             <ProviderInfoBottomContentInputStyled>{quantity}</ProviderInfoBottomContentInputStyled>
             <AddOutlinedIcon style={{cursor: 'pointer'}} onClick={handleIncrease}/>
         </ProviderInfoBottomContentInputWrapperStyled>
-        <ProviderInfoBottomContentSelectStyled name='ro_tb' onChange={handleChangeInChild}>
+        <ProviderInfoBottomContentSelectStyled name='nameOfBed' onChange={handleChangeInChild}>
             {selectBedTypeListData && selectBedTypeListData.map(item => (
-            <ProviderInfoBottomContentOptionStyled key={item.id} value={item.id}>{item.name}</ProviderInfoBottomContentOptionStyled>
+            <ProviderInfoBottomContentOptionStyled key={item.id} value={item.name}>{item.name}</ProviderInfoBottomContentOptionStyled>
             ))}
         </ProviderInfoBottomContentSelectStyled>
         {checkIsActive >= 1 && 

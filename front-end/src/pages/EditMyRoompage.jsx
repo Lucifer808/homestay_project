@@ -11,7 +11,7 @@ import Popup from '../components/admin/components/Popup';
 import BedConfiguarationPopup from '../components/child/BedConfiguarationPopup';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { useEffect } from 'react';
-import { addDetailBedConfig, selectedBedDetailConfigurations, userCreateRoomInfo, userGetAllTypeRoom, selectedAllTypeRoom, userGetTypeRoomById } from '../features/userSlice';
+import { addDetailBedConfig, selectedBedDetailConfigurations, userCreateRoomInfo, userGetAllTypeRoom, selectedAllTypeRoom, userGetTypeRoomById, selectedTypeRoom, selectSuccess } from '../features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { styled as muiStyled } from '@mui/material/styles';
@@ -22,8 +22,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import * as yup from 'yup';
-import { useFormik } from 'formik';
+import { useForm } from '../components/admin/child/useForm';
 const MyRoompageContainerStyled = styled.div``
 const MyRoompageWrapperStyled = styled.div`
     display: flex;
@@ -31,7 +30,6 @@ const MyRoompageWrapperStyled = styled.div`
 const MyRoompageLeftWrapperStyled = styled.div`
     flex: 2;
     height: 100vh;
-    overflow: auto;
     background-color: rgba(7, 39, 107, 0.90);
     padding: 1rem;
 `
@@ -422,150 +420,93 @@ const StyledTableRow = muiStyled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-const MyRoompage = () => {
-  const [openView, setOpenView] = useState(false);
-  const [openPopup, setOpenPopup] = useState(false);
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [addOptions, setAddOptions] = useState(1);
-  const [images, setImages] = useState("");
-  const dispatch = useDispatch();
-  const params = useParams();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const roomTypeId = searchParams.get('roomtypeid');
-  const selectedBedDetailConfigurationsData = useSelector(selectedBedDetailConfigurations);
-  const selectedAllTypeRoomData = useSelector(selectedAllTypeRoom);
-  const formik = useFormik({
-    initialValues: {
-      nameTypeOfRoom: " " ,
-      numTypeOfRoom: 0,
-      maxPrice: 0,
-      minPrice: 0,
-      exactlyPrice: 0,
-      numOfAdult: 0,
-      allowChildren: false,
-      numOfChildren: 0,
-      areaOfTypeRoom: 0,
-      numOfBathrooms: 0,
-      viewOfTypeRoom: "",
-    },
-    validationSchema: yup.object({
-      nameTypeOfRoom: yup.string().required("Xin vui lòng chọn loại phòng !"),
-      numTypeOfRoom: yup.number().moreThan(0, "Số lượng khách có thể ở phải lớn hơn 0 !"),
-      minPrice: yup.number().min(40000, "Số tiền tối thiểu lớn hơn 40000 !"),
-      maxPrice: yup.number().moreThan(yup.ref("minPrice"), "Số tiền tối đa lớn hơn giá tối thiểu !"),
-      exactlyPrice: yup.number().moreThan(yup.ref("minPrice"), "Số tiền phải lớn hơn giá tối thiểu !").lessThan(yup.ref("maxPrice"), "Số tiền phải bé hơn giá tối đa !"),
-      numOfAdult: yup.number().min(1, "Vui lòng nhập số lượng người lớn cho loại phòng này !"),
-      numOfChildren: yup.number().min(1, "Vui lòng nhập số trẻ em được phép ở miễn phí !"),
-      areaOfTypeRoom: yup.number().min(1, "Vui lòng nhập diện tích phòng !"),
-      numOfBathrooms: yup.number().min(1, "Vui lòng nhập số phòng tắm !"),
-      viewOfTypeRoom: yup.string().required("Vui lòng chọn hướng phòng !"),
-    }),
-    onSubmit: (values) => {
-        const {...rest} = values;
-        console.log(values);
+const EditMyRoompage = (props) => {
+    const { recordForEdit } = props;
+    const [openView, setOpenView] = useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
+    const [imagesPreview, setImagesPreview] = useState([]);
+    const [addOptions, setAddOptions] = useState(1);
+    const [images, setImages] = useState("");
+    const dispatch = useDispatch();
+    const params = useParams();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const roomTypeId = searchParams.get('roomtypeid');
+    const selectedBedDetailConfigurationsData = useSelector(selectedBedDetailConfigurations);
+    const selectedTypeRoomData = useSelector(selectedTypeRoom);
+    const selectSuccessData = useSelector(selectSuccess);
+    const initialValues = {
+        nameTypeOfRoom: " ",
+        numTypeOfRoom: 1,
+        maxPrice: 0,
+        minPrice: 0,
+        exactlyPrice: 0,
+        numOfAdult: 0,
+        allowChildren: false,
+        numOfChildren: 0,
+        areaOfTypeRoom: 0,
+        numOfBathrooms: 0,
+        viewOfTypeRoom: " ",
     }
-  })
-  const handleImagesChange = (e) => {
-    setImages(e.target.files)
-    const filesPre = Array.from(e.target.files);
-    
-    setImagesPreview([]);
-    
-    filesPre.forEach((file) => {
-      const reader = new FileReader();
-      
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-        }
-      };
-      
-      reader.readAsDataURL(file);
-    });
-  };
-  const createImagesSubmitHandler = (e) => {
-    e.preventDefault();
-
-
-    const formData = new FormData();
-
-    formData.append("info", JSON.stringify(formik.values));
-    formData.append("ac_propertyRegistrationId", params.id);
-    formData.append("roomTypeId", roomTypeId);
-    formData.append('bedConfig', JSON.stringify(selectedBedDetailConfigurationsData))
-    for (let i = 0; i < images.length; i++) {
-      formData.append('images', images[i]);        
-    }
-    dispatch(userCreateRoomInfo(formData))
-  };
-  useEffect(() => {
-    const tempItem = {
-        ro_tb: "1",
-        noOfBed: 1,
-        nameOfBed: "Giường đơn",
-        optionId: addOptions,
-        tbr_roomTypeId: roomTypeId
+    useEffect(() => {
+      if(recordForEdit !== null){
+          setValues({
+            nameTypeOfRoom: recordForEdit.name,
+            numTypeOfRoom: recordForEdit.trro_id[0].numTypeOfRoom,
+            maxPrice: 0,
+            minPrice: 0,
+            exactlyPrice: 0,
+            numOfAdult: 0,
+            allowChildren: false,
+            numOfChildren: 0,
+            areaOfTypeRoom: 0,
+            numOfBathrooms: 0,
+            viewOfTypeRoom: " ",
+          })
       }
-      dispatch(addDetailBedConfig(tempItem));
-      dispatch(userGetAllTypeRoom({roomTypeId: roomTypeId, propertyRegistrationId: params.id}));
-  },[dispatch])
-  const handleClick = (roomTypeId) => {
-    navigate(`/provider/editmyroom/${params.id}?roomtypeid=${roomTypeId}`);
-    // dispatch(userGetTypeRoomById());
-  }
+    },[dispatch, recordForEdit])
+    const {
+        values,
+        setValues,
+        handleInputChange,
+        resetForm
+    } = useForm(initialValues);
+      const handleImagesChange = (e) => {
+        setImages(e.target.files)
+        const filesPre = Array.from(e.target.files);
+        
+        setImagesPreview([]);
+        
+        filesPre.forEach((file) => {
+          const reader = new FileReader();
+          
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setImagesPreview((old) => [...old, reader.result]);
+            }
+          };
+          
+          reader.readAsDataURL(file);
+        });
+      };
+      const createImagesSubmitHandler = (e) => {
+        e.preventDefault();
+    
+    
+        const formData = new FormData();
+    
+        formData.append("info", JSON.stringify(values));
+        formData.append("ac_propertyRegistrationId", params.id);
+        formData.append("roomTypeId", roomTypeId);
+        formData.append('bedConfig', JSON.stringify(selectedBedDetailConfigurationsData))
+        for (let i = 0; i < images.length; i++) {
+          formData.append('images', images[i]);        
+        }
+        dispatch(userCreateRoomInfo(formData))
+      };
   return (
     <MyRoompageContainerStyled>
         <MyRoompageWrapperStyled>
-            <MyRoompageLeftWrapperStyled>
-                <MyRoompageLeftHeaderWrapperStyled>
-                    <MyRoompageLeftHeaderTitleWrapperStyled>Thiết lập phòng</MyRoompageLeftHeaderTitleWrapperStyled>
-                    <MyRoompageLeftHeaderButtonWrapperWrapperStyled>
-                        <Button variant="contained" size="large">
-                        + Tạo
-                        </Button>
-                    </MyRoompageLeftHeaderButtonWrapperWrapperStyled>
-                </MyRoompageLeftHeaderWrapperStyled>
-                <MyRoompageLeftHeaderSearchWrapperStyled>
-                    <MyRoompageLeftHeaderSearchStyled>
-                        <SearchIcon />
-                        <MyRoompageLeftHeaderSearchInputStyled 
-                            placeholder='Tìm kiếm tên/mã'
-                        />
-                    </MyRoompageLeftHeaderSearchStyled>
-                </MyRoompageLeftHeaderSearchWrapperStyled>
-                <MyRoompageLeftHeaderStatusWrapperStyled>
-                    <MyRoompageLeftHeaderButtonStatusWrapperStyled>
-                        Hoạt động
-                    </MyRoompageLeftHeaderButtonStatusWrapperStyled>
-                </MyRoompageLeftHeaderStatusWrapperStyled>
-                {selectedAllTypeRoomData && selectedAllTypeRoomData.map(item => (
-                    <MyRoompageLeftRoomDetailWrapperStyled key={item.id} onClick={() => handleClick(item.tr_roomTypeId)}>
-                        <MyRoompageLeftRoomDetailHeaderWrapperStyled>
-                            <MyRoompageLeftRoomDetailHeaderIdStyled>#{item.tr_roomTypeId}</MyRoompageLeftRoomDetailHeaderIdStyled>
-                            <MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>
-                                {item.isActive === true ? "Hoạt động" : "Không hoạt động"}
-                            </MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>
-                        </MyRoompageLeftRoomDetailHeaderWrapperStyled>
-                        <MyRoompageLeftInfoWrapperStyled>
-                            <MyRoompageLeftInfoTitleStyled>{item.name}</MyRoompageLeftInfoTitleStyled>
-                        </MyRoompageLeftInfoWrapperStyled>
-                        <MyRoompageLeftInfoSubTitleWrapperStyled>
-                            <Groups2OutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Số người ở phòng: {item.trro_id[0]?.noOfAdult}</MyRoompageLeftInfoSubTitleStyled>
-                        </MyRoompageLeftInfoSubTitleWrapperStyled>
-                        <MyRoompageLeftInfoSubTitleWrapperStyled>
-                            <HomeOutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Kích cỡ phòng: {item.trro_id[0]?.area} m2</MyRoompageLeftInfoSubTitleStyled>
-                        </MyRoompageLeftInfoSubTitleWrapperStyled>
-                        <MyRoompageLeftInfoSubTitleWrapperStyled>
-                            <SensorDoorOutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Số lượng phòng của loại này: {item.trro_id[0]?.numTypeOfRoom}</MyRoompageLeftInfoSubTitleStyled>
-                        </MyRoompageLeftInfoSubTitleWrapperStyled>
-                    </MyRoompageLeftRoomDetailWrapperStyled>
-                ))}
-            </MyRoompageLeftWrapperStyled>
             <MyRoompageRightWrapperStyled onSubmit={createImagesSubmitHandler}>
                 <MyRoompageRightHeaderWrapperStyled>
                     <MyRoompageRightTitleWrapperStyled>Cài Đặt Phòng Mới</MyRoompageRightTitleWrapperStyled>
@@ -577,19 +518,16 @@ const MyRoompage = () => {
                         <EnterprisePriceBottomWrapperStyled>
                             <EnterprisePriceBottomTitleStyled>Tên phòng*</EnterprisePriceBottomTitleStyled>
                             <EnterpriseInfoBottomContentSelectStyled 
-                                onChange={formik.handleChange} 
+                                onChange={handleInputChange}
+                                value={values.nameTypeOfRoom} 
                                 name="nameTypeOfRoom"
-                                value={formik.values.nameTypeOfRoom} 
-                                className={formik.errors.nameTypeOfRoom && formik.touched.nameTypeOfRoom  ? 'input-error' : ''}
                             >
                                 <EnterpriseInfoBottomContentOptionStyled value="0">--Chọn--</EnterpriseInfoBottomContentOptionStyled>
                                 {typeRoomPicker.map(item => (
                                     <EnterpriseInfoBottomContentOptionStyled key={item.title} value={item.title}>{item.title}</EnterpriseInfoBottomContentOptionStyled>
                                 ))}
                             </EnterpriseInfoBottomContentSelectStyled>
-                            {formik.errors.nameTypeOfRoom && formik.touched.nameTypeOfRoom && (
-                            <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.nameTypeOfRoom}</RegisterpageInputErrorPromptStyled>
-                            )}
+
                         </EnterprisePriceBottomWrapperStyled>
                         <EnterprisePriceBottomWrapperStyled>
                             <EnterprisePriceBottomTitleStyled>Số lượng phòng của loại này*</EnterprisePriceBottomTitleStyled>
@@ -597,14 +535,10 @@ const MyRoompage = () => {
                                 <EnterpriseInfoTopContentBottomAreaInputStyled 
                                     type="number"
                                     min={0} 
-                                    onChange={formik.handleChange} 
-                                    name="numTypeOfRoom" 
-                                    value={formik.values.numTypeOfRoom} 
-                                    className={formik.errors.numTypeOfRoom && formik.touched.numTypeOfRoom  ? 'input-error' : ''}
+                                    value={values.numTypeOfRoom} 
+                                    onChange={handleInputChange} 
+                                    name="numTypeOfRoom"
                                 />
-                                {formik.errors.numTypeOfRoom && formik.touched.numTypeOfRoom && (
-                                <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.numTypeOfRoom}</RegisterpageInputErrorPromptStyled>
-                                )}
                             </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                         </EnterprisePriceBottomWrapperStyled>
                     </EnterprisePriceSetUpTopWrapperStyled>
@@ -618,17 +552,12 @@ const MyRoompage = () => {
                             min={0}
                             placeholder="0"
                             name='minPrice'
-                            onChange={formik.handleChange}
-                            value={formik.values.minPrice} 
-                            className={formik.errors.minPrice && formik.touched.minPrice  ? 'input-error' : ''}
+                            onChange={handleInputChange}
                         />
                         <ProviderPriceBottomInputPriceTitleWrapperStyled>
                             <ProviderPriceBottomInputPriceTitleStyled>VND</ProviderPriceBottomInputPriceTitleStyled>
                         </ProviderPriceBottomInputPriceTitleWrapperStyled>
                         </ProviderPriceBottomInputWrapperStyled>
-                        {formik.errors.minPrice && formik.touched.minPrice && (
-                            <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.minPrice}</RegisterpageInputErrorPromptStyled>
-                        )}
                     </ProviderPriceTopWrapperStyled>
                     <ProviderPriceTopWrapperStyled>
                         <ProviderPriceBottomTitleStyled>Mức giá tối đa</ProviderPriceBottomTitleStyled>
@@ -639,17 +568,12 @@ const MyRoompage = () => {
                             min={0}
                             placeholder="0"
                             name='maxPrice'
-                            onChange={formik.handleChange}
-                            value={formik.values.maxPrice} 
-                            className={formik.errors.maxPrice && formik.touched.maxPrice  ? 'input-error' : ''}
+                            onChange={handleInputChange}
                         />
                         <ProviderPriceBottomInputPriceTitleWrapperStyled>
                             <ProviderPriceBottomInputPriceTitleStyled>VND</ProviderPriceBottomInputPriceTitleStyled>
                         </ProviderPriceBottomInputPriceTitleWrapperStyled>
                         </ProviderPriceBottomInputWrapperStyled>
-                        {formik.errors.maxPrice && formik.touched.maxPrice && (
-                            <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.maxPrice}</RegisterpageInputErrorPromptStyled>
-                        )}
                     </ProviderPriceTopWrapperStyled>
                     <ProviderPriceTopWrapperStyled>
                         <ProviderPriceBottomTitleStyled>Gia niêm yết</ProviderPriceBottomTitleStyled>
@@ -660,17 +584,12 @@ const MyRoompage = () => {
                             min={0} 
                             placeholder="0"
                             name='exactlyPrice'
-                            onChange={formik.handleChange}
-                            value={formik.values.exactlyPrice} 
-                            className={formik.errors.exactlyPrice && formik.touched.exactlyPrice  ? 'input-error' : ''}
+                            onChange={handleInputChange}
                         />
                         <ProviderPriceBottomInputPriceTitleWrapperStyled>
                             <ProviderPriceBottomInputPriceTitleStyled>VND</ProviderPriceBottomInputPriceTitleStyled>
                         </ProviderPriceBottomInputPriceTitleWrapperStyled>
                         </ProviderPriceBottomInputWrapperStyled>
-                        {formik.errors.exactlyPrice && formik.touched.exactlyPrice && (
-                            <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.exactlyPrice}</RegisterpageInputErrorPromptStyled>
-                        )}
                     </ProviderPriceTopWrapperStyled>
                 </MyRoompageRightContentWrapperStyled>
                 <MyRoompageRightContentWrapperStyled>
@@ -683,20 +602,15 @@ const MyRoompage = () => {
                                     type="number"
                                     min={0} 
                                     name='numOfAdult'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.numOfAdult} 
-                                    className={formik.errors.numOfAdult && formik.touched.numOfAdult  ? 'input-error' : ''}
+                                    onChange={handleInputChange}
                                 />
-                                {formik.errors.numOfAdult && formik.touched.numOfAdult && (
-                                    <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.numOfAdult}</RegisterpageInputErrorPromptStyled>
-                                )}
                             </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                         </EnterprisePriceBottomWrapperStyled>
                         <EnterprisePriceBottomWrapperStyled>
                             <EnterprisePriceBottomTitleStyled>Cho phép trẻ em trong phòng này*</EnterprisePriceBottomTitleStyled>
                             <EnterpriseInfoTopContentBottomAreaWrapperStyled>
-                                <EnterpriseInfoTopContentBottomQuantityBtnStyled type='button' onClick={() => formik.setFieldValue("allowChildren", true)}>Có</EnterpriseInfoTopContentBottomQuantityBtnStyled>
-                                <EnterpriseInfoTopContentBottomQuantityBtnStyled type='button' onClick={() => formik.setFieldValue("allowChildren", false)}>Không</EnterpriseInfoTopContentBottomQuantityBtnStyled>
+                                <EnterpriseInfoTopContentBottomQuantityBtnStyled type='button'>Có</EnterpriseInfoTopContentBottomQuantityBtnStyled>
+                                <EnterpriseInfoTopContentBottomQuantityBtnStyled type='button'>Không</EnterpriseInfoTopContentBottomQuantityBtnStyled>
                             </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                         </EnterprisePriceBottomWrapperStyled>
                         <EnterprisePriceBottomWrapperStyled>
@@ -706,13 +620,8 @@ const MyRoompage = () => {
                                     type="number"
                                     min={0} 
                                     name='numOfChildren'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.numOfChildren} 
-                                    className={formik.errors.numOfChildren && formik.touched.numOfChildren  ? 'input-error' : ''}
+                                    onChange={handleInputChange}
                                 />
-                                {formik.errors.numOfChildren && formik.touched.numOfChildren && (
-                                    <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.numOfChildren}</RegisterpageInputErrorPromptStyled>
-                                )}
                             </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                         </EnterprisePriceBottomWrapperStyled>
                     </EnterpriseQuantityWrapperStyled>
@@ -729,13 +638,8 @@ const MyRoompage = () => {
                                         min={0} 
                                         placeholder="mét vuông"
                                         name='areaOfTypeRoom'
-                                        onChange={formik.handleChange}
-                                        value={formik.values.areaOfTypeRoom} 
-                                        className={formik.errors.areaOfTypeRoom && formik.touched.areaOfTypeRoom  ? 'input-error' : ''}
+                                        onChange={handleInputChange}
                                     />
-                                    {formik.errors.areaOfTypeRoom && formik.touched.areaOfTypeRoom && (
-                                        <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.areaOfTypeRoom}</RegisterpageInputErrorPromptStyled>
-                                    )}
                                 </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                             </EnterprisePriceBottomWrapperStyled>
                             <EnterprisePriceBottomWrapperStyled>
@@ -745,13 +649,8 @@ const MyRoompage = () => {
                                         type="number"
                                         min={0} 
                                         name='numOfBathrooms'
-                                        onChange={formik.handleChange}
-                                        value={formik.values.numOfBathrooms} 
-                                        className={formik.errors.numOfBathrooms && formik.touched.numOfBathrooms  ? 'input-error' : ''}
+                                        onChange={handleInputChange}
                                     />
-                                     {formik.errors.numOfBathrooms && formik.touched.numOfBathrooms && (
-                                        <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.numOfBathrooms}</RegisterpageInputErrorPromptStyled>
-                                    )}
                                 </EnterpriseInfoTopContentBottomAreaWrapperStyled>
                             </EnterprisePriceBottomWrapperStyled>
                         </EnterprisePriceSetUpTopWrapperStyled>
@@ -770,7 +669,7 @@ const MyRoompage = () => {
                                             {viewPicker.slice(0,12).map(item => (
                                                 <MyRoomViewChoiceWrapperStyled key={item.id}>
                                                     <BalconyOutlinedIcon />
-                                                    <MyRoomViewChoiceTitleStyled type='button' onClick={(e) => formik.setFieldValue("viewOfTypeRoom", e.target.innerHTML)}>{item.title}</MyRoomViewChoiceTitleStyled>
+                                                    <MyRoomViewChoiceTitleStyled type='button'>{item.title}</MyRoomViewChoiceTitleStyled>
                                                 </MyRoomViewChoiceWrapperStyled>
                                             ))}
                                         </MyRoomViewChoiceLeftWrapperStyled>
@@ -778,7 +677,7 @@ const MyRoompage = () => {
                                             {viewPicker.slice(12,24).map(item => (
                                                 <MyRoomViewChoiceWrapperStyled key={item.id}>
                                                     <BalconyOutlinedIcon />
-                                                    <MyRoomViewChoiceTitleStyled type='button' onClick={(e) => formik.setFieldValue("viewOfTypeRoom", e.target.innerHTML)}>{item.title}</MyRoomViewChoiceTitleStyled>
+                                                    <MyRoomViewChoiceTitleStyled type='button'>{item.title}</MyRoomViewChoiceTitleStyled>
                                                 </MyRoomViewChoiceWrapperStyled>
                                             ))}
                                         </MyRoomViewChoiceRightWrapperStyled>
@@ -890,4 +789,4 @@ const MyRoompage = () => {
   )
 }
 
-export default MyRoompage
+export default EditMyRoompage

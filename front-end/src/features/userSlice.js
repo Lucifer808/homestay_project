@@ -4,8 +4,11 @@ import userApi from "../api/userApi";
 const initialState = {
   bedTypeList: [],
   bedConfigurations: [],
+  bedDetailConfiguarations: { firstRoom: [], seccondRoom: [] },
   userTypeOfAccommodations: [],
   userAllAccommodation: [],
+  userAllTypeRoom: [],
+  typeRoom: {},
   serviceList: [],
   userData: {},
   success: false,
@@ -206,6 +209,42 @@ export const userGetAllAccommodation = createAsyncThunk(
   }
 );
 
+export const userCreateRoomInfo = createAsyncThunk(
+  "user/all_accommodation",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.createRoomInfo(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userGetAllTypeRoom = createAsyncThunk(
+  "user/all_type_room",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.getAllTypeRoom(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userGetTypeRoomById = createAsyncThunk(
+  "user/type_room_by_id",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.getTypeRoomById(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -215,11 +254,11 @@ export const userSlice = createSlice({
         (item) => item.optionId === action.payload.optionId
       );
       if (itemIndex >= 0) {
-        state.bedConfigurations[itemIndex].ro_tb = action.payload.ro_tb;
+        state.bedConfigurations[itemIndex].nameOfBed = action.payload.nameOfBed;
       } else {
         const tempBedConfig = {
           ...action.payload,
-          ro_tb: action.payload.ro_tb,
+          nameOfBed: action.payload.nameOfBed,
         };
         state.bedConfigurations.push(tempBedConfig);
       }
@@ -250,6 +289,84 @@ export const userSlice = createSlice({
             (item) => item.optionId !== action.payload
           );
           state.bedConfigurations = newBedConfigurations;
+        }
+        return state;
+      });
+    },
+    addDetailBedConfig(state, action) {
+      const itemIndex = state.bedDetailConfiguarations.firstRoom.findIndex(
+        (item) => item.optionId === action.payload.optionId
+      );
+      if (itemIndex >= 0) {
+        state.bedDetailConfiguarations.firstRoom[itemIndex].ro_tb =
+          action.payload.ro_tb;
+        state.bedDetailConfiguarations.firstRoom[itemIndex].nameOfBed =
+          action.payload.nameOfBed;
+      } else {
+        const tempBedConfig = {
+          ...action.payload,
+          ro_tb: action.payload.ro_tb,
+        };
+        state.bedDetailConfiguarations.firstRoom.push(tempBedConfig);
+      }
+    },
+    changeNoOfDetailBedConfig(state, action) {
+      const itemIndex = state.bedDetailConfiguarations.firstRoom.findIndex(
+        (item) => item.optionId === action.payload.optionId
+      );
+      if (itemIndex >= 0) {
+        state.bedDetailConfiguarations.firstRoom[itemIndex].noOfBed =
+          action.payload.noOfBed;
+      }
+    },
+    removeFromDetailBedConfig(state, action) {
+      state.bedDetailConfiguarations.firstRoom.map((item) => {
+        if (item.optionId === action.payload) {
+          const newbedDetailConfiguarations =
+            state.bedDetailConfiguarations.firstRoom.filter(
+              (item) => item.optionId !== action.payload
+            );
+          state.bedDetailConfiguarations.firstRoom =
+            newbedDetailConfiguarations;
+        }
+        return state;
+      });
+    },
+    addDetailBedConfigSeccond(state, action) {
+      const itemIndex = state.bedDetailConfiguarations.seccondRoom.findIndex(
+        (item) => item.optionId === action.payload.optionId
+      );
+      if (itemIndex >= 0) {
+        state.bedDetailConfiguarations.seccondRoom[itemIndex].ro_tb =
+          action.payload.ro_tb;
+        state.bedDetailConfiguarations.seccondRoom[itemIndex].nameOfBed =
+          action.payload.nameOfBed;
+      } else {
+        const tempBedConfig = {
+          ...action.payload,
+          ro_tb: action.payload.ro_tb,
+        };
+        state.bedDetailConfiguarations.seccondRoom.push(tempBedConfig);
+      }
+    },
+    changeNoOfDetailBedConfigSeccond(state, action) {
+      const itemIndex = state.bedDetailConfiguarations.seccondRoom.findIndex(
+        (item) => item.optionId === action.payload.optionId
+      );
+      if (itemIndex >= 0) {
+        state.bedDetailConfiguarations.seccondRoom[itemIndex].noOfBed =
+          action.payload.noOfBed;
+      }
+    },
+    removeFromDetailBedConfigSeccond(state, action) {
+      state.bedDetailConfiguarations.seccondRoom.map((item) => {
+        if (item.optionId === action.payload) {
+          const newbedDetailConfiguarations =
+            state.bedDetailConfiguarations.seccondRoom.filter(
+              (item) => item.optionId !== action.payload
+            );
+          state.bedDetailConfiguarations.seccondRoom =
+            newbedDetailConfiguarations;
         }
         return state;
       });
@@ -455,6 +572,33 @@ export const userSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [userGetAllTypeRoom.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetAllTypeRoom.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.userAllTypeRoom = action.payload;
+      state.errorMessage = {};
+    },
+    [userGetAllTypeRoom.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [userGetTypeRoomById.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetTypeRoomById.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.typeRoom = action.payload;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [userGetTypeRoomById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -463,14 +607,25 @@ export const {
   increaseBedConfig,
   decreaseBedConfig,
   removeFromBedConfig,
+  addDetailBedConfig,
+  changeNoOfDetailBedConfig,
+  removeFromDetailBedConfig,
+  addDetailBedConfigSeccond,
+  changeNoOfDetailBedConfigSeccond,
+  removeFromDetailBedConfigSeccond,
 } = userSlice.actions;
 
 export const selectUser = (state) => state.user.userData;
 export const selectLoading = (state) => state.user.isLoading;
+export const selectSuccess = (state) => state.user.success;
 export const selectBedTypeList = (state) => state.user.bedTypeList;
 export const selectServiceList = (state) => state.user.serviceList;
+export const selectedAllTypeRoom = (state) => state.user.userAllTypeRoom;
+export const selectedTypeRoom = (state) => state.user.typeRoom;
 export const selectedBedConfigurations = (state) =>
   state.user.bedConfigurations;
+export const selectedBedDetailConfigurations = (state) =>
+  state.user.bedDetailConfiguarations;
 export const selectUserTypeOfAccommodations = (state) =>
   state.user.userTypeOfAccommodations;
 export const selectIsAutheticated = (state) => state.user.isAutheticated;

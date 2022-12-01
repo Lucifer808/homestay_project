@@ -203,7 +203,7 @@ const RegisterpageInputErrorPromptStyled = styled.p`
 `
 const initialValuesF = {
   typeOfAccommodation: "",
-  sizeSqm: "",
+  sizeSqm: 1,
   accommodates: 1,
   noOfBathrooms: 1,
   noOfBedrooms: 1,
@@ -219,11 +219,12 @@ const ProviderInfo = () => {
   const selectedBedConfigurationsData = useSelector(selectedBedConfigurations);
   const typeOfAccommodations = selectTypeOfAccommodationsData.filter(item => item.ta_th === 1);
   const propertyRegistrationId = searchParams.get('p');
+  const roomTypeId = searchParams.get('roomTypeId');
   const initialBedConfig = {
-    ro_tb: "1",
+    nameOfBed: "Giường đơn",
     noOfBed: 1,
     optionId: 0,
-    ro_propertyRegistrationId: propertyRegistrationId
+    tbr_roomTypeId: roomTypeId
   }
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -247,10 +248,10 @@ const ProviderInfo = () => {
   }
   const autoInsertData = () => {
     const tempItem = {
-      ro_tb: "1",
+      nameOfBed: "Giường đơn",
       noOfBed: 1,
       optionId: addOptions,
-      ro_propertyRegistrationId: propertyRegistrationId
+      tbr_roomTypeId: roomTypeId
     }
     dispatch(addBedConfig(tempItem));
   }
@@ -271,7 +272,7 @@ const ProviderInfo = () => {
     if(values.typeOfAccommodation === "" || values.sizeSqm === ""){
       setErrors(true);
     }else{
-      dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData, propertyRegistrationId }));
+      dispatch(createRegistraionInfo({ ...values, bedConfiguaration: selectedBedConfigurationsData, propertyRegistrationId, roomTypeId }));
       navigate(`/provider/location?p=${propertyRegistrationId}`);
     }
   }
@@ -308,9 +309,9 @@ const ProviderInfo = () => {
                 <ProviderInfoTopContentBottomTitleStyled>Quy mô chổ nghỉ</ProviderInfoTopContentBottomTitleStyled>
                 <ProviderInfoTopContentBottomAreaWrapperStyled>
                   <ProviderInfoTopContentBottomAreaInputStyled
+                    type="number"
                     name="sizeSqm"
                     placeholder={0}
-                    type="number"
                     min={1}
                     required={true}
                     value={values.sizeSqm}

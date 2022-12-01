@@ -16,7 +16,6 @@ const RoomListpageContainerStyled = styled.div`
 const RoomListpage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location);
   useEffect(() => {
     dispatch(customerSearch(location.search));
   },)

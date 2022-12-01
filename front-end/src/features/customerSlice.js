@@ -7,7 +7,7 @@ const initialState = {
     : null,
   isLoading: false,
   success: false,
-  roomDetail: {},
+  roomDetail: null,
 };
 
 export const customerSearch = createAsyncThunk(
@@ -62,6 +62,7 @@ export const customerSlice = createSlice({
     [customerRoomDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.roomDetail = action.payload;
+      state.success = true;
     },
     [customerRoomDetail.rejected]: (state, action) => {
       state.isLoading = false;
@@ -77,5 +78,6 @@ export const selectPosition = (state) => state.customer.selectPosition;
 export const selectCitiSearch = (state) => state.customer.citiSearch;
 export const selectRoomDetail = (state) => state.customer.roomDetail;
 export const selectIsLoading = (state) => state.customer.isLoading;
+export const selectIsSuccess = (state) => state.customer.success;
 
 export default customerSlice.reducer;

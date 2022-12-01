@@ -7,7 +7,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import{ createRegistraionDesc } from '../../../features/userSlice';
+import { createRegistraionDesc } from '../../../features/userSlice';
 const ProviderDescContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -265,7 +265,7 @@ const ProviderDesc = () => {
                   <RegisterpageInputErrorPromptStyled sx={{color: 'red', margin: '0', position: 'absolute', bottom: '0'}}>{formik.errors.rating}</RegisterpageInputErrorPromptStyled>
                 )}
             </ProviderDescRightTopWrapperStyled>
-            <EnterpriseInfoRightBottomWrapperStyled>
+              <EnterpriseInfoRightBottomWrapperStyled>
                   <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
                   <EnterpriseInfoRightBottomNextButtonStyled type='submit'>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
               </EnterpriseInfoRightBottomWrapperStyled>

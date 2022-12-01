@@ -81,6 +81,21 @@ const userApi = {
     const config = {};
     return axiosClient.get(url, config);
   },
+  createRoomInfo: (params) => {
+    const url = "/create-room-info";
+    const config = { "Content-Type": "multipart/form-data" };
+    return axiosClient.post(url, params, config);
+  },
+  getAllTypeRoom: (params) => {
+    const url = "/get-all-type-room";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
+  getTypeRoomById: (params) => {
+    const url = "/get-type-room-by-id";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default userApi;

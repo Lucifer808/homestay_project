@@ -40,6 +40,8 @@ import AdminTypeOfAccommodationpage from "./components/admin/pages/AdminTypeOfAc
 import AdminAccommodationspage from "./components/admin/pages/AdminAccommodationpage";
 import MyRoomListpage from "./pages/MyRoomListpage";
 import MyRoompage from "./pages/MyRoompage";
+import EditMyRoompage from "./pages/EditMyRoompage";
+import MyRoomListByIdpage from "./pages/MyRoomListByIdpage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -80,7 +82,12 @@ function App() {
           <Route path="/provider/file" element={<ProviderFile />} />
           <Route path="/provider/sucess" element={<ProviderSuccessSetUp />} />
           <Route path="/provider/myroomlist" element={<MyRoomListpage />} />
+          <Route
+            path="/provider/roombyid/:id"
+            element={<MyRoomListByIdpage />}
+          />
           <Route path="/provider/myroom/:id" element={<MyRoompage />} />
+          <Route path="/provider/editmyroom/:id" element={<EditMyRoompage />} />
         </Route>
         <Route path="/enterprise" element={<EnterpriseLayout />}>
           <Route path="/enterprise" index element={<EnterpriseInfo />} />
