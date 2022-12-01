@@ -116,6 +116,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
       sizeSqm,
       typeOfAccommodation,
       bedConfiguaration,
+      roomTypeId,
     } = req.body;
     const foundRental = await db.RetalRegistration.findOne({
       where: { rr_propertyRegistrationId: propertyRegistrationId },
@@ -150,10 +151,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
     });
     if (!foundAccommodation) {
       const createNewAccommodationInfo = await db.Accommodations.create({
-        area: sizeSqm,
-        accommodates,
         noOfBedrooms,
-        noOfBathrooms,
         ac_ta: typeOfAccommodation,
         ac_propertyRegistrationId: propertyRegistrationId,
         createdById: req.user.id,
@@ -164,10 +162,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
     } else {
       const updateAccommodationInfo = await db.Accommodations.update(
         {
-          area: sizeSqm,
-          accommodates,
           noOfBedrooms,
-          noOfBathrooms,
           ac_ta: typeOfAccommodation,
           ac_propertyRegistrationId: propertyRegistrationId,
           updatedById: req.user.id,
@@ -178,9 +173,62 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
         return next(new ErrorHandler("Xảy ra lỗi khi thêm mới nơi ở !", 401));
       }
     }
-    const createNewRoomInfo = await db.Room.bulkCreate(bedConfiguaration, {
-      updateOnDuplicate: ["ro_propertyRegistrationId"],
+    const foundTypeOfRoom = await db.TypeOfRooms.findOne({
+      where: { tr_roomTypeId: roomTypeId },
     });
+    if (!foundTypeOfRoom) {
+      const createTypeOfRoom = await db.TypeOfRooms.create({
+        isActive: true,
+        tr_propertyRegistrationId: propertyRegistrationId,
+        tr_roomTypeId: roomTypeId,
+      });
+      if (!createTypeOfRoom) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi tạo thêm loại phòng", 401)
+        );
+      }
+    }
+    const foundRoom = await db.Room.findOne({
+      where: { ro_roomTypeId: roomTypeId },
+    });
+    if (!foundRoom) {
+      const createRoom = await db.Room.create({
+        area: sizeSqm,
+        numTypeOfRoom: accommodates,
+        noOfBathrooms: noOfBathrooms,
+        allowChildren: true,
+        ro_propertyRegistrationId: propertyRegistrationId,
+        ro_roomTypeId: roomTypeId,
+      });
+      if (!createRoom) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi tạo thêm loại phòng", 401)
+        );
+      }
+    } else {
+      const updatedRoom = await db.Room.update(
+        {
+          area: sizeSqm,
+          numTypeOfRoom: accommodates,
+          noOfBathrooms: noOfBathrooms,
+          allowChildren: true,
+        },
+        {
+          where: { ro_roomTypeId: roomTypeId },
+        }
+      );
+      if (!updatedRoom) {
+        return next(
+          new ErrorHandler("Xảy ra lỗi khi sửa thêm loại phòng", 401)
+        );
+      }
+    }
+    const createNewRoomInfo = await db.RoomTypeOfBed.bulkCreate(
+      bedConfiguaration,
+      {
+        updateOnDuplicate: ["tbr_roomTypeId"],
+      }
+    );
     if (!createNewRoomInfo) {
       return next(new ErrorHandler("Xảy ra lỗi khi thêm mới phòng !", 401));
     }
@@ -628,4 +676,185 @@ exports.userGetAllAccommodation = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Xảy ra lỗi khi tìm kiếm theo mã !", 401));
   }
   res.status(200).json(userGetAllAccommodation);
+});
+
+exports.createNewRoomInfo = catchAsyncError(async (req, res, next) => {
+  const roomInfo = JSON.parse(req.body.info);
+  const bedConfig = JSON.parse(req.body.bedConfig);
+  const roomTypeId = req.body.roomTypeId;
+  const foundTypeOfRoom = await db.TypeOfRooms.findOne({
+    where: { tr_roomTypeId: roomTypeId },
+  });
+  if (!foundTypeOfRoom) {
+    const createTypeOfRoom = await db.TypeOfRooms.create({
+      name: roomInfo.nameTypeOfRoom,
+      isActive: true,
+      tr_propertyRegistrationId: req.body.ac_propertyRegistrationId,
+      tr_roomTypeId: roomTypeId,
+    });
+    if (!createTypeOfRoom) {
+      return next(new ErrorHandler("Xảy ra lỗi khi tạo thêm loại phòng", 401));
+    }
+  } else {
+    const updatedTypeOfRoom = await db.TypeOfRooms.update(
+      {
+        name: roomInfo.nameTypeOfRoom,
+      },
+      {
+        where: { tr_roomTypeId: roomTypeId },
+      }
+    );
+    if (!updatedTypeOfRoom) {
+      return next(new ErrorHandler("Xảy ra lỗi khi sửa thêm loại phòng", 401));
+    }
+  }
+  const foundRoom = await db.Room.findOne({
+    where: { ro_roomTypeId: roomTypeId },
+  });
+  if (!foundRoom) {
+    const createRoom = await db.Room.create({
+      noOfAdult: roomInfo.numOfAdult,
+      noOfChildren: roomInfo.numOfChildren,
+      allowChildren: roomInfo.allowChildren,
+      area: roomInfo.areaOfTypeRoom,
+      viewOfRoom: roomInfo.viewOfTypeRoom,
+      numTypeOfRoom: roomInfo.numTypeOfRoom,
+      noOfBathrooms: roomInfo.numOfBathrooms,
+      ro_propertyRegistrationId: req.body.ac_propertyRegistrationId,
+      ro_roomTypeId: roomTypeId,
+    });
+    if (!createRoom) {
+      return next(new ErrorHandler("Xảy ra lỗi khi tạo thêm loại phòng", 401));
+    }
+  } else {
+    const updatedRoom = await db.Room.update(
+      {
+        noOfAdult: roomInfo.numOfAdult,
+        noOfChildren: roomInfo.numOfChildren,
+        allowChildren: roomInfo.allowChildren,
+        area: roomInfo.areaOfTypeRoom,
+        viewOfRoom: roomInfo.viewOfTypeRoom,
+        numTypeOfRoom: roomInfo.numTypeOfRoom,
+        noOfBathrooms: roomInfo.numOfBathrooms,
+      },
+      {
+        where: { ro_roomTypeId: roomTypeId },
+      }
+    );
+    if (!updatedRoom) {
+      return next(new ErrorHandler("Xảy ra lỗi khi sửa thêm loại phòng", 401));
+    }
+  }
+  if (bedConfig.firstRoom.length >= 1) {
+    const createNewRoomInfo = await db.RoomTypeOfBed.bulkCreate(
+      bedConfig.firstRoom,
+      {
+        updateOnDuplicate: ["tbr_roomTypeId"],
+      }
+    );
+    if (!createNewRoomInfo) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm mới phòng !", 401));
+    }
+  }
+  if (bedConfig.seccondRoom.length >= 1) {
+    const createNewRoomInfo = await db.RoomTypeOfBed.bulkCreate(
+      bedConfig.seccondRoom,
+      {
+        updateOnDuplicate: ["tbr_roomTypeId"],
+      }
+    );
+    if (!createNewRoomInfo) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm mới phòng !", 401));
+    }
+  }
+  const imagesArr = req.files;
+  const result = [];
+  for (let i = 0; i < imagesArr.length; i++) {
+    result.push({
+      type: imagesArr[i].mimetype,
+      name: imagesArr[i].originalname,
+      path: imagesArr[i].path,
+      tri_roomTypeId: roomTypeId,
+    });
+  }
+  const createNewImages = await db.TypeOfRoomImages.bulkCreate(result);
+  if (!createNewImages) {
+    return next(new ErrorHandler("Xảy ra lỗi khi thêm hình ảnh !", 401));
+  }
+  const foundRoomPrice = await db.RoomPrices.findOne({
+    where: { rp_roomTypeId: roomTypeId },
+  });
+  if (!foundRoomPrice) {
+    const createNewPrice = await db.RoomPrices.create({
+      price: roomInfo.exactlyPrice,
+      minPrice: roomInfo.minPrice,
+      maxPrice: roomInfo.maxPrice,
+      active: true,
+      rp_propertyRegistrationId: req.body.ac_propertyRegistrationId,
+      rp_roomTypeId: roomTypeId,
+    });
+    if (!createNewPrice) {
+      return next(new ErrorHandler("Xảy ra lỗi khi thêm giá !", 401));
+    }
+  } else {
+    const updatedRoomPrice = await db.RoomPrices.update(
+      {
+        price: roomInfo.exactlyPrice,
+        minPrice: roomInfo.minPrice,
+        maxPrice: roomInfo.maxPrice,
+      },
+      {
+        where: { rp_roomTypeId: roomTypeId },
+      }
+    );
+    if (!updatedRoomPrice) {
+      return next(new ErrorHandler("Xảy ra lỗi khi sửa thêm giá phòng", 401));
+    }
+  }
+  res.status(200).json("Thêm phòng mới thành công !");
+});
+
+exports.getAllTypeRoom = catchAsyncError(async (req, res, next) => {
+  const getAllTypeRoom = await db.TypeOfRooms.findAll({
+    where: {
+      tr_propertyRegistrationId: req.body.propertyRegistrationId,
+      isActive: true,
+    },
+    include: [
+      {
+        model: db.Room,
+        as: "trro_id",
+      },
+    ],
+    attributes: [
+      "id",
+      "name",
+      "isActive",
+      "tr_propertyRegistrationId",
+      "tr_roomTypeId",
+    ],
+  });
+  res.status(200).json(getAllTypeRoom);
+});
+
+exports.getAllTypeRoomById = catchAsyncError(async (req, res, next) => {
+  const getAllTypeRoomById = await db.TypeOfRooms.findOne({
+    where: {
+      tr_roomTypeId: req.body.roomTypeId,
+    },
+    include: [
+      {
+        model: db.Room,
+        as: "trro_id",
+      },
+    ],
+    attributes: [
+      "id",
+      "name",
+      "isActive",
+      "tr_propertyRegistrationId",
+      "tr_roomTypeId",
+    ],
+  });
+  res.status(200).json(getAllTypeRoomById);
 });

@@ -45,4 +45,13 @@ router
 router
   .route("/get-all-accommodation")
   .get(isAuthenticatedUser, usersController.userGetAllAccommodation);
+router
+  .route("/create-room-info")
+  .post(isAuthenticatedUser, upload.any(), usersController.createNewRoomInfo);
+router
+  .route("/get-all-type-room")
+  .post(isAuthenticatedUser, usersController.getAllTypeRoom);
+router
+  .route("/get-type-room-by-id")
+  .post(isAuthenticatedUser, usersController.getAllTypeRoomById);
 module.exports = router;

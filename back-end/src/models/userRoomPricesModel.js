@@ -2,7 +2,12 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class RoomPrices extends Model {
-    static associate(modles) {}
+    static associate(modles) {
+      RoomPrices.belongsTo(modles.TypeOfRooms, {
+        foreignKey: "rp_roomTypeId",
+        as: "trrp_id",
+      });
+    }
   }
 
   RoomPrices.init(
@@ -11,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         field: "rp_price",
+      },
+      minPrice: {
+        type: DataTypes.INTEGER,
+        field: "rp_minPrice",
+      },
+      maxPrice: {
+        type: DataTypes.INTEGER,
+        field: "rp_maxPrice",
       },
       active: {
         type: DataTypes.BOOLEAN,
@@ -29,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
       rp_propertyRegistrationId: {
         type: DataTypes.STRING,
         field: "rp_propertyRegistrationId",
+      },
+      rp_roomTypeId: {
+        type: DataTypes.STRING,
+        field: "rp_roomTypeId",
       },
       rp_ds: {
         type: DataTypes.INTEGER,

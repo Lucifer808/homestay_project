@@ -146,6 +146,21 @@ exports.customerGetDetailAccommodation = catchAsyncError(
           where: { ct_propertyRegistrationId: id },
           attributes: ["id", "name"],
         },
+        {
+          model: db.TypeOfRooms,
+          as: "trac_id",
+          where: { tr_propertyRegistrationId: id },
+          include: [
+            {
+              model: db.RoomPrices,
+              as: "trrp_id",
+            },
+            {
+              model: db.TypeOfRoomImages,
+              as: "trtri_id",
+            },
+          ],
+        },
       ],
       attributes: [
         "id",
