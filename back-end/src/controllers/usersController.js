@@ -411,14 +411,28 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
     const { priceFrom, fristDiscount, paymentMethod, propertyRegistrationId } =
       req.body;
     const discountCheck = fristDiscount === true ? 1 : 0;
+    const priceAccomodation = db.Accommodations.update(
+      {
+        priceBase: priceFrom,
+      },
+      {
+        where: { ac_propertyRegistrationId: propertyRegistrationId },
+      }
+    );
+    const foundRoomTypeId = await db.TypeOfRooms.findOne({
+      where: { tr_propertyRegistrationId: propertyRegistrationId },
+    });
     const foundRoomPrices = db.RoomPrices.findOne({
       where: { rp_propertyRegistrationId: propertyRegistrationId },
     });
     if (!foundRoomPrices) {
       const createNewRoomPrices = await db.RoomPrices.create({
         price: priceFrom,
+        minPrice: priceFrom,
+        maxPrice: priceFrom,
         active: 1,
         rp_propertyRegistrationId: propertyRegistrationId,
+        rp_roomTypeId: foundRoomTypeId.tr_roomTypeId,
       });
       if (!createNewRoomPrices) {
         return next(
@@ -434,8 +448,11 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
       );
       const createNewRoomPrices = await db.RoomPrices.create({
         price: priceFrom,
+        minPrice: priceFrom,
+        maxPrice: priceFrom,
         active: 1,
         rp_propertyRegistrationId: propertyRegistrationId,
+        rp_roomTypeId: foundRoomTypeId.tr_roomTypeId,
       });
       if (!createNewRoomPrices) {
         return next(
@@ -470,6 +487,7 @@ exports.createOrUpdateRegistraionImages = catchAsyncError(
     const descsArr = req.body.descs.map((item) => JSON.parse(item));
     const imagesArr = req.files;
     const result = [];
+    const roomImage = [];
     for (let i = 0; i < imagesArr.length; i++) {
       result.push({
         type: imagesArr[i].mimetype,
@@ -482,6 +500,23 @@ exports.createOrUpdateRegistraionImages = catchAsyncError(
     const createNewImages = await db.Images.bulkCreate(result);
     if (!createNewImages) {
       return next(new ErrorHandler("Xảy ra lỗi khi thêm hình ảnh !", 401));
+    }
+    const findRoomTypeId = await db.TypeOfRooms.findOne({
+      where: { tr_propertyRegistrationId: req.body.propertyRegistrationId },
+    });
+    for (let i = 0; i < 3; i++) {
+      roomImage.push({
+        type: imagesArr[i].mimetype,
+        name: imagesArr[i].originalname,
+        path: imagesArr[i].path,
+        tri_roomTypeId: findRoomTypeId.tr_roomTypeId,
+      });
+    }
+    const createNewTypeOfRoomImage = db.TypeOfRoomImages.bulkCreate(roomImage);
+    if (!createNewTypeOfRoomImage) {
+      return next(
+        new ErrorHandler("Xảy ra lỗi khi thêm hình ảnh loại phòng !", 401)
+      );
     }
     res.status(200).json("Thêm hình ảnh thành công");
   }
@@ -668,6 +703,7 @@ exports.userGetAllAccommodation = catchAsyncError(async (req, res, next) => {
       "createdById",
       "updatedById",
       "ac_propertyRegistrationId",
+      "ac_latlong",
     ],
     nest: true,
     raw: false,

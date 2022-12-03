@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "tr_propertyRegistrationId",
         as: "trac_id",
       });
+      TypeOfRooms.hasMany(modles.RoomTypeOfBed, {
+        foreignKey: "tbr_roomTypeId",
+        sourceKey: "tr_roomTypeId",
+        as: "tbrtr_id",
+      });
     }
   }
 

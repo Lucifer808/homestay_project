@@ -258,6 +258,7 @@ exports.getAllAccommodation = catchAsyncError(async (req, res, next) => {
       "createdById",
       "updatedById",
       "ac_propertyRegistrationId",
+      "ac_latlong",
     ],
     nest: true,
     raw: false,
@@ -299,7 +300,8 @@ exports.getAllImagesById = catchAsyncError(async (req, res, next) => {
 
 exports.updateRentalRegistrationStatus = catchAsyncError(
   async (req, res, next) => {
-    const { status, propertyRegistrationId } = req.body;
+    const { status, propertyRegistrationId, latitude, longtitude } = req.body;
+    const point = { type: "Point", coordinates: [latitude, longtitude] };
     if (status === "Đang hoạt động") {
       const updateRentalRegistration = await db.RetalRegistration.update(
         {
@@ -318,6 +320,7 @@ exports.updateRentalRegistrationStatus = catchAsyncError(
       const updateAccommodationActive = await db.Accommodations.update(
         {
           activeAt: sequelize.literal("CURRENT_TIMESTAMP(4)"),
+          ac_latlong: point,
           isActive: true,
         },
         {

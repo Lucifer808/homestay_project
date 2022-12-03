@@ -73,15 +73,15 @@ module.exports = (sequelize, DataTypes) => {
         field: "ac_area",
       },
       policy: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("medium"),
         field: "ac_policy",
       },
       recommend: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("medium"),
         field: "ac_reccommend",
       },
       howToGetThere: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT("medium"),
         field: "ac_howToGetThere",
       },
       paymentMethod: {
@@ -157,6 +157,18 @@ module.exports = (sequelize, DataTypes) => {
       ac_dc: {
         type: DataTypes.INTEGER,
         field: "ac_dc",
+      },
+      ac_latitude: {
+        type: DataTypes.DECIMAL(10, 8),
+        field: "ac_latitude",
+      },
+      ac_longtitude: {
+        type: DataTypes.DECIMAL(11, 8),
+        field: "ac_longtitude",
+      },
+      ac_latlong: {
+        type: DataTypes.GEOMETRY("POINT"),
+        field: "ac_latlong",
       },
     },
     {
