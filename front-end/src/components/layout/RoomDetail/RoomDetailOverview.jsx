@@ -165,26 +165,26 @@ const RoomDetailOverviewRightTopConvenientWrapperStyled = styled.div`
     border: 1px solid #ccc;
     border-radius: .2rem;
 `
-const RoomCardRightReviewWrapperStyled = styled.div`
+const AdminServiceFormRightReviewWrapperStyled = styled.div`
     display: flex;
     padding: .6rem;
     width: 100%;
 `
-const RoomCardRightReviewContentWrapperStyled = styled.div`
+const AdminServiceFormRightReviewContentWrapperStyled = styled.div`
     width: 100%;
     height: 100%;
     margin-right: .6rem;
 `
-const RoomCardRightReviewContentTopStyled = styled.span`
+const AdminServiceFormRightReviewContentTopStyled = styled.span`
     font-size: .9rem;
     display: block;
 `
-const RoomCardRightReviewContentBottomStyled = styled.span`
+const AdminServiceFormRightReviewContentBottomStyled = styled.span`
     display: block;
     font-size: .8rem;
     color: #888;
 `
-const RoomCardRightReviewPointWrapperStyled = styled.div`
+const AdminServiceFormRightReviewPointWrapperStyled = styled.div`
     position: relative;
     background-color: rgb(62, 108, 234);
     height: 2.2rem;
@@ -195,17 +195,17 @@ const RoomCardRightReviewPointWrapperStyled = styled.div`
     justify-content: center;
     border-bottom-left-radius: 0;
 `
-const RoomCardRightReviewPointContentStyled = styled.span`
+const AdminServiceFormRightReviewPointContentStyled = styled.span`
     display: block;
     color: #fff;
 `
-const RoomCardRightReviewTagContainerStyled = styled.div`
+const AdminServiceFormRightReviewTagContainerStyled = styled.div`
     max-width: 20rem;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
 `
-const RoomCardRightReviewTagWrapperStyled = styled.div`
+const AdminServiceFormRightReviewTagWrapperStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -216,15 +216,15 @@ const RoomCardRightReviewTagWrapperStyled = styled.div`
     padding: .3rem;
     margin: .4rem .4rem;
 `
-const RoomCardRightReviewTagContentStyled = styled.span`
+const AdminServiceFormRightReviewTagContentStyled = styled.span`
     font-size: .8rem;
 `
-const RoomCardRightReviewTagContentNumberWrapperStyled = styled.div`
+const AdminServiceFormRightReviewTagContentNumberWrapperStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
 `
-const RoomCardRightReviewTagContentNumberStyled = styled.span`
+const AdminServiceFormRightReviewTagContentNumberStyled = styled.span`
     font-size: .8rem;
     margin: 0 .2rem;
     color: rgb(50, 169, 35);
@@ -413,52 +413,52 @@ const RoomDetailOverview = (props) => {
             </RoomDetailOverviewLeftWrapperStyled>
             <RoomDetailOverviewRightWrapperStyled>
                 <RoomDetailOverviewRightTopConvenientWrapperStyled>
-                    <RoomCardRightReviewWrapperStyled>
-                        <RoomCardRightReviewContentWrapperStyled>
-                            <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                            <RoomCardRightReviewContentBottomStyled>1.509 Bài đánh giá</RoomCardRightReviewContentBottomStyled>
-                        </RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewPointWrapperStyled>
-                            <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                        </RoomCardRightReviewPointWrapperStyled>
-                    </RoomCardRightReviewWrapperStyled>
-                    <RoomCardRightReviewTagContainerStyled>
-                        <RoomCardRightReviewTagWrapperStyled>
-                            <RoomCardRightReviewTagContentStyled>Bãi biển</RoomCardRightReviewTagContentStyled>
-                            <RoomCardRightReviewTagContentNumberWrapperStyled>
-                                <RoomCardRightReviewTagContentNumberStyled>52</RoomCardRightReviewTagContentNumberStyled>
+                    <AdminServiceFormRightReviewWrapperStyled>
+                        <AdminServiceFormRightReviewContentWrapperStyled>
+                            <AdminServiceFormRightReviewContentTopStyled>Tuyệt vời</AdminServiceFormRightReviewContentTopStyled>
+                            <AdminServiceFormRightReviewContentBottomStyled>1.509 Bài đánh giá</AdminServiceFormRightReviewContentBottomStyled>
+                        </AdminServiceFormRightReviewContentWrapperStyled>
+                        <AdminServiceFormRightReviewPointWrapperStyled>
+                            <AdminServiceFormRightReviewPointContentStyled>8.5</AdminServiceFormRightReviewPointContentStyled>
+                        </AdminServiceFormRightReviewPointWrapperStyled>
+                    </AdminServiceFormRightReviewWrapperStyled>
+                    <AdminServiceFormRightReviewTagContainerStyled>
+                        <AdminServiceFormRightReviewTagWrapperStyled>
+                            <AdminServiceFormRightReviewTagContentStyled>Bãi biển</AdminServiceFormRightReviewTagContentStyled>
+                            <AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                                <AdminServiceFormRightReviewTagContentNumberStyled>52</AdminServiceFormRightReviewTagContentNumberStyled>
                                 <ThumbUpAltIcon style={{fontSize: '.8rem', color: 'rgb(50, 169, 35)'}}/>
-                            </RoomCardRightReviewTagContentNumberWrapperStyled>
-                        </RoomCardRightReviewTagWrapperStyled>
-                        <RoomCardRightReviewTagWrapperStyled>
-                            <RoomCardRightReviewTagContentStyled>Bữa sáng</RoomCardRightReviewTagContentStyled>
-                            <RoomCardRightReviewTagContentNumberWrapperStyled>
-                                <RoomCardRightReviewTagContentNumberStyled>52</RoomCardRightReviewTagContentNumberStyled>
+                            </AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                        </AdminServiceFormRightReviewTagWrapperStyled>
+                        <AdminServiceFormRightReviewTagWrapperStyled>
+                            <AdminServiceFormRightReviewTagContentStyled>Bữa sáng</AdminServiceFormRightReviewTagContentStyled>
+                            <AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                                <AdminServiceFormRightReviewTagContentNumberStyled>52</AdminServiceFormRightReviewTagContentNumberStyled>
                                 <ThumbUpAltIcon style={{fontSize: '.8rem', color: 'rgb(50, 169, 35)'}}/>
-                            </RoomCardRightReviewTagContentNumberWrapperStyled>
-                        </RoomCardRightReviewTagWrapperStyled>
-                        <RoomCardRightReviewTagWrapperStyled>
-                            <RoomCardRightReviewTagContentStyled>Dọn phòng</RoomCardRightReviewTagContentStyled>
-                            <RoomCardRightReviewTagContentNumberWrapperStyled>
-                                <RoomCardRightReviewTagContentNumberStyled>52</RoomCardRightReviewTagContentNumberStyled>
+                            </AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                        </AdminServiceFormRightReviewTagWrapperStyled>
+                        <AdminServiceFormRightReviewTagWrapperStyled>
+                            <AdminServiceFormRightReviewTagContentStyled>Dọn phòng</AdminServiceFormRightReviewTagContentStyled>
+                            <AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                                <AdminServiceFormRightReviewTagContentNumberStyled>52</AdminServiceFormRightReviewTagContentNumberStyled>
                                 <ThumbUpAltIcon style={{fontSize: '.8rem', color: 'rgb(50, 169, 35)'}}/>
-                            </RoomCardRightReviewTagContentNumberWrapperStyled>
-                        </RoomCardRightReviewTagWrapperStyled>
-                    </RoomCardRightReviewTagContainerStyled>
+                            </AdminServiceFormRightReviewTagContentNumberWrapperStyled>
+                        </AdminServiceFormRightReviewTagWrapperStyled>
+                    </AdminServiceFormRightReviewTagContainerStyled>
                 </RoomDetailOverviewRightTopConvenientWrapperStyled>
                 <RoomDetailOverviewRightBottomConvenientWrapperStyled>
                     <RoomDetailOverviewRightBottomMapWrapperStyled>
                         <RoomDetailOverviewRightBottomMapStyled>XEM VỊ TRÍ</RoomDetailOverviewRightBottomMapStyled>
                     </RoomDetailOverviewRightBottomMapWrapperStyled>
-                    <RoomCardRightReviewWrapperStyled>
-                        <RoomCardRightReviewContentWrapperStyled>
-                            <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
-                            <RoomCardRightReviewContentBottomStyled>Điểm đánh giá</RoomCardRightReviewContentBottomStyled>
-                        </RoomCardRightReviewContentWrapperStyled>
-                        <RoomCardRightReviewPointWrapperStyled>
-                            <RoomCardRightReviewPointContentStyled>8.5</RoomCardRightReviewPointContentStyled>
-                        </RoomCardRightReviewPointWrapperStyled>
-                    </RoomCardRightReviewWrapperStyled>
+                    <AdminServiceFormRightReviewWrapperStyled>
+                        <AdminServiceFormRightReviewContentWrapperStyled>
+                            <AdminServiceFormRightReviewContentTopStyled>Tuyệt vời</AdminServiceFormRightReviewContentTopStyled>
+                            <AdminServiceFormRightReviewContentBottomStyled>Điểm đánh giá</AdminServiceFormRightReviewContentBottomStyled>
+                        </AdminServiceFormRightReviewContentWrapperStyled>
+                        <AdminServiceFormRightReviewPointWrapperStyled>
+                            <AdminServiceFormRightReviewPointContentStyled>8.5</AdminServiceFormRightReviewPointContentStyled>
+                        </AdminServiceFormRightReviewPointWrapperStyled>
+                    </AdminServiceFormRightReviewWrapperStyled>
                     <RoomDetailOverviewRightBottomTitleContainerStyled>
                         <RoomDetailOverviewRightBottomTitleWrapperStyled>
                             <WorkspacePremiumOutlinedIcon />

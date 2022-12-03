@@ -80,7 +80,8 @@ const RoomDetailChoiceFilterSubContentStyled = styled.p`
     margin: .4rem 0;
     color: #555;
 `
-const RoomDetailChoice = () => {
+const RoomDetailChoice = (props) => {
+  const { selectRoomDetailData } = props;
   return (
     <RoomDetailChoiceContainerStyled>
         <RoomDetailChoiceWrapperStyled>
@@ -118,8 +119,9 @@ const RoomDetailChoice = () => {
                 <RoomDetailChoiceFilterContentStyled>5 loại phòng và tổng cộng 10 lựa chọn</RoomDetailChoiceFilterContentStyled>
                 <RoomDetailChoiceFilterSubContentStyled>Giá không bao gồm thuế & phí</RoomDetailChoiceFilterSubContentStyled>
             </RoomDetailChoiceFilterContentWrapperStyled>
-            <BookingDetailCard />
-            <BookingDetailCard />
+            {selectRoomDetailData && selectRoomDetailData?.trac_id?.map(item => (
+                <BookingDetailCard key={item.id} roomInfo = {item} selectRoomDetailData={selectRoomDetailData}/>
+            ))}
         </RoomDetailChoiceWrapperStyled>
     </RoomDetailChoiceContainerStyled>
   )

@@ -78,7 +78,7 @@ const AdminAccommodationspage = () => {
     }
   },[dispatch, selectSuccessData]);
   const addOrEdit = (item, resetForm, openChildPopup) => {
-    dispatch(updateRentalRegistrationStatus({status: item.status, propertyRegistrationId: item.ac_propertyRegistrationId}));
+    dispatch(updateRentalRegistrationStatus({status: item.status, propertyRegistrationId: item.ac_propertyRegistrationId, latitude: item.latitude, longtitude: item.longtitude}));
   }
 
   const openInPopup = (item) => {

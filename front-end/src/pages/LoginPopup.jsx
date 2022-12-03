@@ -7,30 +7,18 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { loginUser } from '../features/userSlice';
-const LoginpageContainerStyled = styled.div`
-    height: 100%;
-    width: 100vw;
-`
+const LoginpageContainerStyled = styled.div``
 const LoginpageWrapperStyled = styled.div`
-    padding: 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 `
 const LoginpageStyled = styled.div`
-    padding: 2rem;
+    padding: 1rem;
     width: 34rem;
     height: 100%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-`
-const LoginpageHeaderStyled = styled.h2`
-    font-weight: 400;
-`
-const LoginpageSubHeaderStyled = styled.span`
-    display: block;
-    margin: 1rem 0;
-    font-weight: 300;
 `
 const LoginpageInputSideWrapperStyled = styled.form``
 const LoginpageInputSideHeaderStyled = styled.h2`
@@ -179,30 +167,29 @@ const LineThroughtLoginPolicyWrapperStyled = styled.span`
     font-size: .8rem;
     text-align: center;
 `
-const Loginpage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isAutheticated = useSelector((state) => state.user.isAutheticated);
-  const formik = useFormik({
-    initialValues: {
-        email: "",
-        password: ""
-    },
-    onSubmit: (values) => {
-        dispatch(loginUser(values));
-    }
-  })
-  useEffect(()=>{
-    if(isAutheticated){
-        navigate('/');
-    }
-  },[isAutheticated])
+const LoginPopup = (props) => {
+    const { setOpenPopup } = props;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const isAutheticated = useSelector((state) => state.user.isAutheticated);
+    const formik = useFormik({
+      initialValues: {
+          email: "",
+          password: ""
+      },
+      onSubmit: (values) => {
+          dispatch(loginUser(values));
+      }
+    })
+    useEffect(()=>{
+      if(isAutheticated){
+          setOpenPopup(false);
+      }
+    },[isAutheticated])
   return (
     <LoginpageContainerStyled>
         <LoginpageWrapperStyled>
             <LoginpageStyled>
-                <LoginpageHeaderStyled>Đăng nhập</LoginpageHeaderStyled>
-                <LoginpageSubHeaderStyled>Để đảm bảo an toàn, xin vui lòng đăng nhập để truy cập vào thông tin</LoginpageSubHeaderStyled>
                 <LoginpageInputSideWrapperStyled onSubmit={formik.handleSubmit}>
                     <LoginpageInputSideHeaderStyled>EMAIL</LoginpageInputSideHeaderStyled>
                     <LoginpageInputSideStyled>
@@ -252,4 +239,4 @@ const Loginpage = () => {
   )
 }
 
-export default Loginpage
+export default LoginPopup

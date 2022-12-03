@@ -7,7 +7,7 @@ const MainLayout = () => {
   const location = useLocation();
   return (
     <div>
-        { location.pathname !== "/payment" && <Header /> }
+        { location.pathname !== "/payment/info"  && <Header /> }
         <Outlet />
         <Footer />
         <FooterCopyright />

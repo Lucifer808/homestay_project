@@ -1,10 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import room_detail_1 from '../../assets/room_detail_1.jpeg';
-import room_detail_2 from '../../assets/room_detail_2.jpeg';
-import room_detail_3 from '../../assets/room_detail_3.jpeg';
 import KingBedOutlinedIcon from '@mui/icons-material/KingBedOutlined';
-import SingleBedOutlinedIcon from '@mui/icons-material/SingleBedOutlined';
 import WifiOutlinedIcon from '@mui/icons-material/WifiOutlined';
 import HouseOutlinedIcon from '@mui/icons-material/HouseOutlined';
 import BalconyOutlinedIcon from '@mui/icons-material/BalconyOutlined';
@@ -16,6 +12,10 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import BoyOutlinedIcon from '@mui/icons-material/BoyOutlined';
 import KeyboardDoubleArrowDownOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowDownOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import intervalToDuration from 'date-fns/intervalToDuration';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../../features/customerSlice';
 const BookingDetailCardContainerStyled = styled.div`
     width: 100%;
     border: 1px solid #ccc;
@@ -162,7 +162,7 @@ const BookingDetailCardBottomRightWrapperStyled = styled.div`
     margin-top: 1rem;
     margin-left: 1rem;
     width: 100%;
-    height: 50%;
+    height: 100%;
     background-color: #fff;
     box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px 0px;
 `
@@ -282,6 +282,7 @@ const RoomCardRightBottomButtonWrapperStyled = styled.div`
     border-radius: .2rem;
     border-color: rgb(120, 152, 240);
     cursor: pointer;
+    width: 14rem;
     &:hover{
         background-color: rgb(120, 152, 240);
     }
@@ -313,12 +314,41 @@ const RoomCardRightCartBottomButtonTitleStyled = styled.span`
     margin: .9rem .8rem;
     font-size: .9rem;
 `
-const BookingDetailCard = () => {
+const BookingDetailCard = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { roomInfo, selectRoomDetailData } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pathName = process.env.REACT_APP_BACK_END_PUBLIC_URL;
+  let params = {};
+
+  searchParams.forEach((key, value) => {
+    params[value] = key
+  });
+  // daycounting caculate day 
+  const dayCounting = intervalToDuration({
+    start: new Date(params.checkIn),
+    end: new Date(params.checkOut)
+  })
+  const handleClick = (item) => {
+      const itemInfo = {
+          propertyRegistrationId: item.tr_propertyRegistrationId,
+          roomTypeId: item.tr_roomTypeId,
+          checkIn: params.checkIn,
+          checkOut: params.checkOut,
+          numOfDays: dayCounting.days,
+          numOfRoom: parseInt(params.rooms),
+          numOfAudlts: parseInt(params.adults),
+          numOfChildrens: parseInt(params.childrens)
+      };
+    dispatch(addItemToCart(itemInfo));
+    navigate('/payment/info');
+  }
   return (
     <BookingDetailCardContainerStyled>
         <BookingDetailCardWrapperStyled>
             <BookingDetailCardTopWrapperStyled>
-                <BookingDetailCardTopLeftTitleStyled>Deluxe sân thượng (Deluxe Terrace)</BookingDetailCardTopLeftTitleStyled>
+                <BookingDetailCardTopLeftTitleStyled>{roomInfo?.name}</BookingDetailCardTopLeftTitleStyled>
                 <RoomCardRightReviewWrapperStyled>
                     <RoomCardRightReviewContentWrapperStyled>
                         <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
@@ -340,32 +370,24 @@ const BookingDetailCard = () => {
                 <BookingDetailCardBottomContentWrapperStyled>
                     <BookingDetailCardBottomLeftWrapperStyled>
                         <BookingDetailCardBottomLeftImageWrapperStyled>
-                            <BookingDetailCardBottomLeftImageStyled src={room_detail_1}/>
+                            <BookingDetailCardBottomLeftImageStyled src={`${pathName+roomInfo?.trtri_id?.[0]?.path}`}/>
                             <BookingDetailCardBottomLeftSubImageWrapperStyled>
-                                <BookingDetailCardBottomLeftSubImageStyled src={room_detail_2} />
-                                <BookingDetailCardBottomLeftSubImageStyled src={room_detail_3} />
+                                <BookingDetailCardBottomLeftSubImageStyled src={`${pathName+roomInfo?.trtri_id?.[1]?.path}`} />
+                                <BookingDetailCardBottomLeftSubImageStyled src={`${pathName+roomInfo?.trtri_id?.[2]?.path}`} />
                             </BookingDetailCardBottomLeftSubImageWrapperStyled>
                         </BookingDetailCardBottomLeftImageWrapperStyled>
                         <BookingDetailCardBottomLeftSubTitleStyled>Xem ảnh và chi tiết</BookingDetailCardBottomLeftSubTitleStyled>
                         <BookingDetailCardBottomLeftBedSizeWrapperStyled>
-                            <BookingDetailCardBottomLeftBedSizeTitleStyled>Ưu tiên giường (nếu có)</BookingDetailCardBottomLeftBedSizeTitleStyled>
-                            <BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled>
-                                <BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
-                                    <BookingDetailCardBottomLeftBedSizeChoiceStyled type="radio" name='bed'/>
-                                    <BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>1 giường lớn</BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>
-                                </BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
-                                <KingBedOutlinedIcon style={{color: '#555'}}/>
-                            </BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled>
-                            <BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled>
-                                <BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
-                                    <BookingDetailCardBottomLeftBedSizeChoiceStyled type="radio" name='bed'/>
-                                    <BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>2 giường đơn</BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>
-                                </BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
-                                <BookingDetailCardBottomLeftBedSizeChoiceRightWrapperStyled>
-                                    <SingleBedOutlinedIcon style={{color: '#555'}}/>
-                                    <SingleBedOutlinedIcon style={{color: '#555'}}/>
-                                </BookingDetailCardBottomLeftBedSizeChoiceRightWrapperStyled>
-                            </BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled>
+                            <BookingDetailCardBottomLeftBedSizeTitleStyled>Loại giường</BookingDetailCardBottomLeftBedSizeTitleStyled>
+                            {roomInfo && roomInfo?.tbrtr_id?.map(item => (
+                                <BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled key={item.id}>
+                                    <BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
+                                        <BookingDetailCardBottomLeftBedSizeChoiceStyled type="radio" checked readOnly/>
+                                        <BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>{item.nameOfBed}</BookingDetailCardBottomLeftBedSizeChoiceTitleStyled>
+                                    </BookingDetailCardBottomLeftBedSizeChoiceLeftWrapperStyled>
+                                    <KingBedOutlinedIcon style={{color: '#555'}}/>
+                                </BookingDetailCardBottomLeftBedSizeChoiceWrapperStyled>
+                            )) }
                         </BookingDetailCardBottomLeftBedSizeWrapperStyled>
                         <BookingDetailCardBottomLeftConvenientWrapperStyled>
                             <BookingDetailCardBottomLeftConvenientContentWrapperStyled>
@@ -374,11 +396,11 @@ const BookingDetailCard = () => {
                             </BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                             <BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                                 <HouseOutlinedIcon style={{color: '#555'}}/>
-                                <BookingDetailCardBottomLeftConvenientContentStyled>Diện tích phòng: 35㎡</BookingDetailCardBottomLeftConvenientContentStyled>
+                                <BookingDetailCardBottomLeftConvenientContentStyled>Diện tích phòng: {roomInfo?.trro_id?.[0]?.area}㎡</BookingDetailCardBottomLeftConvenientContentStyled>
                             </BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                             <BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                                 <DoorBackOutlinedIcon style={{color: '#555'}}/>
-                                <BookingDetailCardBottomLeftConvenientContentStyled>Hướng phòng: Vườn</BookingDetailCardBottomLeftConvenientContentStyled>
+                                <BookingDetailCardBottomLeftConvenientContentStyled>Hướng phòng: {roomInfo?.trro_id?.[0]?.viewOfRoom}</BookingDetailCardBottomLeftConvenientContentStyled>
                             </BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                             <BookingDetailCardBottomLeftConvenientContentWrapperStyled>
                                 <BalconyOutlinedIcon style={{color: '#555'}}/>
@@ -422,11 +444,16 @@ const BookingDetailCard = () => {
                             </BookingDetailCardBottomRightContentContainerStyled>
                             <BookingDetailCardBottomRightCapacityContainerStyled>
                                 <BoyOutlinedIcon style={{fontSize: '2.4rem', color: '#555'}}/>
-                                <BookingDetailCardBottomRightCapacityContentStyled>1 bé dưới 13 tuổi được ở </BookingDetailCardBottomRightCapacityContentStyled>
+                                <BookingDetailCardBottomRightCapacityContentStyled>{roomInfo?.trro_id?.[0]?.noOfChildren} bé dưới 13 tuổi được ở </BookingDetailCardBottomRightCapacityContentStyled>
                                 <BookingDetailCardBottomRightCapacitySubContentStyled>MIỄN PHÍ!</BookingDetailCardBottomRightCapacitySubContentStyled>
                             </BookingDetailCardBottomRightCapacityContainerStyled>
                             <BookingDetailCardBottomRightCancelContainerStyled>
                                 <BookingDetailCardBottomRightContentWrapperStyled>
+                                    <BookingDetailCardBottomRightContentTitleWrapperStyled>Lợi ích</BookingDetailCardBottomRightContentTitleWrapperStyled>
+                                    <BookingDetailCardBottomRightContentTitleCancelWrapperStyled>
+                                        <BookingDetailCardBottomRightContentTitleCancelInputStyled type="radio" checked readOnly/>
+                                        <BookingDetailCardBottomRightContentTitleCancelStyled>Cà phê & trà, WiFi miễn phí, Nước uống</BookingDetailCardBottomRightContentTitleCancelStyled>
+                                    </BookingDetailCardBottomRightContentTitleCancelWrapperStyled>
                                     <BookingDetailCardBottomRightContentTitleWrapperStyled>Hủy bỏ</BookingDetailCardBottomRightContentTitleWrapperStyled>
                                     <BookingDetailCardBottomRightContentTitleCancelWrapperStyled>
                                         <BookingDetailCardBottomRightContentTitleCancelInputStyled type="radio" checked readOnly/>
@@ -445,18 +472,15 @@ const BookingDetailCard = () => {
                                     <RoomCardRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</RoomCardRightPriceDiscountContentStyled>
                                 </RoomCardRightPriceDiscountContentWrapperStyled>
                                 <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
-                                <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>
-                                <RoomCardRightNewPriceStyled>660.000 ₫</RoomCardRightNewPriceStyled> 
-                                <RoomCardRightBottomButtonWrapperStyled>
-                                    <RoomCardRightBottomButtonTitleStyled>Đặt ngay</RoomCardRightBottomButtonTitleStyled>
-                                    <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
+                                <RoomCardRightOldPriceStyled className='cross'>{roomInfo?.trrp_id?.[0]?.maxPrice?.toLocaleString()} ₫</RoomCardRightOldPriceStyled>
+                                <RoomCardRightNewPriceStyled>{roomInfo?.trrp_id?.[0]?.price?.toLocaleString()} ₫</RoomCardRightNewPriceStyled> 
+                                <RoomCardRightBottomButtonWrapperStyled onClick={() => handleClick(roomInfo)}>
+                                    <RoomCardRightBottomButtonTitleStyled>Đặt phòng ngay</RoomCardRightBottomButtonTitleStyled>
+                                    <ArrowForwardIosOutlinedIcon style={{color: '#fff', fontSize: '16px'}}/>
                                 </RoomCardRightBottomButtonWrapperStyled>
-                                <RoomCardRightBottomCartButtonWrapperStyled>
-                                    <RoomCardRightCartBottomButtonTitleStyled>Thêm vào xe đẩy hàng</RoomCardRightCartBottomButtonTitleStyled>
-                                </RoomCardRightBottomCartButtonWrapperStyled>
                             </BookingDetailCardBottomRightPriceContainerStyled>
                         </BookingDetailCardBottomRightWrapperStyled>
-                        <BookingDetailCardBottomRightWrapperStyled>
+                        {/* <BookingDetailCardBottomRightWrapperStyled>
                             <BookingDetailCardBottomRightContentContainerStyled>
                                 <BookingDetailCardBottomRightContentWrapperStyled>
                                     <BookingDetailCardBottomRightContentTitleWrapperStyled>Lợi ích</BookingDetailCardBottomRightContentTitleWrapperStyled>
@@ -512,7 +536,7 @@ const BookingDetailCard = () => {
                                     <RoomCardRightCartBottomButtonTitleStyled>Thêm vào xe đẩy hàng</RoomCardRightCartBottomButtonTitleStyled>
                                 </RoomCardRightBottomCartButtonWrapperStyled>
                             </BookingDetailCardBottomRightPriceContainerStyled>
-                        </BookingDetailCardBottomRightWrapperStyled>
+                        </BookingDetailCardBottomRightWrapperStyled> */}
                     </BookingDetailCardBottomRightContainerStyled>
                 </BookingDetailCardBottomContentWrapperStyled>
                 

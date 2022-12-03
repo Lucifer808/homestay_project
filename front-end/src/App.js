@@ -1,11 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
+import customerApi from "./api/customerApi";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { store } from "./store";
-import { loadUser, selectUser } from "./features/userSlice";
+import { Elements } from "@stripe/react-stripe-js";
+import {
+  loadUser,
+  selectUser,
+  selectIsAutheticated,
+} from "./features/userSlice";
 import Homepage from "./pages/Homepage";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
@@ -42,11 +48,27 @@ import MyRoomListpage from "./pages/MyRoomListpage";
 import MyRoompage from "./pages/MyRoompage";
 import EditMyRoompage from "./pages/EditMyRoompage";
 import MyRoomListByIdpage from "./pages/MyRoomListByIdpage";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentFristStep from "./components/layout/Payment/PaymentFristStep";
+import PaymentSeccondStep from "./components/layout/Payment/PaymentSeccondStep";
+import PaymentSuccess from "./components/layout/Payment/PaymentSuccess";
+import PaymentLayout from "./components/layout/Payment/PaymentLayout";
 function App() {
+  const selectData = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectIsAutheticated);
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    const { data } = await customerApi.customerGetStripeKey();
+    console.log(data);
+    setStripeApiKey(data.stripeApiKey);
+  }
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
-  const selectData = useSelector(selectUser);
+  useEffect(() => {
+    getStripeApiKey();
+  }, [isAuthenticated]);
   return (
     <>
       <ToastContainer
@@ -68,7 +90,20 @@ function App() {
           <Route path="/register" element={<Registerpage />} />
           <Route path="/search" element={<RoomListpage />} />
           <Route path="/roomdetail/:id" element={<RoomDetailpage />} />
-          <Route path="/payment" element={<Paymentpage />} />
+        </Route>
+        <Route path="/payment" element={<PaymentLayout />}>
+          <Route path="/payment" index element={<PaymentFristStep />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          {stripeApiKey && (
+            <Route
+              path="/payment/checkout"
+              element={
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                  <PaymentSeccondStep />
+                </Elements>
+              }
+            />
+          )}
         </Route>
         <Route path="/homes" element={<ProviderWelcomepage />} />
         <Route path="/homes/choice" element={<ProviderMainpage />} />

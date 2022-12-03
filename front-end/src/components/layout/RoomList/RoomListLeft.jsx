@@ -5,7 +5,7 @@ import Slider from '@mui/material/Slider';
 import Rating from '@mui/material/Rating';
 import RoomFilterList from '../../child/RoomFilterList';
 import { useSelector } from 'react-redux';
-import { selectPosition } from '../../../features/customerSlice';
+import { selectPosition, selectCitiSearch } from '../../../features/customerSlice';
 import RoomListMap from './RoomListMap';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
@@ -158,6 +158,7 @@ const RoomListLeftTopFilterMaiddleStyled = styled.div`
 const RoomListLeft = () => {
   const [price, setPrice] = useState([100000, 100000000]);
   const selectPositionData = useSelector(selectPosition);
+  const citiSearchData = useSelector(selectCitiSearch);
   const [open, setOpen] = useState(false);
   const priceHandle = (e, newPrice) =>{
       setPrice(newPrice);
@@ -202,7 +203,7 @@ const RoomListLeft = () => {
                         </IconButton>
                     </Toolbar>
                     </AppBar>
-                    <RoomListMap selectPosition={selectPositionData}/>  
+                    <RoomListMap selectPosition={selectPositionData} citiSearchData={citiSearchData}/>  
                 </Dialog>
             </RoomListLeftTopWrapperStyled>
             <RoomListLeftTopSearchWrapperStyled>

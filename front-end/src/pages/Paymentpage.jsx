@@ -11,6 +11,12 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
 import PaymentFristStep from '../components/layout/Payment/PaymentFristStep';
 import PaymentSeccondStep from '../components/layout/Payment/PaymentSeccondStep';
+import Popup from '../components/admin/components/Popup';
+import LoginPopup from './LoginPopup';
+import { selectIsAutheticated, selectUser } from '../features/userSlice';
+import UserOptions from '../components/child/UserOptions';
+import { useSelector } from 'react-redux';
+import { selectBookingInfo } from '../features/customerSlice';
 const PaymentpageContainerStyled = styled.div`
     width: 100%;
     height: 100%;
@@ -26,7 +32,7 @@ const PaymentpageHeaderContainerStyled = styled.div`
 const PaymentpageHeaderWrapperStyled = styled.div`
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-around;
     width: 80vw;
     padding: .4rem 0;
 `
@@ -35,8 +41,7 @@ const HeaderLogoStyled = styled.h2`
     text-align: left;
 `
 const PaymentpageHeaderStepWrapperStyled = styled.div`
-    width: 50%;
-    margin-left: 14rem;
+    width: 60%;
 `
 const PaymentpageBottomContainerStyled = styled.div`
     display: flex;
@@ -245,11 +250,28 @@ const PaymentpageBottomLeftBottomButtonContentStyled = styled.button`
         transition: all 0.15s ease-in-out 0s;
     }
 `
+const HeaderLoginButtonStyled = styled.button`
+    border: .05rem solid rgb(135, 179, 251);
+    border-radius: .3rem;
+    width: 8rem;
+    margin-left: 1rem;
+    font-size: .9rem;
+    background-color: transparent;
+    padding: .8rem .4rem;
+    height: 100%;
+    cursor: pointer;
+    color: rgb(135, 179, 251);
+    transition: all .1s linear;
+    &:hover{
+        color: #fff;
+        background-color: rgb(135, 179, 251);
+    }
+`
 const steps = ['Thông tin khách hàng', 'Chi tiết thanh toán', 'Đã xác nhận đặt phòng'];
-function getStepContent(step) {
+function getStepContent(step, usereData, selectBookingInfoData, values, setValues, handleChangeInput) {
     switch(step){
         case 0:
-            return <PaymentFristStep />;
+            return <PaymentFristStep usereData={usereData} selectBookingInfoData={selectBookingInfoData} values={values} setValues={setValues} handleChangeInput={handleChangeInput}/>;
         case 1:
             return <PaymentSeccondStep />;
         case 2:
@@ -259,12 +281,35 @@ function getStepContent(step) {
     }
 }
 const Paymentpage = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set());
+    const [activeStep, setActiveStep] = useState(0);
+    const [skipped, setSkipped] = useState(new Set());
+    const [openPopup, setOpenPopup] = useState(false);
+    const isAutheticated = useSelector(selectIsAutheticated);
+    const selectBookingInfoData = useSelector(selectBookingInfo);
+    const pathName = process.env.REACT_APP_BACK_END_PUBLIC_URL;
+    const usereData = useSelector(selectUser);
+    const initialValueF = {
+        userName: usereData.user.userName || " ",
+        userEmail: usereData.user.email || " ",
+        userPhoneNumber: " ",
+        userRegion: " ",
+        smoke: " ",
+        bed: " ",
+        message: " "
+    }
+    const [values, setValues] = useState(initialValueF);
+    const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setValues({
+        ...values,
+        [name]: value
+    })
+  }
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
   const handleNext = () => {
+    sessionStorage.setItem("orderInfo", JSON.stringify(values));
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -277,6 +322,9 @@ const Paymentpage = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const handlePopupLogin = () => {
+    setOpenPopup(true);
+  }
   return (
     <PaymentpageContainerStyled>
         <PaymentpageHeaderContainerStyled>
@@ -296,25 +344,29 @@ const Paymentpage = () => {
                         </Stepper>
                     </Box>
                 </PaymentpageHeaderStepWrapperStyled>
+                { isAutheticated ? <UserOptions user={usereData} /> : (
+                    <HeaderLoginButtonStyled onClick={handlePopupLogin}>Đăng nhập</HeaderLoginButtonStyled>
+                )}
             </PaymentpageHeaderWrapperStyled>
         </PaymentpageHeaderContainerStyled>
         <PaymentpageBottomContainerStyled>
             <PaymentpageBottomWrapperStyled>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, usereData, selectBookingInfoData, values, setValues, handleChangeInput)}
                 <PaymentpageBottomRightWrapperStyled>
                     <PaymentpageBottomRightTopWrapperStyled>
                         <PaymentpageBottomRightTopLeftImageWrapperStyled>
-                            <PaymentpageBottomRightTopLeftImageStyled src={img_sub_detail_6} />
+                            <PaymentpageBottomRightTopLeftImageStyled src={`${pathName+selectBookingInfoData?.data?.[0]?.acim_id?.[0]?.path}`} />
                         </PaymentpageBottomRightTopLeftImageWrapperStyled>
                         <PaymentpageBottomRightTopRightInfoWrapperStyled>
-                            <PaymentpageBottomRightTopRightInfoTitleStyled>Thavorn Palm Beach Resort Phuket (SHA Plus+)</PaymentpageBottomRightTopRightInfoTitleStyled>
-                            <Rating name="size-small" value={5} size="small" readOnly/>
-                            <PaymentpageBottomRightTopRightInfoSubContentStyled>311 Patak Road, Karon Beach, Amphur Muang, Karon, Phuket, Phuket, Thái Lan, 83100</PaymentpageBottomRightTopRightInfoSubContentStyled>
+                            <PaymentpageBottomRightTopRightInfoTitleStyled>{selectBookingInfoData?.data?.[0]?.nameOfAccommodation}</PaymentpageBottomRightTopRightInfoTitleStyled>
+                            <Rating name="size-small" value={selectBookingInfoData?.data?.[0]?.rating || 5} size="small" readOnly/>
+                            <PaymentpageBottomRightTopRightInfoSubContentStyled>{`${selectBookingInfoData?.data?.[0]?.acci_id?.name}, ${selectBookingInfoData?.data?.[0]?.acst_id?.name}, ${selectBookingInfoData?.data?.[0]?.acct_id?.name}`}</PaymentpageBottomRightTopRightInfoSubContentStyled>
                         </PaymentpageBottomRightTopRightInfoWrapperStyled>
                     </PaymentpageBottomRightTopWrapperStyled>
                     <PaymentpageBottomRightMiddleWrapperStyled>
-                        <PaymentpageBottomRightMiddleDateStyled>20 tháng 9 2022 - 23 tháng 9 2022</PaymentpageBottomRightMiddleDateStyled>
-                        <PaymentpageBottomRightMiddleTitleStyled>1 x Deluxe Terrace Pool View</PaymentpageBottomRightMiddleTitleStyled>
+                        <PaymentpageBottomRightMiddleDateStyled>{`${selectBookingInfoData?.checkIn} đến ${selectBookingInfoData?.checkOut}`}</PaymentpageBottomRightMiddleDateStyled>
+                        {/* <PaymentpageBottomRightMiddleDateStyled>{`${format(new Date(selectBookingInfoData?.checkIn), 'dd LLLL yyyy', { locale: vi })} - ${format(new Date(selectBookingInfoData?.checkOut), 'dd LLLL yyyy', { locale: vi })}`}</PaymentpageBottomRightMiddleDateStyled> */}
+                        <PaymentpageBottomRightMiddleTitleStyled>{selectBookingInfoData?.numOfRoom} x {selectBookingInfoData?.data?.[0]?.trac_id?.[0]?.name}</PaymentpageBottomRightMiddleTitleStyled>
                         <RoomCardRightReviewWrapperStyled>
                             <RoomCardRightReviewContentWrapperStyled>
                                 <RoomCardRightReviewContentTopStyled>Tuyệt vời</RoomCardRightReviewContentTopStyled>
@@ -331,11 +383,11 @@ const Paymentpage = () => {
                             <PaymentpageBottomRightMiddleAdvancedContainerStyled>
                                 <PaymentpageBottomRightMiddleAdvancedWrapperStyled>
                                     <PermIdentityOutlinedIcon />
-                                    <PaymentpageBottomRightMiddleAdvancedContentStyled>1 phòng, 2 người lớn</PaymentpageBottomRightMiddleAdvancedContentStyled>
+                                    <PaymentpageBottomRightMiddleAdvancedContentStyled>{selectBookingInfoData?.numOfRoom} phòng, {selectBookingInfoData?.numOfAudlts} người lớn</PaymentpageBottomRightMiddleAdvancedContentStyled>
                                 </PaymentpageBottomRightMiddleAdvancedWrapperStyled>
                                 <PaymentpageBottomRightMiddleAdvancedWrapperStyled>
                                     <Diversity3OutlinedIcon />
-                                    <PaymentpageBottomRightMiddleAdvancedContentStyled>Tối đa 2 người lớn, 1 Trẻ em (0-12 tuổi)</PaymentpageBottomRightMiddleAdvancedContentStyled>
+                                    <PaymentpageBottomRightMiddleAdvancedContentStyled>Tối đa {selectBookingInfoData?.data?.[0]?.trac_id?.[0]?.trro_id?.[0]?.noOfAdult} người lớn, {selectBookingInfoData?.data?.[0]?.trac_id?.[0]?.trro_id?.[0]?.noOfChildren} Trẻ em (0-12 tuổi)</PaymentpageBottomRightMiddleAdvancedContentStyled>
                                 </PaymentpageBottomRightMiddleAdvancedWrapperStyled>
                                 <PaymentpageBottomRightMiddleAdvancedWrapperStyled>
                                     <CheckOutlinedIcon style={{color: 'rgb(50, 169, 35)'}}/>
@@ -363,12 +415,12 @@ const Paymentpage = () => {
                     <PaymentpageBottomRightBottomWrapperStyled>
                         <PaymentpageBottomRightBottomUpWrapperStyled>
                             <PaymentpageBottomRightBottomUpContentWrapperStyled>
-                                <PaymentpageBottomRightBottomUpContentLeftStyled>Giá gốc (1 phòng x 3 đêm)</PaymentpageBottomRightBottomUpContentLeftStyled>
-                                <PaymentpageBottomRightBottomUpContentRightStyled className='cross'>7.850.001</PaymentpageBottomRightBottomUpContentRightStyled>
+                                <PaymentpageBottomRightBottomUpContentLeftStyled>Giá gốc ({selectBookingInfoData?.numOfRoom} phòng x {selectBookingInfoData?.numOfDays} đêm)</PaymentpageBottomRightBottomUpContentLeftStyled>
+                                <PaymentpageBottomRightBottomUpContentRightStyled className='cross'>{selectBookingInfoData?.priceBase?.toLocaleString()} ₫</PaymentpageBottomRightBottomUpContentRightStyled>
                             </PaymentpageBottomRightBottomUpContentWrapperStyled>
                             <PaymentpageBottomRightBottomUpContentWrapperStyled>
-                                <PaymentpageBottomRightBottomUpContentLeftStyled>Giá phòng (1 phòng x 3 đêm)</PaymentpageBottomRightBottomUpContentLeftStyled>
-                                <PaymentpageBottomRightBottomUpContentRightStyled>1.962.498 ₫</PaymentpageBottomRightBottomUpContentRightStyled>
+                                <PaymentpageBottomRightBottomUpContentLeftStyled>Giá phòng ({selectBookingInfoData?.numOfRoom} phòng x {selectBookingInfoData?.numOfDays} đêm)</PaymentpageBottomRightBottomUpContentLeftStyled>
+                                <PaymentpageBottomRightBottomUpContentRightStyled>{selectBookingInfoData?.priceExactly?.toLocaleString()} ₫</PaymentpageBottomRightBottomUpContentRightStyled>
                             </PaymentpageBottomRightBottomUpContentWrapperStyled>
                             <PaymentpageBottomRightBottomUpContentWrapperStyled>
                                 <PaymentpageBottomRightBottomUpContentLeftStyled>Phí đặt trước</PaymentpageBottomRightBottomUpContentLeftStyled>
@@ -378,7 +430,7 @@ const Paymentpage = () => {
                         <PaymentpageBottomRightBottomDownWrapperStyled>
                             <PaymentpageBottomRightBottomDownContentWrapperStyled>
                                 <PaymentpageBottomRightBottomDownContentLeftStyled>Giá tiền</PaymentpageBottomRightBottomDownContentLeftStyled>
-                                <PaymentpageBottomRightBottomDownContentLeftStyled>2.331.450 ₫</PaymentpageBottomRightBottomDownContentLeftStyled>
+                                <PaymentpageBottomRightBottomDownContentLeftStyled>{selectBookingInfoData?.priceTotal?.toLocaleString()} ₫</PaymentpageBottomRightBottomDownContentLeftStyled>
                             </PaymentpageBottomRightBottomDownContentWrapperStyled>
                             <PaymentpageBottomRightBottomDownTagWrapperStyled>
                                 <PaymentpageBottomRightBottomDownTagTitleStyled>Giá đã bao gồm: </PaymentpageBottomRightBottomDownTagTitleStyled>
@@ -395,6 +447,15 @@ const Paymentpage = () => {
                 </PaymentpageBottomRightWrapperStyled>
             </PaymentpageBottomWrapperStyled>
         </PaymentpageBottomContainerStyled>
+        <Popup
+            title="Đăng nhập"
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+            onClose={() => setOpenPopup(false)} 
+            maxWidth="sm"
+        >
+                <LoginPopup setOpenPopup={setOpenPopup}/>
+        </Popup>
     </PaymentpageContainerStyled>
   )
 }

@@ -17,7 +17,7 @@ const HeaderWrapperStyled = styled.div`
     justify-content: flex-start;
     align-items: center;
     height: 4rem;
-    padding: 0 2rem;
+    padding: 0 8rem;
     background-color: #fff;
 `
 const HeaderLogoStyled = styled.h2`

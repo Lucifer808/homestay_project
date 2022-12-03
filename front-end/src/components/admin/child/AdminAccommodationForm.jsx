@@ -46,6 +46,8 @@ const AdminAccommodationsFormImagesStyled = styled.img`
   margin: .4rem;
 `
 const initialFValues = {
+    latitude: 0,
+    longtitude: 0,
     status: " "
 }
 
@@ -61,7 +63,6 @@ export default function AdminAccommodationForm(props) {
         handleInputChange,
         resetForm
     } = useForm(initialFValues);
-
     const handleSubmit = e => {
         e.preventDefault();
         addOrEdit(values, resetForm, openChildPopup);
@@ -177,6 +178,26 @@ export default function AdminAccommodationForm(props) {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            variant="standard"
+                        />
+                    </FormControl>
+                    <FormControl variant="standard">
+                        <TextField
+                            id="standard-read-only-input"
+                            label="Vĩ độ"
+                            name='latitude'
+                            value={values.latitude}
+                            onChange={handleInputChange}
+                            variant="standard"
+                        />
+                    </FormControl>
+                    <FormControl variant="standard">
+                        <TextField
+                            id="standard-read-only-input"
+                            label="Kinh độ"
+                            name='longtitude'
+                            value={values.longtitude}
+                            onChange={handleInputChange}
                             variant="standard"
                         />
                     </FormControl>

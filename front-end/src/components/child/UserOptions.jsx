@@ -22,6 +22,7 @@ const fadeIn = keyframes `
     }
 `;
 const LoginIconStyled = styled.img`
+    position: relative;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -51,7 +52,6 @@ const LoginedContainerStyled = styled.div`
 const LoginCateWrapperStyled = styled.div`
     position: absolute;
     background-color: #fff;
-    right: 40px;
     display: none;
     width: 240px;
     list-style-type: none;
@@ -137,6 +137,7 @@ const UserOptions = ({user}) => {
   const logoutHandle = () =>{
     dispatch(logoutUser());
   }
+  console.log(user);
   return (
     <>
       <LoginedContainerStyled>

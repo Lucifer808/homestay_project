@@ -176,7 +176,7 @@ const RoomDetailpage = () => {
           <RoomDetailOverview selectRoomDetailData={selectRoomDetailData?.[0]}/>
         </RoomDetailOverviewWrapperStyled>
         <RoomDetailChoiceWrapperStyled id='choice'>
-          <RoomDetailChoice />
+          <RoomDetailChoice selectRoomDetailData={selectRoomDetailData?.[0]}/>
         </RoomDetailChoiceWrapperStyled>
         <RoomDetailCommentWrapperStyled id='comment'>
           <RoomDetailComment />
