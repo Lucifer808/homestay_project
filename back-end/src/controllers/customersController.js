@@ -3,6 +3,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const { sequelize } = require("../models");
 const moment = require("moment");
+const Sequelize = require("sequelize");
 const sendEmail = require("../utils/sendEmail");
 const { Op } = require("sequelize");
 exports.customerSearch = catchAsyncError(async (req, res, next) => {
@@ -221,6 +222,7 @@ exports.customerGetDetailAccommodation = catchAsyncError(
         "updatedAt",
         "createdById",
         "updatedById",
+        "ac_latlong",
         "ac_propertyRegistrationId",
       ],
       subQuery: false,
@@ -329,6 +331,7 @@ exports.customerGetDetailAccommodationAndRoom = catchAsyncError(
         "updatedAt",
         "createdById",
         "updatedById",
+        "ac_latlong",
         "ac_propertyRegistrationId",
       ],
       subQuery: false,
@@ -405,6 +408,7 @@ exports.customerCreateOrder = catchAsyncError(async (req, res, next) => {
     userEmail,
     userPhoneNumber,
     userRegion,
+    nameOfAccommodation,
     smoke,
     bed,
     message,
@@ -434,6 +438,7 @@ exports.customerCreateOrder = catchAsyncError(async (req, res, next) => {
     numOfRooms: numOfRoom,
     numOfAudlts,
     numOfChildrens,
+    nameOfAccomodations: nameOfAccommodation,
     createdById: req.user.id,
     uo_propertyRegistrationId: propertyRegistrationId,
     uo_roomTypeId: roomTypeId,
@@ -441,5 +446,63 @@ exports.customerCreateOrder = catchAsyncError(async (req, res, next) => {
   if (!newOrder) {
     return next(new ErrorHandler("Xảy ra lỗi khi thêm đơn hàng mới !", 401));
   }
+  const findRoom = await db.Room.findOne({
+    where: { ro_roomTypeId: roomTypeId },
+  });
+  const newQuantity = findRoom.numTypeOfRoom - numOfRoom;
+  const updateQuantity = await db.Room.update(
+    {
+      numTypeOfRoom: newQuantity,
+    },
+    {
+      where: { ro_roomTypeId: roomTypeId },
+    }
+  );
+  if (!updateQuantity) {
+    return next(new ErrorHandler("Xảy ra lỗi khi thay đổi số lượng !", 401));
+  }
   res.status(200).json("Đặt phòng thành công !");
+});
+
+exports.getAllAccommodationsHired = catchAsyncError(async (req, res, next) => {
+  const findAllAccommodationHired = await db.Orders.findOne({
+    where: { uo_propertyRegistrationId: req.body.propertyRegistrationId },
+  });
+});
+
+exports.getAllOrderById = catchAsyncError(async (req, res, next) => {
+  const findAllOrderById = await db.Orders.findAll({
+    where: { createdById: req.user.id },
+    include: [
+      {
+        model: db.Accommodations,
+        as: "uoac_id",
+      },
+    ],
+    attributes: [
+      "id",
+      "phoneNumber",
+      "smoke",
+      "bed",
+      "message",
+      "total",
+      "checkIn",
+      "checkOut",
+      "numOfDays",
+      "numOfRooms",
+      "numOfAudlts",
+      "numOfChildrens",
+      "createdAt",
+      "updatedAt",
+      "createdById",
+      "updatedById",
+      "nameOfAccomodations",
+      "uo_propertyRegistrationId",
+      "uo_roomTypeId",
+    ],
+    subQuery: false,
+    nest: true,
+    raw: false,
+  });
+  res.status(200).json(findAllOrderById);
 });

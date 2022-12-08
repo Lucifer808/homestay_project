@@ -2,7 +2,12 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Orders extends Model {
-    static associate(modles) {}
+    static associate(modles) {
+      Orders.belongsTo(modles.Accommodations, {
+        foreignKey: "uo_propertyRegistrationId",
+        as: "uoac_id",
+      });
+    }
   }
 
   Orders.init(
@@ -58,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
       numOfChildrens: {
         type: DataTypes.INTEGER,
         field: "uo_numOfChildrens",
+      },
+      nameOfAccomodations: {
+        type: DataTypes.STRING,
+        field: "uo_nameOfAccommodations",
       },
       createdAt: {
         type: DataTypes.DATE(3),

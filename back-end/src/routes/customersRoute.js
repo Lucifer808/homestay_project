@@ -16,4 +16,7 @@ router
 router
   .route("/confirm_order")
   .post(isAuthenticatedUser, customersController.customerConfirmOrder);
+router
+  .route("/all_order")
+  .get(isAuthenticatedUser, customersController.getAllOrderById);
 module.exports = router;

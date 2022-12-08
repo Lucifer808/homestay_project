@@ -43,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "ac_propertyRegistrationId",
         as: "trac_id",
       });
+      Accommodations.hasMany(modles.Orders, {
+        foreignKey: "uo_propertyRegistrationId",
+        sourceKey: "ac_propertyRegistrationId",
+        as: "uoac_id",
+      });
     }
   }
 

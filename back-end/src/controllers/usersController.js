@@ -195,6 +195,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
       const createRoom = await db.Room.create({
         area: sizeSqm,
         numTypeOfRoom: accommodates,
+        noOfAdult: accommodates,
         noOfBathrooms: noOfBathrooms,
         allowChildren: true,
         ro_propertyRegistrationId: propertyRegistrationId,
@@ -210,6 +211,7 @@ exports.createOrUpdateRegistraionInfo = catchAsyncError(
         {
           area: sizeSqm,
           numTypeOfRoom: accommodates,
+          noOfAdult: accommodates,
           noOfBathrooms: noOfBathrooms,
           allowChildren: true,
         },
@@ -485,6 +487,7 @@ exports.createOrUpdateRegistraionPriceSetup = catchAsyncError(
 exports.createOrUpdateRegistraionImages = catchAsyncError(
   async (req, res, next) => {
     const descsArr = req.body.descs.map((item) => JSON.parse(item));
+    console.log("object");
     const imagesArr = req.files;
     const result = [];
     const roomImage = [];
@@ -893,4 +896,10 @@ exports.getAllTypeRoomById = catchAsyncError(async (req, res, next) => {
     ],
   });
   res.status(200).json(getAllTypeRoomById);
+});
+exports.getAllAccommodationsOrder = catchAsyncError(async (req, res, next) => {
+  const getAllAccommodationsOrder = await db.Orders.findAll({
+    where: { uo_propertyRegistrationId: req.body.propertyRegistrationId },
+  });
+  res.status(200).json(getAllAccommodationsOrder);
 });

@@ -54,4 +54,7 @@ router
 router
   .route("/get-type-room-by-id")
   .post(isAuthenticatedUser, usersController.getAllTypeRoomById);
+router
+  .route("/get-all-order-accommodation-by-id")
+  .post(isAuthenticatedUser, usersController.getAllAccommodationsOrder);
 module.exports = router;
