@@ -7,6 +7,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { loginUser } from '../features/userSlice';
+import * as yup from 'yup';
 const LoginpageContainerStyled = styled.div`
     height: 100%;
     width: 100vw;
@@ -179,6 +180,10 @@ const LineThroughtLoginPolicyWrapperStyled = styled.span`
     font-size: .8rem;
     text-align: center;
 `
+const RegisterpageInputErrorPromptStyled = styled.p`
+    font-size: .9rem;
+    color: rgb(225, 45, 45);
+`
 const Loginpage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -188,6 +193,10 @@ const Loginpage = () => {
         email: "",
         password: ""
     },
+    validationSchema: yup.object({
+        email: yup.string().required("Vui lòng điền tên tài khoản."),
+        password: yup.string().required("Vui lòng điền mật khẩu.")
+    }),
     onSubmit: (values) => {
         dispatch(loginUser(values));
     }
@@ -212,7 +221,12 @@ const Loginpage = () => {
                          name='email'
                          type='email' 
                          onChange={formik.handleChange}
+                         onBlur={formik.handleBlur}
+                         className={formik.errors.email && formik.touched.email  ? 'input-error' : ''}
                         />
+                        {formik.errors.email && formik.touched.email && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.email}</RegisterpageInputErrorPromptStyled>
+                         )}
                     </LoginpageInputSideStyled>
                     <LoginpageInputSideStyled>
                         <LoginpageInputTitleStyled>Mật khẩu</LoginpageInputTitleStyled>
@@ -221,11 +235,16 @@ const Loginpage = () => {
                          type='password' 
                          name='password' 
                          onChange={formik.handleChange}
+                         className={formik.errors.password && formik.touched.password  ? 'input-error' : ''}
+                         onBlur={formik.handleBlur}
                         />
+                        {formik.errors.password && formik.touched.password && (
+                             <RegisterpageInputErrorPromptStyled>{formik.errors.password}</RegisterpageInputErrorPromptStyled>
+                        )}
                     </LoginpageInputSideStyled>
                     <LoginpageLoginButtonStyled type='submit'>Đăng nhập</LoginpageLoginButtonStyled>
                     <LoginpageNavigateWrapperStyled>
-                        <Link to="/register" style={{textDecoration: 'none'}}>
+                        <Link to="/account/register" style={{textDecoration: 'none'}}>
                             <LoginpageNavigateTitleStyled>Tạo tài khoản</LoginpageNavigateTitleStyled>
                         </Link>
                         <LoginpageNavigateTitleStyled>Quên mật khẩu?</LoginpageNavigateTitleStyled>
@@ -245,7 +264,7 @@ const Loginpage = () => {
                         <LineThroughtAnotherLoginButtonHalfStyled><AppleIcon sx={{marginRight: '.4rem'}}/>Apple</LineThroughtAnotherLoginButtonHalfStyled>
                     </LineThroughtAnotherLoginButtonWrapperStyled>
                 </LineThroughtAnotherLoginWrapperStyled>
-                <LineThroughtLoginPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Looking.</LineThroughtLoginPolicyWrapperStyled>
+                <LineThroughtLoginPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Vluxstay.</LineThroughtLoginPolicyWrapperStyled>
             </LoginpageStyled>
         </LoginpageWrapperStyled>
     </LoginpageContainerStyled>

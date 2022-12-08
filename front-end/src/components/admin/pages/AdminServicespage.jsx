@@ -170,7 +170,7 @@ const AdminServicespage = () => {
   return (
     <AdminServicespageContainerStyled>
       <AdminServicespageHeaderWrapperStyled>
-          <Typography variant='h5'>Danh sách loại sản phẩm</Typography>
+          <Typography variant='h5'>Danh sách dịch vụ</Typography>
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <StyledLink to="/admin">

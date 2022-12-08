@@ -257,9 +257,9 @@ const ProviderFile = () => {
   const formik = useFormik({
     initialValues: {
       kind: "",
-      firstName: "",
-      lastName: "",
-      nickName: "",
+      firstName: "Duy",
+      lastName: "Nguyen",
+      nickName: "DuyNguyen",
       dayOfBirth: "",
       monthOfBirth: "",
       yearOfBirth: "",

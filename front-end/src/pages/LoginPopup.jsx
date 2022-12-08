@@ -212,7 +212,7 @@ const LoginPopup = (props) => {
                     </LoginpageInputSideStyled>
                     <LoginpageLoginButtonStyled type='submit'>Đăng nhập</LoginpageLoginButtonStyled>
                     <LoginpageNavigateWrapperStyled>
-                        <Link to="/register" style={{textDecoration: 'none'}}>
+                        <Link to="/account/register" style={{textDecoration: 'none'}}>
                             <LoginpageNavigateTitleStyled>Tạo tài khoản</LoginpageNavigateTitleStyled>
                         </Link>
                         <LoginpageNavigateTitleStyled>Quên mật khẩu?</LoginpageNavigateTitleStyled>
@@ -232,7 +232,7 @@ const LoginPopup = (props) => {
                         <LineThroughtAnotherLoginButtonHalfStyled><AppleIcon sx={{marginRight: '.4rem'}}/>Apple</LineThroughtAnotherLoginButtonHalfStyled>
                     </LineThroughtAnotherLoginButtonWrapperStyled>
                 </LineThroughtAnotherLoginWrapperStyled>
-                <LineThroughtLoginPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Looking.</LineThroughtLoginPolicyWrapperStyled>
+                <LineThroughtLoginPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Vluxstay.</LineThroughtLoginPolicyWrapperStyled>
             </LoginpageStyled>
         </LoginpageWrapperStyled>
     </LoginpageContainerStyled>

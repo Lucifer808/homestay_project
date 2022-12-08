@@ -47,6 +47,7 @@ export default function AdminServiesForm(props) {
                         label="Tên loại dịch vụ"
                         value={values.name}
                         onChange={handleInputChange}
+                        required = {true}
                     />
                     <Controls.Input
                         name="desc"
@@ -56,6 +57,7 @@ export default function AdminServiesForm(props) {
                         multiline
                         minRows={6}
                         maxRows={10}
+                        required={true}
                     />
                     <Controls.Checkbox
                         name="active"

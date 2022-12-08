@@ -4,6 +4,7 @@ import Footer from './Footer';
 import FooterCopyright from './Home/FooterCopyright';
 import flag1 from '../../assets/flag-vn.png';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 const EnterpriseWelcomepageHeaderContainerStyled = styled.div`
     display: flex;
     align-items: center;
@@ -36,7 +37,9 @@ const EnterpriseLayout = () => {
     <>
         <EnterpriseWelcomepageHeaderContainerStyled>
           <EnterpriseWelcomepageHeaderWrapperStyled>
-              <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+              <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+              </Link>
               <HeaderRightStyled>
                   <HeaderLanguageStyled src={flag1} />
               </HeaderRightStyled>

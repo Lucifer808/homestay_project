@@ -158,13 +158,15 @@ const ProviderWelcomepage = () => {
     <ProviderWelcomepageContainerStyled>
         <ProviderWelcomepageHeaderContainerStyled>
             <ProviderWelcomepageHeaderWrapperStyled>
-                <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+                <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+                </Link>
                 <HeaderRightStyled>
                     <HeaderLanguageStyled src={flag1} />
-                    <Link to="/login">
+                    <Link to="/account/login">
                         <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
                     </Link>
-                    <Link to="/register">
+                    <Link to="/account/register">
                         <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
                     </Link>
                 </HeaderRightStyled>

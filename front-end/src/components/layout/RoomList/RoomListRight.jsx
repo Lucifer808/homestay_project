@@ -70,7 +70,9 @@ const RoomListRight = () => {
             </RoomListRightTopFilterContentWrapperStyled>
           </RoomListRightTopFilterWrapperStyled>
           <RoomListRightBottomFilterWrapperStyled>
-            <RoomCard cardInfo={citiSearchData}/>
+            {citiSearchData && citiSearchData.map(item => (
+              <RoomCard cardInfo={item} key={item.id}/>
+            ))}
           </RoomListRightBottomFilterWrapperStyled>
         </RoomListRightWrapperStyled>
     </RoomListRightContainerStyled>

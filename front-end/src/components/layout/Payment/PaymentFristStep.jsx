@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import RecordVoiceOverOutlinedIcon from '@mui/icons-material/RecordVoiceOverOutlined';
 import SmokeFreeIcon from '@mui/icons-material/SmokeFree';
@@ -18,6 +18,8 @@ import Popup from '../../admin/components/Popup';
 import LoginPopup from '../../../pages/LoginPopup';
 import UserOptions from '../../child/UserOptions';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 const PaymentpageContainerStyled = styled.div`
     width: 100%;
     height: 100%;
@@ -415,9 +417,10 @@ const PaymentFristStep = () => {
     const pathName = process.env.REACT_APP_BACK_END_PUBLIC_URL;
     const usereData = useSelector(selectUser);
     const initialValueF = {
-        userName: usereData.user.userName || " ",
-        userEmail: usereData.user.email || " ",
+        userName: usereData?.user?.userName || " ",
+        userEmail: usereData?.user?.email || " ",
         userPhoneNumber: " ",
+        nameOfAccommodation: selectBookingInfoData?.data?.[0]?.nameOfAccommodation || "An Lam Retreats Ninh Van Bay",
         userRegion: " ",
         smoke: " ",
         bed: " ",
@@ -442,7 +445,9 @@ const PaymentFristStep = () => {
     <PaymentpageContainerStyled>
         <PaymentpageHeaderContainerStyled>
             <PaymentpageHeaderWrapperStyled>
-                <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+                <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+                </Link>
                 <PaymentpageHeaderStepWrapperStyled>
                     <PaymentStepperProvider activeStep={0} />
                 </PaymentpageHeaderStepWrapperStyled>

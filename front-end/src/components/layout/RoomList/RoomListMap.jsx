@@ -17,7 +17,8 @@ const PopupLeftWrapperStyled = styled.div``
 const PopupLeftImageStyled = styled.img`
   width: 10rem;
   height: 12rem;
-  `
+  object-fit: cover;
+`
 const PopupRightWrapperStyled = styled.div`
   margin: 0 .2rem;
 `
@@ -143,7 +144,7 @@ const Markers = (props) => {
                           </AdminServiceFormRightReviewPointWrapperStyled>
                       </AdminServiceFormRightReviewWrapperStyled>
                       <AdminServiceFormRightPriceDiscountWrapperStyled>
-                          <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
+                          <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM SỐC HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
                       </AdminServiceFormRightPriceDiscountWrapperStyled>
                       <AdminServiceFormRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</AdminServiceFormRightPriceDiscountSubContentStyled>
                       <AdminServiceFormRightNewPriceStyled>{marker.priceBase?.toLocaleString()} ₫</AdminServiceFormRightNewPriceStyled>

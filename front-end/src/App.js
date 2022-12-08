@@ -53,6 +53,12 @@ import PaymentFristStep from "./components/layout/Payment/PaymentFristStep";
 import PaymentSeccondStep from "./components/layout/Payment/PaymentSeccondStep";
 import PaymentSuccess from "./components/layout/Payment/PaymentSuccess";
 import PaymentLayout from "./components/layout/Payment/PaymentLayout";
+import NotFoundRoute from "./routes/NotFoundRoute";
+import MyOrderspage from "./pages/MyOrderspage";
+import AccountLayout from "./components/child/AccountLayout";
+import MyRoomOrdersListpage from "./pages/MyRoomOrdersListpage";
+import MyWishListpage from "./pages/MyWishListpage";
+import MyInfopage from "./pages/MyInfopage";
 function App() {
   const selectData = useSelector(selectUser);
   const isAuthenticated = useSelector(selectIsAutheticated);
@@ -86,8 +92,6 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Homepage />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/register" element={<Registerpage />} />
           <Route path="/search" element={<RoomListpage />} />
           <Route path="/roomdetail/:id" element={<RoomDetailpage />} />
         </Route>
@@ -107,6 +111,13 @@ function App() {
         </Route>
         <Route path="/homes" element={<ProviderWelcomepage />} />
         <Route path="/homes/choice" element={<ProviderMainpage />} />
+        <Route path="/account" element={<AccountLayout />}>
+          <Route path="/account/login" element={<Loginpage />} />
+          <Route path="/account/register" element={<Registerpage />} />
+          <Route path="/account/orders" element={<MyOrderspage />} />
+          <Route path="/account/wishlist" element={<MyWishListpage />} />
+          <Route path="/account/myinfo" element={<MyInfopage />} />
+        </Route>
         <Route path="/provider" element={<ProviderLayout />}>
           <Route path="/provider" index element={<ProviderInfo />} />
           <Route path="/provider/desc" element={<ProviderDesc />} />
@@ -117,6 +128,10 @@ function App() {
           <Route path="/provider/file" element={<ProviderFile />} />
           <Route path="/provider/sucess" element={<ProviderSuccessSetUp />} />
           <Route path="/provider/myroomlist" element={<MyRoomListpage />} />
+          <Route
+            path="/provider/my-room-order-list/:id"
+            element={<MyRoomOrdersListpage />}
+          />
           <Route
             path="/provider/roombyid/:id"
             element={<MyRoomListByIdpage />}
@@ -155,6 +170,7 @@ function App() {
             element={<AdminAccommodationspage />}
           />
         </Route>
+        <Route path="*" element={<NotFoundRoute />} />
       </Routes>
     </>
   );

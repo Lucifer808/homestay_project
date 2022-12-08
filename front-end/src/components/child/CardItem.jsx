@@ -22,7 +22,7 @@ const PesudoStyled = styled.div `
     position: absolute;
     top: 1rem;
     right: 1rem;
-    z-index: 99;
+    z-index: 1;
     width: 2.8rem;
     height: 2.8rem;
     border-radius: .5rem;

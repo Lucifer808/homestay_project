@@ -129,15 +129,17 @@ const CountNotificationStyled = styled.span`
     color: #fff;
     font-size: 12px;
 `
-const UserOptions = ({user}) => {
+const UserOptions = ({user, account}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 //   const [imageReview, setImageReview] = useState("/Profile.png");
 //   const alert = useAlert();
   const logoutHandle = () =>{
     dispatch(logoutUser());
+    if(account == 1){
+      navigate("/account/login")
+    }
   }
-  console.log(user);
   return (
     <>
       <LoginedContainerStyled>
@@ -152,19 +154,19 @@ const UserOptions = ({user}) => {
             </LoginedWrapStyled>
         <LoginCateWrapperStyled className='loginCate' role={user.role}>
           <LoginCateListStyled>
-              <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
+              <Link to='/account/myinfo' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
                   <AccountBoxOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Hồ sơ của tôi</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
-              <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
+              <Link to='/account/orders' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
                   <InsertDriveFileOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Đơn đặt chổ của tôi</LoginCateListItemOptionStyled>
                 </LoginCateListItemStyled>
               </Link>
-              <Link to='/account' style={{textDecoration: 'none', color: 'black'}}>
+              <Link to='/account/wishlist' style={{textDecoration: 'none', color: 'black'}}>
                 <LoginCateListItemStyled>
                   <FeaturedPlayListOutlinedIcon style={{fontSize: '1.5rem', color: '#000'}}/>
                   <LoginCateListItemOptionStyled>Danh sách yêu thích</LoginCateListItemOptionStyled>

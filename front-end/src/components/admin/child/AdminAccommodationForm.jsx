@@ -189,6 +189,7 @@ export default function AdminAccommodationForm(props) {
                             value={values.latitude}
                             onChange={handleInputChange}
                             variant="standard"
+                            required={true}
                         />
                     </FormControl>
                     <FormControl variant="standard">
@@ -199,6 +200,7 @@ export default function AdminAccommodationForm(props) {
                             value={values.longtitude}
                             onChange={handleInputChange}
                             variant="standard"
+                            required={true}
                         />
                     </FormControl>
                     <FormControl variant="outlined">

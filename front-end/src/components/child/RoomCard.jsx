@@ -463,43 +463,42 @@ const AdminServiceForm = (props) => {
   const searchQueryString = new URLSearchParams(params).toString();
   return (
     <AdminServiceFormContainerStyled>
-        {cardInfo.map(item => (
-            <AdminServiceFormWrapperStyled key={item.id}>
+            <AdminServiceFormWrapperStyled key={cardInfo.id}>
                 <AdminServiceFormLeftWrapperStyled onClick={handleClickOpen}>
                     <AdminServiceFormLeftMainImgWrapperStyled>
-                        <AdminServiceFormLeftMainImgStyled src={`${pathName+item.acim_id[0]?.path}`}/>
+                        <AdminServiceFormLeftMainImgStyled src={`${pathName+cardInfo.acim_id[0]?.path}`}/>
                     </AdminServiceFormLeftMainImgWrapperStyled>
                     <AdminServiceFormLeftSubImgWrapperStyled>
-                        {item.acim_id?.slice(1, 4).map(item => (
+                        {cardInfo.acim_id?.slice(1, 4).map(item => (
                             <AdminServiceFormLeftSubImgStyled key={item.id} src={`${pathName+item.path}`}/>
                         ))}
                         <AdminServiceFormLeftSubImgOverlayWrapperStyled>
-                            <AdminServiceFormLeftSubImgAllStyled src={`${pathName+item.acim_id[5]?.path}`}/>
+                            <AdminServiceFormLeftSubImgAllStyled src={`${pathName+cardInfo.acim_id[5]?.path}`}/>
                             <AdminServiceFormLeftSubImgOverlayStyled>
                                 <AdminServiceFormLeftSubImgOverlayTitleStyled>XEM TẤT CẢ</AdminServiceFormLeftSubImgOverlayTitleStyled>
                             </AdminServiceFormLeftSubImgOverlayStyled>
                         </AdminServiceFormLeftSubImgOverlayWrapperStyled>
                     </AdminServiceFormLeftSubImgWrapperStyled>
                 </AdminServiceFormLeftWrapperStyled>
-                <Link to={`/roomdetail/${item.ac_propertyRegistrationId}?${searchQueryString}`}  style={{color: 'black', textDecoration: 'none'}}>
+                <Link to={`/roomdetail/${cardInfo.ac_propertyRegistrationId}?${searchQueryString}`}  style={{color: 'black', textDecoration: 'none'}}>
                     <AdminServiceFormMiddleWrapperStyled>
                         <AdminServiceFormMiddleTopWrapperStyled>
-                            <AdminServiceFormMiddleTopStyled>{item.nameOfAccommodation}</AdminServiceFormMiddleTopStyled>
+                            <AdminServiceFormMiddleTopStyled>{cardInfo.nameOfAccommodation}</AdminServiceFormMiddleTopStyled>
                             <AdminServiceFormMiddleTopRatingWrapperStyled>
-                                <Rating name="size-small" value={item.rating} size="small" readOnly/>
+                                <Rating name="size-small" value={cardInfo.rating} size="small" readOnly/>
                                 <AdminServiceFormMiddleTopRatingAddressWrapperStyled>
                                     <PlaceOutlinedIcon style={{fontSize: '.9rem', color: '#0283df'}}/>
-                                    <AdminServiceFormMiddleTopRatingAddressStyled>{item.acci_id?.name}, {item.acst_id?.name}, {item.acct_id?.name}</AdminServiceFormMiddleTopRatingAddressStyled>
+                                    <AdminServiceFormMiddleTopRatingAddressStyled>{cardInfo.acci_id?.name}, {cardInfo.acst_id?.name}, {cardInfo.acct_id?.name}</AdminServiceFormMiddleTopRatingAddressStyled>
                                 </AdminServiceFormMiddleTopRatingAddressWrapperStyled>
                             </AdminServiceFormMiddleTopRatingWrapperStyled>
                             <AdminServiceFormMiddleTopAdvancedServiceContainerStyled>
-                                {item.acdas_id.slice(4, 6).map((item, index) => (
+                                {cardInfo.acdas_id.slice(4, 6).map((item, index) => (
                                     <AdminServiceFormMiddleTopAdvancedServiceWrapperStyled key={index}>
                                         <AdminServiceFormMiddleTopAdvancedServiceContentStyled>{item.dsasv_id[0]?.name}</AdminServiceFormMiddleTopAdvancedServiceContentStyled>
                                     </AdminServiceFormMiddleTopAdvancedServiceWrapperStyled>
                                 ))}
                                 <AdminServiceFormMiddleTopAdvancedServiceWrapperStyled>
-                                    <AdminServiceFormMiddleTopAdvancedServiceContentMoreStyled>+{item.acdas_id.length - 2}</AdminServiceFormMiddleTopAdvancedServiceContentMoreStyled>
+                                    <AdminServiceFormMiddleTopAdvancedServiceContentMoreStyled>+{cardInfo.acdas_id.length - 2}</AdminServiceFormMiddleTopAdvancedServiceContentMoreStyled>
                                 </AdminServiceFormMiddleTopAdvancedServiceWrapperStyled>
                             </AdminServiceFormMiddleTopAdvancedServiceContainerStyled>
                             <AdminServiceFormMiddleTopAdvancedServiceBottomContainerStyled>
@@ -521,7 +520,7 @@ const AdminServiceForm = (props) => {
                     </AdminServiceFormMiddleWrapperStyled>
                 </Link>
                 <RoomListRightTopFilterMiddleStyled />
-                <Link to={`/roomdetail/${item.ac_propertyRegistrationId}?${searchQueryString}`}  style={{color: 'black', textDecoration: 'none'}}>
+                <Link to={`/roomdetail/${cardInfo.ac_propertyRegistrationId}?${searchQueryString}`}  style={{color: 'black', textDecoration: 'none'}}>
                     <AdminServiceFormRightWrapperStyled>
                         <AdminServiceFormRightReviewWrapperStyled>
                             <AdminServiceFormRightReviewContentWrapperStyled>
@@ -534,15 +533,15 @@ const AdminServiceForm = (props) => {
                         </AdminServiceFormRightReviewWrapperStyled>
                         <AdminServiceFormRightPriceWrapperStyled>
                             <AdminServiceFormRightPriceDiscountWrapperStyled>
-                                <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
+                                <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM SỐC HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
                             </AdminServiceFormRightPriceDiscountWrapperStyled>
                             <AdminServiceFormRightPriceDiscountContentWrapperStyled>
                                 <KeyboardDoubleArrowDownOutlinedIcon style={{color: 'rgb(180, 36, 36)', fontSize: '.9rem'}}/>
                                 <AdminServiceFormRightPriceDiscountContentStyled>SIÊU TIẾT KIỆM</AdminServiceFormRightPriceDiscountContentStyled>
                             </AdminServiceFormRightPriceDiscountContentWrapperStyled>
                             <AdminServiceFormRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</AdminServiceFormRightPriceDiscountSubContentStyled>
-                            <AdminServiceFormRightOldPriceStyled className='cross'>{item?.trac_id?.[0]?.trrp_id?.[0]?.maxPrice?.toLocaleString()} ₫</AdminServiceFormRightOldPriceStyled>
-                            <AdminServiceFormRightNewPriceStyled>{item.priceBase?.toLocaleString()} ₫</AdminServiceFormRightNewPriceStyled>
+                            <AdminServiceFormRightOldPriceStyled className='cross'>{cardInfo?.trac_id?.[0]?.trrp_id?.[0]?.maxPrice?.toLocaleString()} ₫</AdminServiceFormRightOldPriceStyled>
+                            <AdminServiceFormRightNewPriceStyled>{cardInfo.priceBase?.toLocaleString()} ₫</AdminServiceFormRightNewPriceStyled>
                             <AdminServiceFormRightBottomButtonWrapperStyled>
                                 <AdminServiceFormRightBottomButtonTitleStyled>Chọn phòng</AdminServiceFormRightBottomButtonTitleStyled>
                                 <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
@@ -568,27 +567,11 @@ const AdminServiceForm = (props) => {
                                 <RoomDetailDialogContentWrapperStyled>
                                     <RoomDetailDialogContentImgWrapperStyled>
                                         <ReactSlickSyled asNavFor={nav2} ref={(slider1) => setNav1(slider1)} {...settings}>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentImgDetailStyled src={img_detail}/>
-                                            </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            {cardInfo?.acim_id?.map(img => (
+                                                <RoomDetailDialogContentImgDetailWrapperStyled key={img.id}>
+                                                    <RoomDetailDialogContentImgDetailStyled src={`${pathName+img?.path}`}/>
+                                                </RoomDetailDialogContentImgDetailWrapperStyled>
+                                            ))}
                                         </ReactSlickSyled>
                                         <Slider
                                             asNavFor={nav1}
@@ -598,27 +581,11 @@ const AdminServiceForm = (props) => {
                                             focusOnSelect={true}
                                             arrows={false}
                                         >
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
+                                            {cardInfo?.acim_id?.map(img => (
+                                            <RoomDetailDialogContentSubImgDetailWrapperStyled key={img.id}>
+                                                <RoomDetailDialogContentSubImgDetailStyled src={`${pathName+img?.path}`}/>
                                             </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                            <RoomDetailDialogContentSubImgDetailWrapperStyled>
-                                                <RoomDetailDialogContentSubImgDetailStyled src={img_detail} />
-                                            </RoomDetailDialogContentSubImgDetailWrapperStyled>
+                                            ))}
                                         </Slider>
                                     </RoomDetailDialogContentImgWrapperStyled>
                                     <RoomDetailDialogContentDiscWrapperStyled>
@@ -717,15 +684,17 @@ const AdminServiceForm = (props) => {
                                         </RoomDetailDialogContentDescTopWrapperStyled>
                                         <RoomDetailDialogContentDescBottomWrapperStyled>
                                             <AdminServiceFormRightPriceDiscountWrapperStyled>
-                                                <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
+                                                <AdminServiceFormRightPriceDiscountPercentStyled>GIẢM SỐC HÔM NAY</AdminServiceFormRightPriceDiscountPercentStyled>
                                             </AdminServiceFormRightPriceDiscountWrapperStyled>
                                                 <AdminServiceFormRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</AdminServiceFormRightPriceDiscountSubContentStyled>
-                                                <AdminServiceFormRightOldPriceStyled className='cross'>320.000.000</AdminServiceFormRightOldPriceStyled>
-                                                <AdminServiceFormRightNewPriceStyled>660.000 ₫</AdminServiceFormRightNewPriceStyled>
+                                                <AdminServiceFormRightOldPriceStyled className='cross'>{(cardInfo?.trac_id?.[0]?.trrp_id?.[0]?.maxPrice + 100000).toLocaleString()} ₫</AdminServiceFormRightOldPriceStyled>
+                                                <AdminServiceFormRightNewPriceStyled>{cardInfo.priceBase?.toLocaleString()} ₫</AdminServiceFormRightNewPriceStyled>
+                                            <Link to={`/roomdetail/${cardInfo.ac_propertyRegistrationId}?${searchQueryString}`}  style={{color: 'black', textDecoration: 'none'}}>
                                             <AdminServiceFormRightBottomButtonWrapperStyled>
-                                                <AdminServiceFormRightBottomButtonTitleStyled>Chọn phòng</AdminServiceFormRightBottomButtonTitleStyled>
+                                                <AdminServiceFormRightBottomButtonTitleStyled >Chọn phòng</AdminServiceFormRightBottomButtonTitleStyled>
                                                 <ArrowForwardIosOutlinedIcon style={{color: '#fff'}}/>
                                             </AdminServiceFormRightBottomButtonWrapperStyled>
+                                            </Link>
                                         </RoomDetailDialogContentDescBottomWrapperStyled>
                                     </RoomDetailDialogContentDiscWrapperStyled>
                                 </RoomDetailDialogContentWrapperStyled>
@@ -734,8 +703,6 @@ const AdminServiceForm = (props) => {
                     </Dialog>
                 </RoomDetailImgDetailWrapperStyled>
             </AdminServiceFormWrapperStyled>
-        ))}
-        
     </AdminServiceFormContainerStyled>
   )
 }

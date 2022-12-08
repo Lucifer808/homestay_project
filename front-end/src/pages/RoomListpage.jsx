@@ -18,7 +18,7 @@ const RoomListpage = () => {
   const location = useLocation();
   useEffect(() => {
     dispatch(customerSearch(location.search));
-  },)
+  },[location.search])
   return (
     <RoomListpageContainerStyled>
         <RoomListLeft />

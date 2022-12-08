@@ -3,15 +3,15 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import FamilyRestroomOutlinedIcon from '@mui/icons-material/FamilyRestroomOutlined';
 import styled from 'styled-components';
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import * as rdrLocales from 'react-date-range/dist/locale';
-import { optionsData } from '../../dummyData';
+import { useSearchParams } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useSelector } from 'react-redux';
+import { selectCitiSearch } from '../../features/customerSlice';
 const QuickSearchContainerStyled = styled.div`
     width: 100%;
     height: 100%;
@@ -160,107 +160,6 @@ const QuickSearchNavigationOptionContentTopStyled = styled.span``
 const QuickSearchNavigationOptionContentBottomStyled = styled.span`
   color: #ccc;
 `
-const QuickSearchNavigationOptionContainerStyled = styled.div`
-  display: flex;
-  position: absolute;
-  border-radius: .6rem;
-  margin-top: .8rem;
-  z-index: 10;
-  left: -10rem;
-  width: ${props => props.toggleCheck ? "40rem" : "auto"};
-  height: auto;
-  background-color: #fff;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  transition: all ease-in-out .2s;
-  &::before{
-    content: "";
-    position: absolute;
-    height: 2rem;
-    width: .1rem;
-    top: -2rem;
-    left: 10rem;
-    border-width: 0 1rem .8rem;
-    border-style: solid;
-    border-color: transparent transparent rgb(248, 247, 249) transparent;
-  }
-`
-const QuickSearchNavigationOptionWrapperStyled = styled.div`
-  flex: 1;
-  width: auto;
-  background-color: rgb(248, 247, 249);
-`
-const QuickSearchNavigationOptionStyled = styled.div`
-  display: flex;
-  flex: 1;
-  width: 20rem;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  border-bottom: 1px solid #ccc;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all .1s linear;
-  &:hover{
-    color: rgb(135, 179, 251);
-  }
-`
-const QuickSearchNavigationOptionLeftStyled = styled.div``
-const QuickSearchNavigationOptionRightStyled = styled.div``
-const QuickSearchNavigationOptionLeftContentStyled = styled.span``
-const QuickSearchNavigationOptionRightContentStyled = styled.span`
-  font-size: .8rem;
-`
-const QuickSearchPesudoStyled = styled.div `
-  width: 100%;
-  height: 1.2rem;
-  padding: .4rem;
-  font-weight: 800;
-  border-radius: .1rem;
-  color: #fff;
-  background-color: rgb(225, 44, 44);
-  align-items: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const QuickSearchPesudoContentStyled = styled.span`
-  display: block;
-  color: #fff;
-  font-size: .8rem;
-  font-weight: 500;
-`
-const QuickSearchNavigationOptionDetailWrapperStyled = styled.div`
-  flex: 1;
-  width: auto;
-  padding: .8rem .6rem;
-`
-const QuickSearchNavigationOptionDetailStyled = styled.div`
-  display: flex;
-  width: auto;
-  align-items: center;
-  justify-content: space-around;
-  padding: 1rem .4rem;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
-  transition: all .1s linear;
-`
-const QuickSearchNavigationOptionDetailQuantityStyled = styled.span`
-  font-size: 1.4rem;
-  color: rgb(57, 116, 210);
-`
-const QuickSearchNavigationOptionDetailContentStyled = styled.span`
-  color: #888;
-`
-const QuickSearchNavigationOptionDetailContentWrapperStyled = styled.div``
-const QuickSearchNavigationOptionDetailInfomationWrapperStyled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const QuickSearchNavigationOptionDetailInfomationStyled = styled.span`
-  display: block;
-  padding: 1rem;
-`
 const QuickSearchButtonWrapperStyled = styled.button`
     margin-left:.2rem;
     width: 7.4vw;
@@ -274,14 +173,113 @@ const QuickSearchButtonWrapperStyled = styled.button`
         background-color: rgb(135, 179, 251);
     }
 `
+const SearchNavigationOptionContainerStyled = styled.div`
+  display: flex;
+  position: absolute;
+  border-radius: .6rem;
+  margin-top: .8rem;
+  z-index: 10;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: all ease-in-out .2s;
+  &::before{
+    content: "";
+    position: absolute;
+    height: 2rem;
+    width: .1rem;
+    top: -2rem;
+    left: .4rem;
+    border-width: 0 1rem .8rem;
+    border-style: solid;
+    border-color: transparent transparent rgb(248, 247, 249) transparent;
+  }
+`
+const SearchNavigationOptionWrapperStyled = styled.div`
+  flex: 1;
+  width: auto;
+  padding: 1rem;
+  background-color: rgb(248, 247, 249);
+  border-radius: .4rem;
+`
+const SearchNavigationOptionStyled = styled.div`
+  display: flex;
+  flex: 1;
+  width: auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  transition: all .1s linear;
+`
+const SearchNavigationOptionLeftStyled = styled.div``
+const SearchNavigationOptionRightStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const SearchNavigationOptionLeftContentStyled = styled.span`
+  font-weight: 600;
+`
+const SearchNavigationOptionLeftContentWrapperStyled = styled.div``
+const SearchNavigationOptionLeftSubContentStyled = styled.span`
+  display: block;
+  font-size: .8rem;
+  color: #888;
+`
+const SearchNavigationOptionRightIconsWrapperStyled = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(49, 112, 231);
+`
+const SearchNavigationOptionDetailQuantityStyled = styled.span`
+  font-size: 1.2rem;
+  font-weight: 600;
+`
+const SearchNavigationOptionDetailContentWrapperStyled = styled.div`
+  margin: 0 1rem;
+`
 const QuickSearch = () => {
   const [openDate, setOpenDate] = useState(false);
   const [openOption, setOpenOption] = useState(false);
   const [index, setIndex] = useState();
+  const [room, setRoom] = useState(2);
+  const [adult, setAdult] = useState(1);
+  const [children, setChildren] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectCitiSearchData = useSelector(selectCitiSearch);
+  const params = [];
+
+  searchParams.forEach((key, value) => {
+    params.push({[value]: key});
+  });
+  const handleDecrease = (name) => {
+    if(name === "room"){
+      if(room > 1){
+        setRoom( room - 1);
+      }else{
+        return 
+      }
+    }else if(name === "adult"){
+      if(adult > 1){
+        setAdult( adult - 1);
+      }else{
+        return 
+      }
+    }else if(name === "children"){
+      if(children > 1){
+        setChildren( children - 1);
+      }else{
+        return 
+      }
+    }
+  }
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: new Date(params[0].checkIn),
+      endDate: new Date(params[4].checkOut),
       key: "selection"
     }
   ]);
@@ -301,8 +299,26 @@ const QuickSearch = () => {
         setOpenOption(!openOption);
     }
   };
-  const handleOpenAdvancedOption = (id) =>{
-    setIndex(id);
+  const handleIncrease = (name) => {
+    if(name === "room"){
+      if(room < 9){
+        setRoom( room + 1);
+      }else{
+        return 
+      }
+    }else if(name === "adult"){
+      if(adult < 36){
+        setAdult( adult + 1);
+      }else{
+        return 
+      }
+    }else if(name === "children"){
+      if(children < 9){
+        setChildren( children + 1);
+      }else{
+        return 
+      }
+    }
   }
   return (
     <QuickSearchContainerStyled>
@@ -311,8 +327,8 @@ const QuickSearch = () => {
             <QuickSearchLeftWrapperStyled>
                 <SearchOutlinedIcon/>
                 <QuickSearchInputWrapperStyled>
-                    <QuickSearchInputStyled placeholder='1.853 nơi ở có phòng' />
-                    <QuickSearchInputContentStyled>London</QuickSearchInputContentStyled>
+                    <QuickSearchInputStyled placeholder={selectCitiSearchData.length + ` nơi ở có phòng`} />
+                    <QuickSearchInputContentStyled>{params[5].textToSearch}</QuickSearchInputContentStyled>
                 </QuickSearchInputWrapperStyled>
             </QuickSearchLeftWrapperStyled>
             <QuickSearchNavigationInputHalfLeftStyled>
@@ -360,65 +376,66 @@ const QuickSearch = () => {
                     <KeyboardArrowDownIcon />
                 </QuickSearchNavigationInputOptionsWrapperStyled>
                 {openOption && (
-                <QuickSearchNavigationOptionContainerStyled toggleCheck={index > 2 ? true : false}>
-                    <QuickSearchNavigationOptionWrapperStyled>
-                    {optionsData.map(item => (
-                    <QuickSearchNavigationOptionStyled key={item.id} onClick={() => handleOpenAdvancedOption(item.id)}>
-                        <QuickSearchNavigationOptionLeftStyled>
-                            <QuickSearchNavigationOptionLeftContentStyled>{item.title}</QuickSearchNavigationOptionLeftContentStyled>
-                            {item.id === 1 && (
-                            <QuickSearchPesudoStyled>
-                                <QuickSearchPesudoContentStyled>
-                                Tiết kiệm đến 12%
-                                </QuickSearchPesudoContentStyled>
-                            </QuickSearchPesudoStyled>
-                            )}
-                        </QuickSearchNavigationOptionLeftStyled>
-                        <QuickSearchNavigationOptionRightStyled>
-                        { item.id < 3 ?
-                        <QuickSearchNavigationOptionRightContentStyled>{item.option}</QuickSearchNavigationOptionRightContentStyled>
-                            :
-                        <ChevronRightOutlinedIcon />
-                        }
-                        </QuickSearchNavigationOptionRightStyled>
-                    </QuickSearchNavigationOptionStyled>
-                    ))}
-                    </QuickSearchNavigationOptionWrapperStyled>
-                    { index > 2 && (
-                    <QuickSearchNavigationOptionDetailWrapperStyled>
-                        <QuickSearchNavigationOptionDetailStyled>
-                        <RemoveIcon />
-                            <QuickSearchNavigationOptionDetailContentWrapperStyled>
-                            <QuickSearchNavigationOptionDetailQuantityStyled>3 </QuickSearchNavigationOptionDetailQuantityStyled>
-                            <QuickSearchNavigationOptionDetailContentStyled>Phòng</QuickSearchNavigationOptionDetailContentStyled>
-                            </QuickSearchNavigationOptionDetailContentWrapperStyled>
-                        <AddIcon sx={{ "&:hover": { color: "rgb(135, 179, 251)" } }}/>
-                        </QuickSearchNavigationOptionDetailStyled>
-                        <QuickSearchNavigationOptionDetailStyled>
-                        <RemoveIcon />
-                            <QuickSearchNavigationOptionDetailContentWrapperStyled>
-                            <QuickSearchNavigationOptionDetailQuantityStyled>1 </QuickSearchNavigationOptionDetailQuantityStyled>
-                            <QuickSearchNavigationOptionDetailContentStyled>Người lớn</QuickSearchNavigationOptionDetailContentStyled>
-                            </QuickSearchNavigationOptionDetailContentWrapperStyled>
-                        <AddIcon sx={{ "&:hover": { color: "rgb(135, 179, 251)" } }}/>
-                        </QuickSearchNavigationOptionDetailStyled>
-                        <QuickSearchNavigationOptionDetailStyled>
-                        <RemoveIcon />
-                            <QuickSearchNavigationOptionDetailContentWrapperStyled>
-                            <QuickSearchNavigationOptionDetailQuantityStyled>1 </QuickSearchNavigationOptionDetailQuantityStyled>
-                            <QuickSearchNavigationOptionDetailContentStyled>Trẻ em</QuickSearchNavigationOptionDetailContentStyled>
-                            </QuickSearchNavigationOptionDetailContentWrapperStyled>
-                        <AddIcon sx={{ "&:hover": { color: "rgb(135, 179, 251)" } }}/>
-                        </QuickSearchNavigationOptionDetailStyled>
-                        <QuickSearchNavigationOptionDetailInfomationWrapperStyled>
-                        <QuickSearchNavigationOptionDetailInfomationStyled>
-                            Du lịch cùng bé yêu? Bao gồm cả mục phía trên có giá và ưu đãi tốt nhất cho các nơi ở phù hợp với trẻ em.
-                        </QuickSearchNavigationOptionDetailInfomationStyled>
-                        <FamilyRestroomOutlinedIcon fontSize='large' sx={{ m: 1}}/>
-                        </QuickSearchNavigationOptionDetailInfomationWrapperStyled>
-                    </QuickSearchNavigationOptionDetailWrapperStyled>
-                    )}
-                </QuickSearchNavigationOptionContainerStyled>
+                <SearchNavigationOptionContainerStyled toggleCheck={index > 2 ? true : false}>
+                  <SearchNavigationOptionWrapperStyled>
+                    <SearchNavigationOptionStyled>
+                      <SearchNavigationOptionLeftStyled>
+                        <SearchNavigationOptionLeftContentStyled>
+                          Phòng
+                        </SearchNavigationOptionLeftContentStyled>
+                      </SearchNavigationOptionLeftStyled>
+                      <SearchNavigationOptionRightStyled>
+                        <SearchNavigationOptionRightIconsWrapperStyled>
+                          <RemoveCircleOutlineIcon onClick={() => handleDecrease("room")}/>
+                        </SearchNavigationOptionRightIconsWrapperStyled>
+                          <SearchNavigationOptionDetailContentWrapperStyled>
+                            <SearchNavigationOptionDetailQuantityStyled>{params[1].rooms}</SearchNavigationOptionDetailQuantityStyled>
+                          </SearchNavigationOptionDetailContentWrapperStyled>
+                          <SearchNavigationOptionRightIconsWrapperStyled>
+                            <AddCircleOutlineIcon onClick={() => handleIncrease("room")}/>
+                          </SearchNavigationOptionRightIconsWrapperStyled>
+                      </SearchNavigationOptionRightStyled>
+                    </SearchNavigationOptionStyled>
+                    <SearchNavigationOptionStyled>
+                      <SearchNavigationOptionLeftStyled>
+                        <SearchNavigationOptionLeftContentWrapperStyled>
+                          <SearchNavigationOptionLeftContentStyled>Người lớn</SearchNavigationOptionLeftContentStyled>
+                          <SearchNavigationOptionLeftSubContentStyled>18 tuổi trở lên</SearchNavigationOptionLeftSubContentStyled>
+                        </SearchNavigationOptionLeftContentWrapperStyled>
+                      </SearchNavigationOptionLeftStyled>
+                      <SearchNavigationOptionRightStyled>
+                        <SearchNavigationOptionRightIconsWrapperStyled>
+                            <RemoveCircleOutlineIcon onClick={() => handleDecrease("adult")}/>
+                        </SearchNavigationOptionRightIconsWrapperStyled>
+                          <SearchNavigationOptionDetailContentWrapperStyled>
+                            <SearchNavigationOptionDetailQuantityStyled>{params[2].adults}</SearchNavigationOptionDetailQuantityStyled>
+                          </SearchNavigationOptionDetailContentWrapperStyled>
+                        <SearchNavigationOptionRightIconsWrapperStyled>
+                          <AddCircleOutlineIcon onClick={() => handleIncrease("adult")}/>
+                        </SearchNavigationOptionRightIconsWrapperStyled>
+                      </SearchNavigationOptionRightStyled>
+                    </SearchNavigationOptionStyled>
+                    <SearchNavigationOptionStyled>
+                      <SearchNavigationOptionLeftStyled>
+                        <SearchNavigationOptionLeftContentWrapperStyled>
+                          <SearchNavigationOptionLeftContentStyled>Trẻ em</SearchNavigationOptionLeftContentStyled>
+                          <SearchNavigationOptionLeftSubContentStyled>0-17 tuổi</SearchNavigationOptionLeftSubContentStyled>
+                        </SearchNavigationOptionLeftContentWrapperStyled>
+                      </SearchNavigationOptionLeftStyled>
+                      <SearchNavigationOptionRightStyled>
+                        <SearchNavigationOptionRightIconsWrapperStyled>
+                          <RemoveCircleOutlineIcon onClick={() => handleDecrease("children")}/>
+                        </SearchNavigationOptionRightIconsWrapperStyled>
+                          <SearchNavigationOptionDetailContentWrapperStyled>
+                            <SearchNavigationOptionDetailQuantityStyled>{params[3].childrens}</SearchNavigationOptionDetailQuantityStyled>
+                          </SearchNavigationOptionDetailContentWrapperStyled>
+                        <SearchNavigationOptionRightIconsWrapperStyled>
+                          <AddCircleOutlineIcon onClick={() => handleIncrease("children")}/>
+                        </SearchNavigationOptionRightIconsWrapperStyled>
+                      </SearchNavigationOptionRightStyled>
+                    </SearchNavigationOptionStyled>
+                  </SearchNavigationOptionWrapperStyled>
+                </SearchNavigationOptionContainerStyled>
                 )}
             </QuickSearchNavigationInputHalfRightStyled>
             <QuickSearchButtonWrapperStyled>TÌM</QuickSearchButtonWrapperStyled>

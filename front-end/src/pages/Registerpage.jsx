@@ -340,10 +340,10 @@ const Registerpage = () => {
                  <LineThroughtWrapperStyled>
                      <LineThroughtFullStyled />
                  </LineThroughtWrapperStyled>
-                 <Link to="/login" style={{textDecoration: 'none'}}>
+                 <Link to="/account/login" style={{textDecoration: 'none'}}>
                     <LineThroughtNavigateLoginButtonStyled>Bạn đã có tài khoản? Đăng nhập ngay</LineThroughtNavigateLoginButtonStyled>
                  </Link>
-                 <LineThroughtRegisterPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Looking.</LineThroughtRegisterPolicyWrapperStyled>
+                 <LineThroughtRegisterPolicyWrapperStyled>Khi đăng nhập, tôi đồng ý với các Điều khoản sử dụng và Chính sách bảo mật của Vluxstay.</LineThroughtRegisterPolicyWrapperStyled>
              </RegisterpageStyled>
          </RegisterpageWrapperStyled>
         )}

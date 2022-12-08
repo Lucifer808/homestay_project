@@ -194,7 +194,7 @@ const AdminTypeOfServicespage = () => {
     { selectIsLoadingData ? <Loader /> : 
       <AdminServicespageContainerStyled>
         <AdminServicespageHeaderWrapperStyled>
-          <Typography variant='h5'>Danh sách loại sản phẩm</Typography>
+          <Typography variant='h5'>Danh sách loại dịch vụ</Typography>
           <div role="presentation">
             <Breadcrumbs aria-label="breadcrumb">
               <StyledLink to="/admin">

@@ -15,6 +15,8 @@ const initialState = {
   isLoading: false,
   isAutheticated: false,
   errorMessage: {},
+  myOrders: [],
+  myAccommodationsOrers: [],
 };
 
 export const getUsers = createAsyncThunk(
@@ -210,7 +212,7 @@ export const userGetAllAccommodation = createAsyncThunk(
 );
 
 export const userCreateRoomInfo = createAsyncThunk(
-  "user/all_accommodation",
+  "user/create_room_info",
   async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
       const response = await userApi.createRoomInfo(params);
@@ -245,10 +247,40 @@ export const userGetTypeRoomById = createAsyncThunk(
   }
 );
 
+export const userGetAllOrder = createAsyncThunk(
+  "user/all_order",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.getAllOrderById();
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userGetAllAccommodationOrder = createAsyncThunk(
+  "user/all_accomodation_order",
+  async (params, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await userApi.getAllOrderAccommodationsById(params);
+      return fulfillWithValue(response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    createReset: (state) => {
+      return {
+        ...state,
+        success: false,
+      };
+    },
     addBedConfig(state, action) {
       const itemIndex = state.bedConfigurations.findIndex(
         (item) => item.optionId === action.payload.optionId
@@ -599,6 +631,48 @@ export const userSlice = createSlice({
       state.success = false;
       state.errorMessage = action.payload;
     },
+    [userCreateRoomInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userCreateRoomInfo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.success = true;
+      state.errorMessage = {};
+      toast.success("Thêm phòng mới thành công !");
+    },
+    [userCreateRoomInfo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [userGetAllOrder.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetAllOrder.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myOrders = action.payload;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [userGetAllOrder.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
+    [userGetAllAccommodationOrder.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userGetAllAccommodationOrder.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myAccommodationsOrers = action.payload;
+      state.success = true;
+      state.errorMessage = {};
+    },
+    [userGetAllAccommodationOrder.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.success = false;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
@@ -613,6 +687,7 @@ export const {
   addDetailBedConfigSeccond,
   changeNoOfDetailBedConfigSeccond,
   removeFromDetailBedConfigSeccond,
+  createReset,
 } = userSlice.actions;
 
 export const selectUser = (state) => state.user.userData;
@@ -621,7 +696,10 @@ export const selectSuccess = (state) => state.user.success;
 export const selectBedTypeList = (state) => state.user.bedTypeList;
 export const selectServiceList = (state) => state.user.serviceList;
 export const selectedAllTypeRoom = (state) => state.user.userAllTypeRoom;
+export const selectedAllMyOrders = (state) => state.user.myOrders;
 export const selectedTypeRoom = (state) => state.user.typeRoom;
+export const selectedMyAccommodationsOrers = (state) =>
+  state.user.myAccommodationsOrers;
 export const selectedBedConfigurations = (state) =>
   state.user.bedConfigurations;
 export const selectedBedDetailConfigurations = (state) =>

@@ -5,6 +5,7 @@ import { links } from '../../dummyData';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeMenu, selectActiveMenu } from '../../features/adminSlice';
+
 const AdminSidebarContainerStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     .activeLink {
@@ -96,7 +97,9 @@ const AdminSidebar = () => {
         ) : (
             <AdminSidebarWrapperStyled>
                 <HeaderLogoWrapperStyled selectOpenMenu={selectOpenMenu}>
-                    <HeaderLogoStyled>Looking</HeaderLogoStyled>
+                    <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+                        <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+                    </Link>
                     <AdminCloseMenuWrapperStyled onClick={handleClickMenu}>
                         <AiOutlineMenu />
                     </AdminCloseMenuWrapperStyled>

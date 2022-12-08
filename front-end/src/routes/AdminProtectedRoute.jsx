@@ -49,7 +49,7 @@ const AdminProtectedRoute = () => {
                         </AdminLayoutRightWrapperStyled>
                     </AdminLayoutWrapperStyled>
                 </AdminLayoutContainerStyled>
-            ) : <Navigate to="/" />
+            ) : <Navigate to="/notfound" />
             ) : (
             <Loader />
         )}

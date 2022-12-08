@@ -97,6 +97,7 @@ export default function AdminServieForm(props) {
                         multiline
                         minRows={6}
                         maxRows={10}
+                        required={true}
                     />
                 </PopupLeftContainerStyled>
                 <PopupRightContainerStyled>
@@ -107,6 +108,7 @@ export default function AdminServieForm(props) {
                             value={values.sv_ts}
                             onChange={handleInputChange}
                             options={selectTypeOfServicesData}
+                            required={true}
                         />
                         <AdminServicespageAddBtnWrapperStyled  onClick={() => { setOpenChildPopup(true)}}>
                             <AdminServicespageAddBtnStyled>

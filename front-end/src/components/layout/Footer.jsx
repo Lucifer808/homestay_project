@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { Link } from 'react-router-dom';
 const FooterContainerStyled = styled.div`
     @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500&display=swap');
     width: 100vw;
@@ -61,7 +62,9 @@ const Footer = () => {
   return (
     <FooterContainerStyled>
         <FooterWrapperStyled>
-            <FooterLogoStyled>Looking</FooterLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+            <FooterLogoStyled>Vluxstay</FooterLogoStyled>
+            </Link>
             <FooterMiddleWrapperStyled>
                 <FooterMiddleContentWrapperStyled>
                     <FooterMiddleContentHeaderStyled>Top Homestay được yêu thích</FooterMiddleContentHeaderStyled>

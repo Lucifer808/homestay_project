@@ -11,7 +11,7 @@ import Popup from '../components/admin/components/Popup';
 import BedConfiguarationPopup from '../components/child/BedConfiguarationPopup';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { useEffect } from 'react';
-import { addDetailBedConfig, selectedBedDetailConfigurations, userCreateRoomInfo, userGetAllTypeRoom, selectedAllTypeRoom, userGetTypeRoomById } from '../features/userSlice';
+import { addDetailBedConfig, selectedBedDetailConfigurations, userCreateRoomInfo, userGetAllTypeRoom, selectedAllTypeRoom, userGetTypeRoomById, createReset, selectServiceList } from '../features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { styled as muiStyled } from '@mui/material/styles';
@@ -433,9 +433,10 @@ const MyRoompage = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const roomTypeId = searchParams.get('roomtypeid');
+  const roomTypeId = searchParams.get('roomTypeId');
   const selectedBedDetailConfigurationsData = useSelector(selectedBedDetailConfigurations);
   const selectedAllTypeRoomData = useSelector(selectedAllTypeRoom);
+  const selectSuccessData = useSelector(selectServiceList);
   const formik = useFormik({
     initialValues: {
       nameTypeOfRoom: " " ,
@@ -455,7 +456,7 @@ const MyRoompage = () => {
       numTypeOfRoom: yup.number().moreThan(0, "Số lượng khách có thể ở phải lớn hơn 0 !"),
       minPrice: yup.number().min(40000, "Số tiền tối thiểu lớn hơn 40000 !"),
       maxPrice: yup.number().moreThan(yup.ref("minPrice"), "Số tiền tối đa lớn hơn giá tối thiểu !"),
-      exactlyPrice: yup.number().moreThan(yup.ref("minPrice"), "Số tiền phải lớn hơn giá tối thiểu !").lessThan(yup.ref("maxPrice"), "Số tiền phải bé hơn giá tối đa !"),
+      exactlyPrice: yup.number().moreThan(yup.ref("minPrice"), "Số tiền phải lớn hơn giá tối thiểu !"),
       numOfAdult: yup.number().min(1, "Vui lòng nhập số lượng người lớn cho loại phòng này !"),
       numOfChildren: yup.number().min(1, "Vui lòng nhập số trẻ em được phép ở miễn phí !"),
       areaOfTypeRoom: yup.number().min(1, "Vui lòng nhập diện tích phòng !"),
@@ -463,8 +464,16 @@ const MyRoompage = () => {
       viewOfTypeRoom: yup.string().required("Vui lòng chọn hướng phòng !"),
     }),
     onSubmit: (values) => {
-        const {...rest} = values;
-        console.log(values);
+        const formData = new FormData();
+
+        formData.append("info", JSON.stringify(values));
+        formData.append("ac_propertyRegistrationId", params.id);
+        formData.append("roomTypeId", roomTypeId);
+        formData.append('bedConfig', JSON.stringify(selectedBedDetailConfigurationsData))
+        for (let i = 0; i < images.length; i++) {
+            formData.append('images', images[i]);        
+        }
+        dispatch(userCreateRoomInfo(formData))
     }
   })
   const handleImagesChange = (e) => {
@@ -485,21 +494,6 @@ const MyRoompage = () => {
       reader.readAsDataURL(file);
     });
   };
-  const createImagesSubmitHandler = (e) => {
-    e.preventDefault();
-
-
-    const formData = new FormData();
-
-    formData.append("info", JSON.stringify(formik.values));
-    formData.append("ac_propertyRegistrationId", params.id);
-    formData.append("roomTypeId", roomTypeId);
-    formData.append('bedConfig', JSON.stringify(selectedBedDetailConfigurationsData))
-    for (let i = 0; i < images.length; i++) {
-      formData.append('images', images[i]);        
-    }
-    dispatch(userCreateRoomInfo(formData))
-  };
   useEffect(() => {
     const tempItem = {
         ro_tb: "1",
@@ -510,9 +504,12 @@ const MyRoompage = () => {
       }
       dispatch(addDetailBedConfig(tempItem));
       dispatch(userGetAllTypeRoom({roomTypeId: roomTypeId, propertyRegistrationId: params.id}));
-  },[dispatch])
+      if(selectSuccessData){
+        dispatch(createReset())
+      }
+  },[dispatch, selectSuccessData])
   const handleClick = (roomTypeId) => {
-    navigate(`/provider/editmyroom/${params.id}?roomtypeid=${roomTypeId}`);
+    navigate(`/provider/roombyid/${params.id}`);
     // dispatch(userGetTypeRoomById());
   }
   return (
@@ -549,24 +546,24 @@ const MyRoompage = () => {
                             </MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>
                         </MyRoompageLeftRoomDetailHeaderWrapperStyled>
                         <MyRoompageLeftInfoWrapperStyled>
-                            <MyRoompageLeftInfoTitleStyled>{item.name}</MyRoompageLeftInfoTitleStyled>
+                            <MyRoompageLeftInfoTitleStyled>{item?.name}</MyRoompageLeftInfoTitleStyled>
                         </MyRoompageLeftInfoWrapperStyled>
                         <MyRoompageLeftInfoSubTitleWrapperStyled>
                             <Groups2OutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Số người ở phòng: {item.trro_id[0]?.noOfAdult}</MyRoompageLeftInfoSubTitleStyled>
+                            <MyRoompageLeftInfoSubTitleStyled>Số người ở phòng: {item?.trro_id?.[0]?.noOfAdult}</MyRoompageLeftInfoSubTitleStyled>
                         </MyRoompageLeftInfoSubTitleWrapperStyled>
                         <MyRoompageLeftInfoSubTitleWrapperStyled>
                             <HomeOutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Kích cỡ phòng: {item.trro_id[0]?.area} m2</MyRoompageLeftInfoSubTitleStyled>
+                            <MyRoompageLeftInfoSubTitleStyled>Kích cỡ phòng: {item?.trro_id?.[0]?.area} m2</MyRoompageLeftInfoSubTitleStyled>
                         </MyRoompageLeftInfoSubTitleWrapperStyled>
                         <MyRoompageLeftInfoSubTitleWrapperStyled>
                             <SensorDoorOutlinedIcon style={{fontSize: '14px'}}/>
-                            <MyRoompageLeftInfoSubTitleStyled>Số lượng phòng của loại này: {item.trro_id[0]?.numTypeOfRoom}</MyRoompageLeftInfoSubTitleStyled>
+                            <MyRoompageLeftInfoSubTitleStyled>Số lượng phòng của loại này: {item?.trro_id?.[0]?.numTypeOfRoom}</MyRoompageLeftInfoSubTitleStyled>
                         </MyRoompageLeftInfoSubTitleWrapperStyled>
                     </MyRoompageLeftRoomDetailWrapperStyled>
                 ))}
             </MyRoompageLeftWrapperStyled>
-            <MyRoompageRightWrapperStyled onSubmit={createImagesSubmitHandler}>
+            <MyRoompageRightWrapperStyled onSubmit={formik.handleSubmit}>
                 <MyRoompageRightHeaderWrapperStyled>
                     <MyRoompageRightTitleWrapperStyled>Cài Đặt Phòng Mới</MyRoompageRightTitleWrapperStyled>
                     <MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>Hoạt động</MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>

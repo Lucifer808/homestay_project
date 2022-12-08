@@ -401,6 +401,7 @@ const EnterpriseInfoRightBottomNextButtonStyled = styled.button`
       background-color: rgb(11, 84, 120);
   }
 `
+
 const StyledTableCell = muiStyled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -420,11 +421,13 @@ const StyledTableRow = muiStyled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
 const EditMyRoompage = (props) => {
     const { recordForEdit } = props;
     const [openView, setOpenView] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
     const [imagesPreview, setImagesPreview] = useState([]);
+    const [errors, setErrors] = useState(false);
     const [addOptions, setAddOptions] = useState(1);
     const [images, setImages] = useState("");
     const dispatch = useDispatch();
@@ -502,14 +505,18 @@ const EditMyRoompage = (props) => {
         for (let i = 0; i < images.length; i++) {
           formData.append('images', images[i]);        
         }
+        if(values.viewOfTypeRoom === "" || values.nameTypeOfRoom === "" || values.maxPrice === 0){
+          setErrors(true);
+        }else{
         dispatch(userCreateRoomInfo(formData))
+        }
       };
   return (
     <MyRoompageContainerStyled>
         <MyRoompageWrapperStyled>
             <MyRoompageRightWrapperStyled onSubmit={createImagesSubmitHandler}>
                 <MyRoompageRightHeaderWrapperStyled>
-                    <MyRoompageRightTitleWrapperStyled>Cài Đặt Phòng Mới</MyRoompageRightTitleWrapperStyled>
+                    <MyRoompageRightTitleWrapperStyled>Cập nhật thông tin phòng</MyRoompageRightTitleWrapperStyled>
                     <MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>Hoạt động</MyRoompageLeftRoomDetailHeaderStatusWrapperStyled>
                 </MyRoompageRightHeaderWrapperStyled>
                 <MyRoompageRightContentWrapperStyled>
@@ -553,6 +560,7 @@ const EditMyRoompage = (props) => {
                             placeholder="0"
                             name='minPrice'
                             onChange={handleInputChange}
+                            required={true}
                         />
                         <ProviderPriceBottomInputPriceTitleWrapperStyled>
                             <ProviderPriceBottomInputPriceTitleStyled>VND</ProviderPriceBottomInputPriceTitleStyled>
@@ -770,6 +778,9 @@ const EditMyRoompage = (props) => {
                         </EnterprisePriceSetUpTopWrapperStyled>
                     </EnterpriseQuantityWrapperStyled>
                 </MyRoompageRightContentWrapperStyled>
+                {errors && (
+                    <RegisterpageInputErrorPromptStyled>Vui lòng điền đủ thông tin</RegisterpageInputErrorPromptStyled>
+                )}
                 <EnterpriseInfoRightBottomWrapperStyled>
                   <EnterpriseInfoRightBottomBackButtonStyled type='button'>HỦY BỎ</EnterpriseInfoRightBottomBackButtonStyled>
                   <EnterpriseInfoRightBottomNextButtonStyled type='submit'>THÊM LOẠI PHÒNG</EnterpriseInfoRightBottomNextButtonStyled>

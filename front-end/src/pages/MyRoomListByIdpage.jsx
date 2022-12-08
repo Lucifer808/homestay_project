@@ -233,7 +233,7 @@ const MyRoomListByIdpage = () => {
         </AdminServicespageWrapperStyled>
         </MyRoomListpageWrapperStyled>
         <Popup
-            title="Thêm dịch vụ"
+            title="Cập nhật thông tin giường"
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
             onClose={() => setOpenPopup(false)} 

@@ -442,7 +442,7 @@ const RoomDetailTopImage = (props) => {
                                 </RoomDetailDialogContentDescTopWrapperStyled>
                                 <RoomDetailDialogContentDescBottomWrapperStyled>
                                     <RoomCardRightPriceDiscountWrapperStyled>
-                                        <RoomCardRightPriceDiscountPercentStyled>GIẢM 81% HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
+                                        <RoomCardRightPriceDiscountPercentStyled>GIẢM SỐC HÔM NAY</RoomCardRightPriceDiscountPercentStyled>
                                     </RoomCardRightPriceDiscountWrapperStyled>
                                         <RoomCardRightPriceDiscountSubContentStyled>Giá mỗi đêm rẻ nhất từ</RoomCardRightPriceDiscountSubContentStyled>
                                         <RoomCardRightOldPriceStyled className='cross'>320.000.000</RoomCardRightOldPriceStyled>

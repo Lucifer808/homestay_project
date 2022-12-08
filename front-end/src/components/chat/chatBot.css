@@ -1,0 +1,92 @@
+.circleBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    border-radius:  50%;
+    margin: 5px;
+    border: none;
+    background-color: rgb(11, 252, 31);
+    cursor: pointer;
+}
+
+.msginp{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    border: none;
+    padding-left: 10px;
+}
+
+.cola{
+    height:55px;
+    width:55px;
+    padding-left: 0px;
+}
+.msgalignend{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.msgalignstart{
+    display: flex;
+    justify-content: flex-start;
+    min-height: 5px;
+    
+}
+
+.botmsg{
+    background-color: rgb(205, 173, 241);
+    padding-left: 15px;
+    padding-right: 15px;
+    height:auto;
+    min-height: 45px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    border-radius: 25px;
+    max-width: 18rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.usermsg{
+    background-color: rgb(235, 220, 252);
+    padding-left: 15px;
+    padding-right: 15px;
+    height: auto;
+    min-height: 45px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    border-radius: 25px;
+    max-width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botIcon{
+    font-size: 45px;
+    border : 1px solid #87b3fb;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    margin-top: 1rem;
+}
+
+.userIcon{
+    font-size: 40px;
+    border : 1px solid #87b3fb;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+
+}
+
+.sendBtn{
+    font-size:25px;
+}

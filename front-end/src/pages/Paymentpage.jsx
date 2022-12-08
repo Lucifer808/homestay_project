@@ -17,6 +17,8 @@ import { selectIsAutheticated, selectUser } from '../features/userSlice';
 import UserOptions from '../components/child/UserOptions';
 import { useSelector } from 'react-redux';
 import { selectBookingInfo } from '../features/customerSlice';
+import { Link } from 'react-router-dom';
+
 const PaymentpageContainerStyled = styled.div`
     width: 100%;
     height: 100%;
@@ -329,7 +331,9 @@ const Paymentpage = () => {
     <PaymentpageContainerStyled>
         <PaymentpageHeaderContainerStyled>
             <PaymentpageHeaderWrapperStyled>
-                <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+                <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+                </Link>
                 <PaymentpageHeaderStepWrapperStyled>
                     <Box sx={{ width: '100%', textAlign: 'center' }}>
                         <Stepper activeStep={activeStep}>

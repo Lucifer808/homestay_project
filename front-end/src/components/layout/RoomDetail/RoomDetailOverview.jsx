@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Rating from '@mui/material/Rating';
 import wheel from '../../../assets/ferrisWheel.svg';
@@ -13,6 +13,17 @@ import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOu
 import DirectionsWalkOutlinedIcon from '@mui/icons-material/DirectionsWalkOutlined';
 import LocalParkingOutlinedIcon from '@mui/icons-material/LocalParkingOutlined';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
+import bkgmap from '../../../assets/bkg-map-entry.svg';
+import mappin from '../../../assets/img-map-pin-red.svg';
+import { selectPosition } from '../../../features/customerSlice';
+import { useSelector } from 'react-redux';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import RoomDetailMap from './RoomDetailMap';
 const RoomDetailOverviewContainerStyled = styled.div`
     height: 100%;
 `
@@ -325,8 +336,41 @@ const RoomDetailOverviewLeftTopSellingGoodTopTitleStyled = styled.p`
 const RoomDetailOverviewLeftTopSellingGoodBottomTitleStyled = styled.p`
     margin-top: .4rem;
 `
+const RoomListLeftTopMapTitleWrapperStyled = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+`
+const RoomListLeftTopMapTitleImageStyled = styled.img`
+    width: 3rem;
+    height: 3rem;
+`
+const RoomListLeftTopMapWrapperStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+`
+const RoomListLeftTopMapImageStyled = styled.img`
+    height: 100%;
+    width: 100%;
+`
+const RoomListLeftTopMapTitleStyled = styled.p``
 const RoomDetailOverview = (props) => {
   const {selectRoomDetailData} = props;
+  const selectPositionData = useSelector(selectPosition);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = (e) => {
+      e.stopPropagation()
+      setOpen(true);
+  };
+  const handleClose = (e) => {
+      e.stopPropagation()
+      setOpen(false);
+  };
   return (
     <RoomDetailOverviewContainerStyled>
         <RoomDetailOverviewWrapperStyled>
@@ -340,7 +384,7 @@ const RoomDetailOverview = (props) => {
                         <Rating name="size-small" value={selectRoomDetailData?.rating} size="medium" readOnly/>
                     </RoomDetailOverviewLeftTopDescTitleWrapperStyled>
                     <RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
-                        <RoomDetailOverviewLeftTopDescSubTitleStyled>
+                        <RoomDetailOverviewLeftTopDescSubTitleStyled onClick={handleClickOpen}>
                             {selectRoomDetailData?.address}, thành phố {selectRoomDetailData?.acci_id?.name}, {selectRoomDetailData?.acst_id?.name},  {selectRoomDetailData?.acct_id?.name} - TRÊN BẢN ĐỒ
                         </RoomDetailOverviewLeftTopDescSubTitleStyled>
                     </RoomDetailOverviewLeftTopDescSubTitleWrapperStyled>
@@ -448,7 +492,35 @@ const RoomDetailOverview = (props) => {
                 </RoomDetailOverviewRightTopConvenientWrapperStyled>
                 <RoomDetailOverviewRightBottomConvenientWrapperStyled>
                     <RoomDetailOverviewRightBottomMapWrapperStyled>
-                        <RoomDetailOverviewRightBottomMapStyled>XEM VỊ TRÍ</RoomDetailOverviewRightBottomMapStyled>
+                        <RoomListLeftTopMapWrapperStyled onClick={handleClickOpen}>
+                            <RoomListLeftTopMapTitleWrapperStyled>
+                                <RoomListLeftTopMapTitleImageStyled src={mappin}/>
+                                <RoomListLeftTopMapTitleStyled>XEM VỊ TRÍ</RoomListLeftTopMapTitleStyled>
+                            </RoomListLeftTopMapTitleWrapperStyled>
+                            <RoomListLeftTopMapImageStyled src={bkgmap}/>
+                        </RoomListLeftTopMapWrapperStyled>
+                        <Dialog
+                            fullScreen
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <AppBar sx={{ position: 'relative' }}>
+                            <Toolbar>
+                                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                                    Bản đồ
+                                </Typography>
+                                <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={handleClose}
+                                aria-label="close"
+                                >
+                                <CloseIcon />
+                                </IconButton>
+                            </Toolbar>
+                            </AppBar>
+                            <RoomDetailMap selectPosition={selectPositionData} selectRoomDetailData={selectRoomDetailData}/>  
+                        </Dialog>
                     </RoomDetailOverviewRightBottomMapWrapperStyled>
                     <AdminServiceFormRightReviewWrapperStyled>
                         <AdminServiceFormRightReviewContentWrapperStyled>

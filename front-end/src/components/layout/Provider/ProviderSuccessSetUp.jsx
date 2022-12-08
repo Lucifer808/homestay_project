@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import location_ec_pricing from '../../../assets/provider-ec-pricing.png';
 import StepperProvider from '../../child/StepperProvider';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const ProviderPriceSetUpContainerStyled = styled.div`
   height: 100%;
   width: 100%;
@@ -114,7 +115,9 @@ const ProviderSucessSetUp = () => {
             </ProviderDescRightTopWrapperStyled>
             <EnterpriseInfoRightBottomWrapperStyled>
                 <EnterpriseInfoRightBottomBackButtonStyled onClick={handleBack}>TRỞ LẠI</EnterpriseInfoRightBottomBackButtonStyled>
-                <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>
+                <Link to="/">
+                  <EnterpriseInfoRightBottomNextButtonStyled>TIẾP THEO</EnterpriseInfoRightBottomNextButtonStyled>  
+                </Link>
             </EnterpriseInfoRightBottomWrapperStyled>
           </ProviderDescRightWrapperStyled>
         </ProviderContentWrapperStyled>

@@ -8,7 +8,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { Box, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-
+import { RiBillLine } from 'react-icons/ri'
 const MyRoomListpageContainerStyled = styled.div``
 const MyRoomListpageWrapperStyled = styled.div`
     padding: 1rem;
@@ -62,6 +62,7 @@ const MyRoomListpage = () => {
   const selectUserGetAllAccommodation = useSelector(selectUserAllAccommodation);
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
+  console.log(selectUserGetAllAccommodation);
   useEffect(() => {
     dispatch(userGetAllAccommodation())
   },[dispatch]);
@@ -89,13 +90,6 @@ const MyRoomListpage = () => {
           renderCell: (params) => <AdminStatusWrapperStyled status={params.value}>{params.value}</AdminStatusWrapperStyled>
         },
         { field: 'ac_propertyRegistrationId', headerName: 'Mã', minWidth: 120, flex: 1 },
-        {
-        field: 'area',
-        headerName: 'Diện tích',
-        minWidth: 120,
-        flex: 1,
-        renderCell: (params) => <AdminAreaWrapperStyled>{params.value} mét vuông</AdminAreaWrapperStyled>
-        },
         {
           field: 'address',
           headerName: 'Địa chỉ',
@@ -137,12 +131,16 @@ const MyRoomListpage = () => {
         type: 'actions',
         flex: 1,
         renderCell: (params) => {
-          const roomTypeId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
             return(
                 <>
                 <StyledLink to={`/provider/roombyid/${params.row.ac_propertyRegistrationId}`}>
                   <AdminServicesBorderButtonEditStyled >
                     <AiOutlineEdit />
+                  </AdminServicesBorderButtonEditStyled>
+                </StyledLink>
+                <StyledLink to={`/provider/my-room-order-list/${params.row.ac_propertyRegistrationId}`}>
+                  <AdminServicesBorderButtonEditStyled >
+                    <RiBillLine />
                   </AdminServicesBorderButtonEditStyled>
                 </StyledLink>
               </>

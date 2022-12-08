@@ -180,7 +180,9 @@ const Header = () => {
   return (
     <HeaderStyled>
         <HeaderWrapperStyled>
-            <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+            <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+            </Link>
             <HeaderMiddleWrapStyled>
                 <HeaderAddressStyled>Khách sạn</HeaderAddressStyled>
                 <HeaderAddressStyled>Chỗ ở</HeaderAddressStyled>
@@ -201,10 +203,10 @@ const Header = () => {
                 <HeaderMoneyStyled>₫</HeaderMoneyStyled>
                 { isAutheticated ? <UserOptions user={usereData} /> : (
                     <HeaderAuthRightStyled>
-                        <Link to="/login">
+                        <Link to="/account/login">
                             <HeaderLoginButtonStyled>Đăng nhập</HeaderLoginButtonStyled>
                         </Link>
-                        <Link to="/register">
+                        <Link to="/account/register">
                             <HeaderRegisterButtonStyled>Tạo tài khoản</HeaderRegisterButtonStyled>
                         </Link>
                     </HeaderAuthRightStyled>

@@ -96,6 +96,16 @@ const userApi = {
     const config = { "Content-Type": "application/json" };
     return axiosClient.post(url, params, config);
   },
+  getAllOrderById: () => {
+    const url = "/all_order";
+    const config = {};
+    return axiosClient.get(url, config);
+  },
+  getAllOrderAccommodationsById: (params) => {
+    const url = "/get-all-order-accommodation-by-id";
+    const config = { "Content-Type": "application/json" };
+    return axiosClient.post(url, params, config);
+  },
 };
 
 export default userApi;

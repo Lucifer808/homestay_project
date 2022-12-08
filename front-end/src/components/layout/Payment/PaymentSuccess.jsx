@@ -78,7 +78,9 @@ const PaymentSuccess = () => {
     <PaymentpageContainerStyled>
         <PaymentpageHeaderContainerStyled>
             <PaymentpageHeaderWrapperStyled>
-                <HeaderLogoStyled>Looking</HeaderLogoStyled>
+            <Link to="/" style={{textDecoration: "none", color: "#000"}}>
+                <HeaderLogoStyled>Vluxstay</HeaderLogoStyled>
+                </Link>
                 <PaymentpageHeaderStepWrapperStyled>
                     <PaymentStepperProvider activeStep={2} />
                 </PaymentpageHeaderStepWrapperStyled>

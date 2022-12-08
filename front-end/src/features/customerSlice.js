@@ -84,7 +84,6 @@ export const addItemToCart = createAsyncThunk(
         propertyRegistrationId,
         roomTypeId,
       };
-      console.log(result);
       return fulfillWithValue(result);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -111,6 +110,7 @@ export const customerCreateNewOrder = createAsyncThunk(
     try {
       const orderData = JSON.parse(localStorage.getItem("orderTemp"));
       const response = await customerApi.customerNewOrder(orderData);
+      // localStorage.removeItem("orderTemp");
       return fulfillWithValue(response.data);
     } catch (error) {
       return rejectWithValue(error.response.data);

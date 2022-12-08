@@ -175,7 +175,7 @@ const AdminTypeOfAccommodationpage = () => {
               <StyledLink to="/admin">
                 Trang chủ
               </StyledLink>
-              <Typography color="text.disabled">Danh sách chỗ nghỉ</Typography>
+              <Typography color="text.disabled">Danh sách loại chỗ nghỉ</Typography>
             </Breadcrumbs>
           </div>
         </AdminServicespageHeaderWrapperStyled>
@@ -228,7 +228,7 @@ const AdminTypeOfAccommodationpage = () => {
             </Box>
         </AdminServicespageWrapperStyled>
         <Popup
-            title="Thêm dịch vụ"
+            title="Thêm loại chỗ nghỉ"
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
             onClose={() => setOpenPopup(false)} 

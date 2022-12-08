@@ -134,13 +134,13 @@ const RoomDetailpage = () => {
           <RoomDetailNavigationAddressLeftWrapperStyled>
             <RoomDetailNavigationAddressStyled>Trang chủ</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
-            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acct_id?.name}(71.179)</RoomDetailNavigationAddressStyled>
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acct_id?.name}(29)</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
-            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acst_id?.name}(10.821)</RoomDetailNavigationAddressStyled>
+            <RoomDetailNavigationAddressStyled>Khách sạn {selectRoomDetailData?.[0]?.acst_id?.name}(21)</RoomDetailNavigationAddressStyled>
             <ChevronRightOutlinedIcon />
             <RoomDetailNavigationAddressNowStyled>Đặt phòng {selectRoomDetailData?.[0]?.nameOfAccommodation}</RoomDetailNavigationAddressNowStyled>
           </RoomDetailNavigationAddressLeftWrapperStyled>
-          <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10.821 khách sạn tại {selectRoomDetailData?.[0]?.acst_id?.name}</RoomDetailNavigationAddressRoomStyled>
+          <RoomDetailNavigationAddressRoomStyled>Xem tất cả 10 khách sạn tại {selectRoomDetailData?.[0]?.acst_id?.name}</RoomDetailNavigationAddressRoomStyled>
         </RoomDetailNavigationAddressWrapperStyled>
           <RoomDetailTopImage selectRoomDetailData={selectRoomDetailData?.[0]}/>
         <RoomDetailNavigationBarWrapperStyled>
@@ -179,7 +179,7 @@ const RoomDetailpage = () => {
           <RoomDetailChoice selectRoomDetailData={selectRoomDetailData?.[0]}/>
         </RoomDetailChoiceWrapperStyled>
         <RoomDetailCommentWrapperStyled id='comment'>
-          <RoomDetailComment />
+          <RoomDetailComment selectRoomDetailData={selectRoomDetailData?.[0]}/>
         </RoomDetailCommentWrapperStyled>
       </RoomDetailContainerStyled>
     }
